@@ -15,9 +15,22 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Vector2 velocity = rb2.velocity;
+
         if (Input.GetKey(KeyCode.A))
         {
-            Debug.Log("Move left!");
+            velocity.x = -10.0f;
+            rb2.velocity = velocity;
+        }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            velocity.x = 10.0f;
+            rb2.velocity = velocity;
+        }
+        else
+        {
+            velocity.x = 0f;
+            rb2.velocity = velocity;
         }
     }
 }
