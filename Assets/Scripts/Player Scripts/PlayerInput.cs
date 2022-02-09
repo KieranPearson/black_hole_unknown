@@ -18,10 +18,10 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        CheckForMovement();
+        CheckMovementInput();
     }
 
-    private void CheckForMovement()
+    private void CheckMovementInput()
     {
         if (Input.GetKeyDown(moveLeft))
         {

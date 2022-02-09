@@ -241,8 +241,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c16e1d53d043bc48a28a89143a22eba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MIN_X_POS: -25
-  MAX_X_POS: 25
+  MAX_LEFT_POS: 25
+  MAX_RIGHT_POS: 25
+  SPEED: 10
 --- !u!114 &293290729
 MonoBehaviour:
   m_ObjectHideFlags: 0

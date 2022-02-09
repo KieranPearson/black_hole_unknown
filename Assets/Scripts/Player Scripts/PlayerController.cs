@@ -5,43 +5,81 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] float MIN_X_POS = -3;
-    [SerializeField] float MAX_X_POS = 3;
+    [SerializeField] float MAX_LEFT_POS;
+    [SerializeField] float MAX_RIGHT_POS;
+    [SerializeField] float SPEED;
+    [SerializeField] float STILL_SPEED;
 
     private Transform thisTransform;
     private Rigidbody2D rb2;
     private PlayerInput playerInput;
+    private Vector2 velocity;
+    private bool movingPlayer;
 
     private void Awake()
     {
         thisTransform = transform;
         rb2 = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        movingPlayer = false;
     }
 
     void Update()
     {
-        MovePlayer();
+        ControlPlayer();
     }
 
-    private void MovePlayer()
+    private void StopPlayer()
     {
-        Vector2 velocity = rb2.velocity;
+        if (!movingPlayer) return;
+        velocity.x = STILL_SPEED;
+        rb2.velocity = velocity;
+        movingPlayer = false;
+    }
 
-        if (playerInput.IsMoveLeftDown())
+    private void MovePlayer(string direction)
+    {
+        if (direction == "Left")
         {
-            velocity.x = -10.0f;
-            rb2.velocity = velocity;
-        }
-        else if (playerInput.IsMoveRightDown())
-        {
-            velocity.x = 10.0f;
-            rb2.velocity = velocity;
+            if ((thisTransform.position.x - SPEED) < (-MAX_LEFT_POS))
+            {
+                StopPlayer();
+                return;
+            }
+            velocity.x = -SPEED;
         }
         else
         {
-            velocity.x = 0f;
-            rb2.velocity = velocity;
+            if ((thisTransform.position.x + SPEED) > MAX_RIGHT_POS)
+            {
+                StopPlayer();
+                return;
+            }
+            velocity.x = SPEED;
+        }
+        rb2.velocity = velocity;
+        movingPlayer = true;
+    }
+
+    private void ControlPlayer()
+    {
+        velocity = rb2.velocity;
+
+        if (playerInput.IsMoveLeftDown() && playerInput.IsMoveRightDown())
+        {
+            StopPlayer();
+        }
+        else if (playerInput.IsMoveLeftDown())
+        {
+            MovePlayer("Left");
+        }
+        else if (playerInput.IsMoveRightDown())
+        {
+            MovePlayer("Right");
+        }
+        else
+        {
+            StopPlayer();
         } 
     }
 }
