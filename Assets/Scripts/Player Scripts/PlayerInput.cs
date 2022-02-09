@@ -18,11 +18,29 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        CheckMovement();
+        CheckForMovement();
     }
 
-    private void CheckMovement()
+    private void CheckForMovement()
     {
-
+        if (Input.GetKeyDown(moveLeft))
+        {
+            isMoveLeftDown = true;
+        }
+        else if (Input.GetKeyUp(moveLeft))
+        {
+            isMoveLeftDown = false;
+        }
+        if (Input.GetKeyDown(moveRight))
+        {
+            isMoveRightDown = true;
+        }
+        else if (Input.GetKeyUp(moveRight))
+        {
+            isMoveRightDown = false;
+        }
     }
+
+    public bool IsMoveLeftDown() => isMoveLeftDown;
+    public bool IsMoveRightDown() => isMoveRightDown;
 }

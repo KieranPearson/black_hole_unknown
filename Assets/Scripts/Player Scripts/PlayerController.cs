@@ -2,38 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] float MIN_X_POS = -3;
     [SerializeField] float MAX_X_POS = 3;
 
-    private Rigidbody2D rb2;
     private Transform thisTransform;
+    private Rigidbody2D rb2;
+    private PlayerInput playerInput;
 
     private void Awake()
     {
-        rb2 = GetComponent<Rigidbody2D>();
         thisTransform = transform;
+        rb2 = GetComponent<Rigidbody2D>();
+        playerInput = GetComponent<PlayerInput>();
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
+    {
+        MovePlayer();
+    }
+
+    private void MovePlayer()
     {
         Vector2 velocity = rb2.velocity;
 
-        if (Input.GetKey(KeyCode.A))
+        if (playerInput.IsMoveLeftDown())
         {
-            if ((thisTransform.position.x - 10.0f) < MIN_X_POS) { return; }
             velocity.x = -10.0f;
             rb2.velocity = velocity;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (playerInput.IsMoveRightDown())
         {
             velocity.x = 10.0f;
             rb2.velocity = velocity;
@@ -42,6 +42,6 @@ public class PlayerController : MonoBehaviour
         {
             velocity.x = 0f;
             rb2.velocity = velocity;
-        }
+        } 
     }
 }
