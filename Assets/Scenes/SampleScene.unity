@@ -244,6 +244,7 @@ MonoBehaviour:
   MAX_LEFT_POS: 25
   MAX_RIGHT_POS: 25
   SPEED: 10
+  STILL_SPEED: 0
 --- !u!114 &293290729
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,6 +6,7 @@ public class PlayerInput : MonoBehaviour
 {
     [SerializeField] KeyCode moveLeft;
     [SerializeField] KeyCode moveRight;
+    [SerializeField] KeyCode fire;
 
     private bool isMoveLeftDown;
     private bool isMoveRightDown;
@@ -43,4 +44,10 @@ public class PlayerInput : MonoBehaviour
 
     public bool IsMoveLeftDown() => isMoveLeftDown;
     public bool IsMoveRightDown() => isMoveRightDown;
+
+    public bool IsFireDown()
+    {
+        if (fire == KeyCode.None) return false;
+        return Input.GetKeyDown(fire);
+    }
 }
