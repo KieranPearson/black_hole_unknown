@@ -10,6 +10,7 @@ public class PlayerInput : MonoBehaviour
 
     private bool isMoveLeftDown;
     private bool isMoveRightDown;
+    private bool isFireDown;
 
     private void Awake()
     {
@@ -20,6 +21,7 @@ public class PlayerInput : MonoBehaviour
     private void Update()
     {
         CheckMovementInput();
+        CheckFireInput();
     }
 
     private void CheckMovementInput()
@@ -42,12 +44,19 @@ public class PlayerInput : MonoBehaviour
         }
     }
 
+    private void CheckFireInput()
+    {
+        if (Input.GetKeyDown(fire))
+        {
+            isFireDown = true;
+        }
+        else if (Input.GetKeyUp(fire))
+        {
+            isFireDown = false;
+        }
+    }
+
     public bool IsMoveLeftDown() => isMoveLeftDown;
     public bool IsMoveRightDown() => isMoveRightDown;
-
-    public bool IsFireDown()
-    {
-        if (fire == KeyCode.None) return false;
-        return Input.GetKeyDown(fire);
-    }
+    public bool IsFireDown() => isFireDown;
 }

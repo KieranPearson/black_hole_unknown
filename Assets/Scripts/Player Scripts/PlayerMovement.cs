@@ -4,7 +4,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerInput))]
-public class PlayerController : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float MAX_LEFT_POS;
     [SerializeField] float MAX_RIGHT_POS;
