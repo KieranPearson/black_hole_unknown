@@ -26,6 +26,11 @@ public class PlayerCombat : MonoBehaviour
         float fireTime = Time.time;
         if ((fireTime - lastFired) < FIRE_RATE) return;
         lastFired = fireTime;
-        Debug.Log("fireeeee");
+        CreateProjectile();
+    }
+
+    private void CreateProjectile()
+    {
+        Debug.Log("FIRE!!!");
     }
 }
