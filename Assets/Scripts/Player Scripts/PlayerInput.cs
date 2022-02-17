@@ -16,6 +16,7 @@ public class PlayerInput : MonoBehaviour
     {
         isMoveLeftDown = false;
         isMoveRightDown = false;
+        isFireDown = false;
     }
 
     private void Update()
