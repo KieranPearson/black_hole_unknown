@@ -12,55 +12,35 @@ public class Movement : MonoBehaviour
     private Vector2 velocity;
     private SpriteRenderer spriteRenderer;
 
+    private Vector3 screenSize;
+    private Vector2 boundary;
+    private float spriteWidth;
+
     void Start()
     {
         rb2 = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        screenSize = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
+        boundary = Camera.main.ScreenToWorldPoint(screenSize);
+        spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }
 
     private void Move(float speed)
     {
-        velocity = rb2.velocity;
-        if (velocity.x == speed) return;
-        velocity.x = speed;
-        rb2.velocity = velocity;
-    }
-
-    public void Stop()
-    {
-        velocity = rb2.velocity;
-        if (velocity.x == 0.0f) return;
-        velocity.x = 0.0f;
-        rb2.velocity = velocity;
+        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        newPosition.x += speed * Time.deltaTime;
+        newPosition.x = Mathf.Clamp(newPosition.x, -boundary.x + spriteWidth, boundary.x - spriteWidth);
+        transform.position = newPosition;
     }
 
     public void MoveLeft()
     {
-        Vector3 targetPos = new Vector3(transform.position.x - speed,
-                                        transform.position.y,
-                                        transform.position.z);
-        targetPos.x -= spriteRenderer.sprite.bounds.size.x / 2;
-        Vector3 posOnScreen = Camera.main.WorldToViewportPoint(targetPos);
-        if (posOnScreen.x < 0f)
-        {
-            Stop();
-            return;
-        }
         Move(-speed);
     }
 
     public void MoveRight()
     {
-        Vector3 targetPos = new Vector3(transform.position.x + speed,
-                                        transform.position.y, 
-                                        transform.position.z);
-        targetPos.x += spriteRenderer.sprite.bounds.size.x / 2;
-        Vector3 posOnScreen = Camera.main.WorldToViewportPoint(targetPos);
-        if (posOnScreen.x > 1.0f)
-        {
-            Stop();
-            return;
-        }
         Move(speed);
     }
 }

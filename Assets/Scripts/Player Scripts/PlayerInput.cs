@@ -9,9 +9,6 @@ public class PlayerInput : MonoBehaviour
     private Command keyA;
     private Command keyD;
 
-    // Non-mappable commands
-    private Command stop;
-
     public void MapCommand(KeyCode key, Command command)
     {
         if (key == KeyCode.Space) keySpacebar = command;
@@ -26,8 +23,6 @@ public class PlayerInput : MonoBehaviour
         MapCommand(KeyCode.Space, new FireCommand(transform));
         MapCommand(KeyCode.A, new MoveLeftCommand(movement));
         MapCommand(KeyCode.D, new MoveRightCommand(movement));
-
-        stop = new StopCommand(movement);
     }
 
     void FixedUpdate()
@@ -40,6 +35,5 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) keySpacebar.Execute();
         if (Input.GetKey(KeyCode.A)) keyA.Execute();
         else if (Input.GetKey(KeyCode.D)) keyD.Execute();
-        else stop.Execute();
     }
 }
