@@ -26,12 +26,21 @@ public class Movement : MonoBehaviour
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }
 
+    private void FixedUpdate()
+    {
+        if (rb2.velocity.x != 0)
+        {
+            rb2.velocity -= rb2.velocity / 20f;
+        }
+    }
+
     private void Move(float speed)
     {
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        newPosition.x += speed * Time.deltaTime;
-        newPosition.x = Mathf.Clamp(newPosition.x, -boundary.x + spriteWidth, boundary.x - spriteWidth);
-        transform.position = newPosition;
+        //Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        //newPosition.x += speed * Time.deltaTime;
+        //newPosition.x = Mathf.Clamp(newPosition.x, -boundary.x + spriteWidth, boundary.x - spriteWidth);
+        //transform.position = newPosition;
+        rb2.velocity = new Vector2(speed, 0);
     }
 
     public void MoveLeft()
