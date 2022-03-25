@@ -12,7 +12,6 @@ public class Movement : MonoBehaviour
     private Vector2 velocity;
     private SpriteRenderer spriteRenderer;
 
-    private Vector3 screenSize;
     private Vector2 boundary;
     private float spriteWidth;
 
@@ -23,7 +22,7 @@ public class Movement : MonoBehaviour
         rb2 = gameObject.GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        screenSize = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
+        Vector3 screenSize = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
         boundary = Camera.main.ScreenToWorldPoint(screenSize);
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }

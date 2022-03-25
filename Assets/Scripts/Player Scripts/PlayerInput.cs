@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(Combat))]
 public class PlayerInput : MonoBehaviour
 {
     private Command keySpacebarPress;
@@ -30,8 +31,9 @@ public class PlayerInput : MonoBehaviour
     void Start()
     {
         PlayerController playerController = gameObject.GetComponent<PlayerController>();
+        Combat combat = gameObject.GetComponent<Combat>();
 
-        MapCommandOnPress(KeyCode.Space, new FireCommand(transform));
+        MapCommandOnPress(KeyCode.Space, new FireCommand(combat));
         MapCommandOnPress(KeyCode.A, new MoveLeftCommand(playerController));
         MapCommandOnPress(KeyCode.D, new MoveRightCommand(playerController));
 

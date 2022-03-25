@@ -6,13 +6,15 @@ public class FireCommand : Command
 {
     Transform transform;
 
-    public FireCommand(Transform transform)
+    Combat combat;
+
+    public FireCommand(Combat combat)
     {
-        this.transform = transform;
+        this.combat = combat;
     }
 
     public override void Execute()
     {
-        Debug.Log("Fire!");
+        combat.Fire();
     }
 }
