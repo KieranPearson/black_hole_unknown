@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class StopFiringCommand : Command
 {
-    Transform transform;
+    Combat combat;
 
-    public StopFiringCommand(Transform transform)
+    public StopFiringCommand(Combat combat)
     {
-        this.transform = transform;
+        this.combat = combat;
     }
 
     public override void Execute()
     {
-        Debug.Log("Stop firing!");
+        combat.ToggleFire(false);
     }
 }

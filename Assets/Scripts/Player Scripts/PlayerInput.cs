@@ -37,7 +37,7 @@ public class PlayerInput : MonoBehaviour
         MapCommandOnPress(KeyCode.A, new MoveLeftCommand(playerController));
         MapCommandOnPress(KeyCode.D, new MoveRightCommand(playerController));
 
-        MapCommandOnRelease(KeyCode.Space, new StopFiringCommand(transform));
+        MapCommandOnRelease(KeyCode.Space, new StopFiringCommand(combat));
         MapCommandOnRelease(KeyCode.A, new StopMovingLeftCommand(playerController));
         MapCommandOnRelease(KeyCode.D, new StopMovingRightCommand(playerController));
     }

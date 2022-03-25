@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class FireCommand : Command
 {
-    Transform transform;
-
     Combat combat;
 
     public FireCommand(Combat combat)
@@ -15,6 +13,6 @@ public class FireCommand : Command
 
     public override void Execute()
     {
-        combat.Fire();
+        combat.ToggleFire(true);
     }
 }
