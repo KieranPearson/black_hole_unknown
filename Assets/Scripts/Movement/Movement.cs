@@ -16,6 +16,8 @@ public class Movement : MonoBehaviour
     private Vector2 boundary;
     private float spriteWidth;
 
+    private Vector2 direction;
+
     void Start()
     {
         rb2 = gameObject.GetComponent<Rigidbody2D>();
@@ -26,8 +28,33 @@ public class Movement : MonoBehaviour
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }
 
+    public void MoveLeft()
+    {
+        direction.x = -1;
+        //Move(-speed);
+    }
+
+    public void MoveRight()
+    {
+        direction.x = 1;
+        //Move(speed);
+    }
+
+    public void Stop(Vector2 direction)
+    {
+        if (this.direction.x == direction.x)
+        {
+            this.direction.x = 0;
+        }
+        if (this.direction.y == direction.y)
+        {
+            this.direction.y = 0;
+        }
+    }
+
     private void FixedUpdate()
     {
+        Move();
         SlowDown();
     }
 
@@ -51,18 +78,9 @@ public class Movement : MonoBehaviour
         transform.position = newPosition;
     }
 
-    private void Move(float speed)
+    private void Move()
     {
-        rb2.velocity = new Vector2(speed, 0);
-    }
-
-    public void MoveLeft()
-    {
-        Move(-speed);
-    }
-
-    public void MoveRight()
-    {
-        Move(speed);
+        if (direction.x == 0 && direction.y == 0) return;
+        rb2.velocity = new Vector2(direction.x * speed, direction.y * speed);
     }
 }

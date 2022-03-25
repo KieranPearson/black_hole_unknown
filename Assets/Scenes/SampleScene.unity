@@ -136,6 +136,7 @@ GameObject:
   - component: {fileID: 293290727}
   - component: {fileID: 293290728}
   - component: {fileID: 293290729}
+  - component: {fileID: 293290730}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -254,6 +255,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 9
+--- !u!114 &293290730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 293290724}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 96cd2559e8c5da84e8f2c9d38877995b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeTillIdle: 1
+  normalSprite: {fileID: 21300000, guid: d57365f73a14ccf4189e253598af0595, type: 3}
+  strafeLeftSprite: {fileID: 21300000, guid: 5b92372dff324ea489fa2ad52eb9aa47, type: 3}
+  strafeRightSprite: {fileID: 21300000, guid: 060e34facce1add468c1feaf04719e4c, type: 3}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
