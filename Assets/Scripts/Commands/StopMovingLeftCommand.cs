@@ -5,14 +5,27 @@ using UnityEngine;
 public class StopMovingLeftCommand : Command
 {
     private Movement movement;
+    private PlayerController playerController;
 
     public StopMovingLeftCommand(Movement movement)
     {
         this.movement = movement;
     }
 
+    public StopMovingLeftCommand(PlayerController playerController)
+    {
+        this.playerController = playerController;
+    }
+
     public override void Execute()
     {
-        movement.Stop(new Vector2(-1, 0));
+        if (playerController)
+        {
+            playerController.UpdateState(this);
+        }
+        else
+        {
+            movement.Stop();
+        }
     }
 }

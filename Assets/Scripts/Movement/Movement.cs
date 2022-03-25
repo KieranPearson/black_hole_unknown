@@ -31,25 +31,16 @@ public class Movement : MonoBehaviour
     public void MoveLeft()
     {
         direction.x = -1;
-        //Move(-speed);
     }
 
     public void MoveRight()
     {
         direction.x = 1;
-        //Move(speed);
     }
 
-    public void Stop(Vector2 direction)
+    public void Stop()
     {
-        if (this.direction.x == direction.x)
-        {
-            this.direction.x = 0;
-        }
-        if (this.direction.y == direction.y)
-        {
-            this.direction.y = 0;
-        }
+        direction = Vector2.zero;
     }
 
     private void FixedUpdate()

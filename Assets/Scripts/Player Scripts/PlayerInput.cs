@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(PlayerController))]
 public class PlayerInput : MonoBehaviour
 {
     private Command keySpacebarPress;
@@ -29,15 +29,15 @@ public class PlayerInput : MonoBehaviour
 
     void Start()
     {
-        Movement movement = gameObject.GetComponent<Movement>();
+        PlayerController playerController = gameObject.GetComponent<PlayerController>();
 
         MapCommandOnPress(KeyCode.Space, new FireCommand(transform));
-        MapCommandOnPress(KeyCode.A, new MoveLeftCommand(movement));
-        MapCommandOnPress(KeyCode.D, new MoveRightCommand(movement));
+        MapCommandOnPress(KeyCode.A, new MoveLeftCommand(playerController));
+        MapCommandOnPress(KeyCode.D, new MoveRightCommand(playerController));
 
         MapCommandOnRelease(KeyCode.Space, new StopFiringCommand(transform));
-        MapCommandOnRelease(KeyCode.A, new StopMovingLeftCommand(movement));
-        MapCommandOnRelease(KeyCode.D, new StopMovingRightCommand(movement));
+        MapCommandOnRelease(KeyCode.A, new StopMovingLeftCommand(playerController));
+        MapCommandOnRelease(KeyCode.D, new StopMovingRightCommand(playerController));
     }
 
     void Update()

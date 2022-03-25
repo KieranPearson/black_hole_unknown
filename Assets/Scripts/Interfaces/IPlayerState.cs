@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IPlayerState
 {
-    public IPlayerState Tick(GameObject gameObject, string command);
-    public void Enter(GameObject gameObject);
-    public void Exit(GameObject gameObject);
+    public IPlayerState Tick(Movement movement, Command cmd);
+    public void Enter(Movement movement);
+    public void Exit(Movement movement);
 }
