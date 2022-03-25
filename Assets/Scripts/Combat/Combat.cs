@@ -19,10 +19,10 @@ public class Combat : MonoBehaviour
         if (projectilePrefab == null) return;
         if (projectilePrefab.GetComponent<Rigidbody2D>().gravityScale > 0)
         {
-            projectileSpawnOffset = -(spriteRenderer.sprite.bounds.size.x / 2) - 0.5f;
+            projectileSpawnOffset = -(spriteRenderer.sprite.bounds.size.x / 2) - 0.6f;
         } else
         {
-            projectileSpawnOffset = (spriteRenderer.sprite.bounds.size.x / 2) + 0.5f;
+            projectileSpawnOffset = (spriteRenderer.sprite.bounds.size.x / 2) + 0.6f;
         }
     }
 
