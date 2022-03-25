@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class PlayerMovingRight : IPlayerState
 {
-    public void Enter(Movement movement)
+    public void Enter(Movement movement, PlayerSpriteUpdater playerSpriteUpdater)
     {
         movement.MoveRight();
+        playerSpriteUpdater.SetStrafeRightSprite();
     }
 
-    public IPlayerState Tick(Movement movement, Command cmd)
+    public IPlayerState Tick(Movement movement, PlayerSpriteUpdater playerSpriteUpdater,
+                             Command cmd)
     {
         if (cmd.GetType().Name == "StopMovingRightCommand") return new PlayerIdle();
         else if (cmd.GetType().Name == "MoveLeftCommand") return new PlayerMovingLeft();
         return null;
     }
 
-    public void Exit(Movement movement)
+    public void Exit(Movement movement, PlayerSpriteUpdater playerSpriteUpdater)
     {
         
     }
