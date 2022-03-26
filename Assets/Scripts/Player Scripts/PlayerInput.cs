@@ -49,9 +49,9 @@ public class PlayerInput : MonoBehaviour
 
     private void HandleInput()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) keySpacebarPress.Execute();
-        if (Input.GetKeyDown(KeyCode.A)) keyAPress.Execute();
-        if (Input.GetKeyDown(KeyCode.D)) keyDPress.Execute();
+        if (Input.GetKey(KeyCode.Space)) keySpacebarPress.Execute();
+        if (Input.GetKey(KeyCode.A)) keyAPress.Execute();
+        if (Input.GetKey(KeyCode.D)) keyDPress.Execute();
 
         if (Input.GetKeyUp(KeyCode.Space)) keySpacebarRelease.Execute();
         if (Input.GetKeyUp(KeyCode.A)) keyARelease.Execute();
