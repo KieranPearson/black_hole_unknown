@@ -7,6 +7,7 @@ public class Combat : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate;
+    [SerializeField] private GameObject projectiles;
 
     private float projectileSpawnOffset;
     private float lastFired;
@@ -47,7 +48,8 @@ public class Combat : MonoBehaviour
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += projectileSpawnOffset;
         projectilePrefab.transform.position = spawnPosition;
-        Instantiate(projectilePrefab);
+        GameObject newProjectile = Instantiate(projectilePrefab);
+        newProjectile.transform.parent = projectiles.transform;
     }
 
     public void FireOnce()
