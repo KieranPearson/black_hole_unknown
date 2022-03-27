@@ -9,6 +9,8 @@ public class EnemyEdgeDetector : MonoBehaviour
     private Vector2 boundary;
     private float spriteWidth;
 
+    public static event System.Action<bool> OnEnemyHitEdge;
+
     private void CalculateBoundary()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
@@ -33,10 +35,10 @@ public class EnemyEdgeDetector : MonoBehaviour
         Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
         if (newPosition.x <= (-boundary.x + spriteWidth))
         {
-            Debug.Log("left edge hit");
+            OnEnemyHitEdge?.Invoke(true);
         } else if (newPosition.x >= (boundary.x - spriteWidth))
         {
-            Debug.Log("right edge hit");
+            OnEnemyHitEdge?.Invoke(false);
         }
     }
 }
