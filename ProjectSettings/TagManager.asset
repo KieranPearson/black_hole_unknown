@@ -47,11 +47,14 @@ TagManager:
   - name: Background
     uniqueID: 518599535
     locked: 0
+  - name: PlayerProjectile
+    uniqueID: 1864463793
+    locked: 0
   - name: Asteroid
     uniqueID: 1775327259
     locked: 0
-  - name: PlayerProjectile
-    uniqueID: 1864463793
+  - name: Enemy
+    uniqueID: 2837339135
     locked: 0
   - name: Player
     uniqueID: 645672717
