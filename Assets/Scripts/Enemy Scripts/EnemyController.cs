@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIController : MonoBehaviour
+public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private GameObject enemyPrefab;
+
 
     void Start()
     {

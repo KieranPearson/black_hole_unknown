@@ -13,9 +13,13 @@ public class LevelManager : MonoBehaviour
 
     private GameObject[,] enemies;
 
-    private void CreateEnemy()
+    private GameObject CreateEnemy(Vector2 position)
     {
-
+        GameObject enemy = Instantiate(enemyPrefab);
+        enemy.transform.parent = enemiesTransform;
+        Vector2 newPosition = position;
+        enemy.transform.position = newPosition;
+        return enemy;
     }
     
     private void GenerateEnemyGrid()
@@ -23,8 +27,8 @@ public class LevelManager : MonoBehaviour
         enemies = new GameObject[enemyRows, enemyColumns];
         int rowLength = enemies.GetLength(0);
         int colLength = enemies.GetLength(1);
-        int colLength_ = colLength - 1;
         int rowLength_ = rowLength - 1;
+        int colLength_ = colLength - 1;
 
         float spawnPosY = -(rowLength_ * (enemyRowPadding)) / 2f;
         for (int row = 0; row < rowLength; row++)
@@ -32,10 +36,8 @@ public class LevelManager : MonoBehaviour
             float spawnPosX = -(colLength_ * (enemyColumnPadding)) / 2f;
             for (int column = 0; column < colLength; column++)
             {
-                GameObject enemy = Instantiate(enemyPrefab);
-                enemy.transform.parent = enemiesTransform;
-                Vector3 newPosition = new Vector3(spawnPosX, spawnPosY);
-                enemy.transform.position = newPosition;
+                GameObject enemy = CreateEnemy(new Vector2(spawnPosX, spawnPosY));
+                enemies[row, column] = enemy;
                 spawnPosX += enemyColumnPadding;
             }
             spawnPosY += enemyRowPadding;
@@ -45,5 +47,6 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         GenerateEnemyGrid();
+        enemiesTransform.position = new Vector3(0, 5, 0);
     }
 }

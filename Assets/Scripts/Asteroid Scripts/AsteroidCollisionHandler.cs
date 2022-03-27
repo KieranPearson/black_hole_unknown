@@ -21,11 +21,11 @@ public class AsteroidCollisionHandler : MonoBehaviour
         boxCollider = GetComponent<BoxCollider2D>();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collision.gameObject.CompareTag("PlayerProjectile"))
+        if (collider.gameObject.CompareTag("PlayerProjectile"))
         {
-            Destroy(collision.gameObject);
+            Destroy(collider.gameObject);
             TakeDamage();
         }
     }

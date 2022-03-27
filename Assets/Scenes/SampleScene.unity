@@ -2601,8 +2601,8 @@ MonoBehaviour:
   enemiesTransform: {fileID: 1599791850}
   enemyRows: 5
   enemyColumns: 11
-  enemyRowPadding: 1.75
-  enemyColumnPadding: 1.75
+  enemyRowPadding: 1.9
+  enemyColumnPadding: 1.9
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0
@@ -2803,7 +2803,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b1d7cf8fe9a5d41bc531f107144c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 6501029125428009736, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
 --- !u!1001 &1607482773
 PrefabInstance:
   m_ObjectHideFlags: 0
