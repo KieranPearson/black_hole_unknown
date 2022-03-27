@@ -7,6 +7,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private float boundaryLimit;
 
     private Rigidbody2D rb2;
     private Vector2 velocity;
@@ -24,6 +25,7 @@ public class Movement : MonoBehaviour
 
         Vector3 screenSize = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
         boundary = Camera.main.ScreenToWorldPoint(screenSize);
+        boundary.x = Mathf.Clamp(boundary.x, -boundaryLimit, boundaryLimit);
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }
 
