@@ -11,22 +11,29 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D rb2;
     private Vector2 velocity;
-    private SpriteRenderer spriteRenderer;
 
     private Vector2 boundary;
     private float spriteWidth;
 
     private Vector2 direction;
 
-    void Start()
+    private void CalculateBoundary()
     {
-        rb2 = gameObject.GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
-
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         Vector3 screenSize = new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z);
         boundary = Camera.main.ScreenToWorldPoint(screenSize);
         boundary.x = Mathf.Clamp(boundary.x, -boundaryLimit, boundaryLimit);
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
+    }
+
+    void Awake()
+    {
+        rb2 = gameObject.GetComponent<Rigidbody2D>();
+    }
+
+    void Start()
+    {
+        CalculateBoundary();
     }
 
     public void MoveLeft()
