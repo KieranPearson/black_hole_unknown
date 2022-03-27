@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyColumnPadding;
 
     private GameObject[,] enemies;
+    private List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
 
     private GameObject CreateEnemy(Vector2 position)
     {
@@ -24,23 +25,26 @@ public class LevelManager : MonoBehaviour
     
     private void GenerateEnemyGrid()
     {
-        enemies = new GameObject[enemyRows, enemyColumns];
-        int rowLength = enemies.GetLength(0);
-        int colLength = enemies.GetLength(1);
+        enemies = new GameObject[enemyColumns, enemyRows];
+        int columnLength = enemies.GetLength(0);
+        int rowLength = enemies.GetLength(1);
+        int columnLength_ = columnLength - 1;
         int rowLength_ = rowLength - 1;
-        int colLength_ = colLength - 1;
 
-        float spawnPosY = -(rowLength_ * (enemyRowPadding)) / 2f;
-        for (int row = 0; row < rowLength; row++)
+        float spawnPosX = -(columnLength_ * (enemyColumnPadding)) / 2f;
+        for (int column = 0; column < columnLength; column++)
         {
-            float spawnPosX = -(colLength_ * (enemyColumnPadding)) / 2f;
-            for (int column = 0; column < colLength; column++)
+            List<GameObject> enemiesInColumn = new List<GameObject>();
+            float spawnPosY = -(rowLength_ * (enemyRowPadding)) / 2f;
+            for (int row = 0; row < rowLength; row++)
             {
                 GameObject enemy = CreateEnemy(new Vector2(spawnPosX, spawnPosY));
-                enemies[row, column] = enemy;
-                spawnPosX += enemyColumnPadding;
+                enemies[column, row] = enemy;
+                enemiesInColumn.Add(enemy);
+                spawnPosY += enemyRowPadding;
             }
-            spawnPosY += enemyRowPadding;
+            aliveEnemies.Add(enemiesInColumn);
+            spawnPosX += enemyColumnPadding;
         }
     }
 
