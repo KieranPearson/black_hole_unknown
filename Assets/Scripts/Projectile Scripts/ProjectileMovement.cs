@@ -6,12 +6,22 @@ using UnityEngine;
 public class ProjectileMovement : MonoBehaviour
 {
     [SerializeField] private float speed;
+    [SerializeField] private bool movesDown;
 
     Rigidbody2D rb2;
+
+    public bool getMovesDown()
+    {
+        return movesDown;
+    }
 
     void Start()
     {
         rb2 = GetComponent<Rigidbody2D>();
+        if (movesDown)
+        {
+            speed = -speed;
+        }
     }
 
     void FixedUpdate()

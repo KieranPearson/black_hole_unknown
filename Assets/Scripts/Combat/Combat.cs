@@ -7,8 +7,9 @@ public class Combat : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate;
-    [SerializeField] private GameObject projectiles;
+    [SerializeField] private Vector2 fireDirection;
 
+    private GameObject projectiles;
     private float projectileSpawnOffset;
     private float lastFired;
 
@@ -18,13 +19,18 @@ public class Combat : MonoBehaviour
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (projectilePrefab == null) return;
-        if (projectilePrefab.GetComponent<Rigidbody2D>().gravityScale > 0)
+        if (projectilePrefab.GetComponent<ProjectileMovement>().getMovesDown())
         {
-            projectileSpawnOffset = -(spriteRenderer.sprite.bounds.size.x / 2) - 0.6f;
+            projectileSpawnOffset = -(spriteRenderer.sprite.bounds.size.y / 2) - 0.6f;
         } else
         {
-            projectileSpawnOffset = (spriteRenderer.sprite.bounds.size.x / 2) + 0.6f;
+            projectileSpawnOffset = (spriteRenderer.sprite.bounds.size.y / 2) + 0.6f;
         }
+    }
+
+    void Awake()
+    {
+        projectiles = GameObject.FindWithTag("Projectiles");
     }
 
     void Start()
