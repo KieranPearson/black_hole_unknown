@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 6906831850324299300}
   - component: {fileID: 6542765838632108541}
   - component: {fileID: -3947062780682599927}
+  - component: {fileID: -4252873566828083705}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Enemy
@@ -152,3 +153,15 @@ MonoBehaviour:
   projectilePrefab: {fileID: 3265392371253117475, guid: 5d8149f63cf12d34fa6260a57746e0b6, type: 3}
   fireRate: 1
   fireDirection: {x: 0, y: 0}
+--- !u!114 &-4252873566828083705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6501029125428009736}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc9266e359da334495299bfd83f495f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

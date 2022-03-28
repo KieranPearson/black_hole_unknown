@@ -11,8 +11,13 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
 
-    private GameObject[,] enemies;
-    private List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
+    private static GameObject[,] enemies;
+    private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
+
+    public static List<List<GameObject>> GetAliveEnemies()
+    {
+        return aliveEnemies;
+    }
 
     private GameObject CreateEnemy(Vector2 position)
     {

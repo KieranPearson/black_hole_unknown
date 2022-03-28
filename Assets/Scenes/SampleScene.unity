@@ -815,7 +815,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3265392371253117475, guid: b6dd30e3c05317c40bf0d6ce90786864, type: 3}
   fireRate: 0.75
-  projectiles: {fileID: 340729584}
+  fireDirection: {x: 0, y: 0}
 --- !u!1001 &294517732
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2806,6 +2806,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b1d7cf8fe9a5d41bc531f107144c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shootRate: 2
+  maxEnemiesShootAtOnce: 4
 --- !u!114 &1599791852
 MonoBehaviour:
   m_ObjectHideFlags: 0

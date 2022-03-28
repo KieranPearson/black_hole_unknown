@@ -23,7 +23,12 @@ public class AsteroidCollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("PlayerProjectile"))
+        GameObject colliderObj = collider.gameObject;
+        if (colliderObj.CompareTag("PlayerProjectile"))
+        {
+            Destroy(collider.gameObject);
+            TakeDamage();
+        } else if (colliderObj.CompareTag("EnemyProjectile"))
         {
             Destroy(collider.gameObject);
             TakeDamage();
