@@ -13,10 +13,29 @@ public class LevelManager : MonoBehaviour
 
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
+    private static int enemiesRemaining;
 
     public static List<List<GameObject>> GetAliveEnemies()
     {
         return aliveEnemies;
+    }
+
+    private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
+    {
+        enemiesRemaining--;
+        for (int column = 0; column < aliveEnemies.Count; column++)
+        {
+            for (int i = 0; i < aliveEnemies[column].Count; i++)
+            {
+                if (aliveEnemies[column][i] != enemy) continue;
+                aliveEnemies[column].RemoveAt(i);
+                if (aliveEnemies[column].Count == 0)
+                {
+                    aliveEnemies.RemoveAt(column);
+                }
+                break;
+            }
+        }
     }
 
     private GameObject CreateEnemy(Vector2 position)
@@ -47,10 +66,21 @@ public class LevelManager : MonoBehaviour
                 enemies[column, row] = enemy;
                 enemiesInColumn.Add(enemy);
                 spawnPosY += enemyRowPadding;
+                enemiesRemaining++;
             }
             aliveEnemies.Add(enemiesInColumn);
             spawnPosX += enemyColumnPadding;
         }
+    }
+
+    void OnEnable()
+    {
+        EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
+    }
+
+    void OnDisable()
+    {
+        EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
     void Start()
