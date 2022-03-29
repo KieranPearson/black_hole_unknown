@@ -2505,6 +2505,7 @@ GameObject:
   - component: {fileID: 339830042}
   - component: {fileID: 339830041}
   - component: {fileID: 339830040}
+  - component: {fileID: 339830044}
   m_Layer: 5
   m_Name: ProfileSelector
   m_TagString: Untagged
@@ -2595,6 +2596,18 @@ RectTransform:
   m_AnchoredPosition: {x: 5.2749214, y: 6.1824327}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &339830044
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 339830039}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &399047035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,6 +3290,7 @@ GameObject:
   - component: {fileID: 493827268}
   - component: {fileID: 493827267}
   - component: {fileID: 493827266}
+  - component: {fileID: 493827270}
   m_Layer: 5
   m_Name: Achievements
   m_TagString: Untagged
@@ -3367,6 +3381,18 @@ RectTransform:
   m_AnchoredPosition: {x: 2.6374607, y: 3.0912163}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &493827270
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493827265}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &518149852
 GameObject:
   m_ObjectHideFlags: 0
@@ -4971,6 +4997,7 @@ GameObject:
   - component: {fileID: 715896656}
   - component: {fileID: 715896655}
   - component: {fileID: 715896654}
+  - component: {fileID: 715896658}
   m_Layer: 5
   m_Name: Settings
   m_TagString: Untagged
@@ -5062,6 +5089,18 @@ RectTransform:
   m_AnchoredPosition: {x: 2.6374607, y: 3.0912163}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &715896658
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 715896653}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &732462604
 GameObject:
   m_ObjectHideFlags: 0
@@ -5389,6 +5428,7 @@ GameObject:
   - component: {fileID: 776159417}
   - component: {fileID: 776159416}
   - component: {fileID: 776159415}
+  - component: {fileID: 776159419}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -5479,6 +5519,18 @@ RectTransform:
   m_AnchoredPosition: {x: 2.6374607, y: 3.0912163}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &776159419
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776159414}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &780858260
 GameObject:
   m_ObjectHideFlags: 0
@@ -6685,6 +6737,7 @@ MonoBehaviour:
   achievements: {fileID: 493827265}
   settings: {fileID: 715896653}
   credits: {fileID: 776159414}
+  transitionSpeed: 2
 --- !u!1 &1147674408
 GameObject:
   m_ObjectHideFlags: 0
