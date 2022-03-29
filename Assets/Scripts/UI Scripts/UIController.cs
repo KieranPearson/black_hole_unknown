@@ -42,6 +42,7 @@ public class UIController : MonoBehaviour
         activeMenuGroup = mainMenuGroup;
         activeTransition = Transition.None;
         transitionTo = null;
+        GetMenuGroupGameObject(activeMenuGroup).SetActive(true);
     }
 
     private void DisplayMenu(CanvasGroup canvasGroup)
@@ -52,6 +53,11 @@ public class UIController : MonoBehaviour
             transitionTo = canvasGroup;
             activeTransition = Transition.Out;
         }
+    }
+
+    public void DisplayMainMenu()
+    {
+        DisplayMenu(mainMenuGroup);
     }
 
     public void DisplayProfileSelector()
