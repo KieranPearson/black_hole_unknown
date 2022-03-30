@@ -83,6 +83,7 @@ public class SettingsManager : MonoBehaviour
 
     public void RequestResolutionChange(int width, int height)
     {
+        if (currentResolution.width == width && currentResolution.height == height) return;
         Resolution? requestedResolution = GetResolutionByWidthHeight(width, height);
         if (requestedResolution == null) return;
         currentResolution = (Resolution)requestedResolution;
