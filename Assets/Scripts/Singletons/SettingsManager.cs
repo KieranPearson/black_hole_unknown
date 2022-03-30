@@ -8,7 +8,7 @@ public class SettingsManager : MonoBehaviour
 
     [SerializeField] private int defaultResolutionWidth;
     [SerializeField] private int defaultResolutionHeight;
-    [SerializeField] private int defaultResolutionRefreshRate;
+    [SerializeField] private int defaultRefreshRate;
     [SerializeField] private bool defaultFullscreen;
     [SerializeField] private float defaultMusicVolume;
     [SerializeField] private float defaultSoundEffectsVolume;
@@ -18,11 +18,13 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private string isFullscreenPrefKey;
     [SerializeField] private string musicVolumePrefKey;
     [SerializeField] private string soundEffectsVolumePrefKey;
+    [SerializeField] private string refreshRatePrefKey;
 
     public static event System.Action OnSettingsLoaded;
 
     private Resolution[] resolutions; // width, height, refresh_rate
     private Resolution currentResolution;
+    private int currentRefreshRate;
     private bool isFullscreen;
     private float musicVolume;
     private float soundEffectsVolume;
@@ -45,7 +47,7 @@ public class SettingsManager : MonoBehaviour
         currentResolution = new Resolution();
         currentResolution.width = defaultResolutionWidth;
         currentResolution.height = defaultResolutionHeight;
-        currentResolution.refreshRate = defaultResolutionRefreshRate;
+        currentResolution.refreshRate = defaultRefreshRate;
     }
 
     private Resolution? GetResolutionByWidthHeight(int width, int height)
@@ -83,12 +85,13 @@ public class SettingsManager : MonoBehaviour
         return resolutions;
     }
 
-    public void RequestResolutionChange(int width, int height)
+    public void RequestResolutionChange(int width, int height, int refreshRate)
     {
         if (currentResolution.width == width && currentResolution.height == height) return;
         Resolution? requestedResolution = GetResolutionByWidthHeight(width, height);
         if (requestedResolution == null) return;
         currentResolution = (Resolution)requestedResolution;
+        currentRefreshRate = refreshRate;
         UpdateDisplay();
     }
 
@@ -121,7 +124,7 @@ public class SettingsManager : MonoBehaviour
 
     private void UpdateDisplay()
     {
-        Screen.SetResolution(currentResolution.width, currentResolution.height, isFullscreen);
+        Screen.SetResolution(currentResolution.width, currentResolution.height, isFullscreen, currentRefreshRate);
     }
 
     private void LoadMusicVolume()
@@ -166,8 +169,18 @@ public class SettingsManager : MonoBehaviour
         return currentResolution;
     }
 
+    private void LoadRefreshRate()
+    {
+        currentRefreshRate = defaultRefreshRate;
+        if (PlayerPrefs.HasKey(refreshRatePrefKey))
+        {
+            currentRefreshRate = PlayerPrefs.GetInt(refreshRatePrefKey);
+        }
+    }
+
     private void Start()
     {
+        LoadRefreshRate();
         LoadResolution();
         LoadFullscreen();
         UpdateDisplay();

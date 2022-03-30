@@ -16,13 +16,13 @@ public class SettingsHandler : MonoBehaviour
         string[] resolutionValues = resolutionDropdown.value.ToString().Split('x');
         if (resolutionValues.Length == 2)
         {
-            int resWidth;
-            int resHeight;
-            int.TryParse(resolutionValues[0], out resWidth);
-            int.TryParse(resolutionValues[1], out resHeight);
+            int resWidth = int.Parse(resolutionValues[0]);
+            string[] heightAndRefreshRate = resolutionValues[1].Split('@');
+            int resHeight = int.Parse(heightAndRefreshRate[0]);
+            int refreshRate = int.Parse(heightAndRefreshRate[1]);
             if (resWidth != 0 && resHeight != 0)
             {
-                SettingsManager.instance.RequestResolutionChange(resWidth, resHeight);
+                SettingsManager.instance.RequestResolutionChange(resWidth, resHeight, refreshRate);
             }
         }
         SettingsManager.instance.RequestFullscreenChange(isFullscreenToggle.isOn);
@@ -33,7 +33,7 @@ public class SettingsHandler : MonoBehaviour
         Resolution[] resolutions = SettingsManager.instance.GetResolutions();
         for (int i = 0; i < resolutions.Length; i++)
         {
-            string resolutionText = resolutions[i].width + "x" + resolutions[i].height;
+            string resolutionText = resolutions[i].width + "x" + resolutions[i].height + "@" + resolutions[i].refreshRate;
             resolutionDropdown.options.Add(new TMP_Dropdown.OptionData() { text = resolutionText });
         }
         Resolution currentResolution = SettingsManager.instance.GetCurrentResolution();

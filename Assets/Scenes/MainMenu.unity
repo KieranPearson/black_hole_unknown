@@ -1518,7 +1518,7 @@ PrefabInstance:
     - target: {fileID: 4861011091941000325, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1090070353}
     - target: {fileID: 4861011091941000325, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -4519,7 +4519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   defaultResolutionWidth: 1280
   defaultResolutionHeight: 720
-  defaultResolutionRefreshRate: 60
+  defaultRefreshRate: 0
   defaultFullscreen: 1
   defaultMusicVolume: 0.5
   defaultSoundEffectsVolume: 0.5
@@ -4528,6 +4528,7 @@ MonoBehaviour:
   isFullscreenPrefKey: isFullscreen
   musicVolumePrefKey: musicVolume
   soundEffectsVolumePrefKey: soundEffectsVolume
+  refreshRatePrefKey: refreshRate
 --- !u!4 &640656483
 Transform:
   m_ObjectHideFlags: 0
