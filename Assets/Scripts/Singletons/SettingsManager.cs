@@ -51,11 +51,12 @@ public class SettingsManager : MonoBehaviour
         currentResolution.refreshRate = defaultRefreshRate;
     }
 
-    private Resolution? GetResolutionByWidthHeight(int width, int height)
+    private Resolution? GetResolutionByWidthHeight(int width, int height, int refreshRate)
     {
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].width == width && resolutions[i].height == height)
+            if (resolutions[i].width == width && resolutions[i].height == height && 
+                resolutions[i].refreshRate == refreshRate)
             {
                 return resolutions[i];
             }
@@ -75,7 +76,7 @@ public class SettingsManager : MonoBehaviour
         {
             int loadedWidth = PlayerPrefs.GetInt(resolutionWidthPrefKey);
             int loadedHeight = PlayerPrefs.GetInt(resolutionHeightPrefKey);
-            Resolution? loadedResolution = GetResolutionByWidthHeight(loadedWidth, loadedHeight);
+            Resolution? loadedResolution = GetResolutionByWidthHeight(loadedWidth, loadedHeight, currentRefreshRate);
             if (loadedResolution == null) return;
             currentResolution = (Resolution)loadedResolution;
         }
@@ -88,7 +89,7 @@ public class SettingsManager : MonoBehaviour
 
     public void RequestResolutionChange(int width, int height, int refreshRate)
     {
-        Resolution? requestedResolution = GetResolutionByWidthHeight(width, height);
+        Resolution? requestedResolution = GetResolutionByWidthHeight(width, height, refreshRate);
         if (requestedResolution == null) return;
         currentResolution = (Resolution)requestedResolution;
         currentRefreshRate = refreshRate;
