@@ -41,7 +41,8 @@ public class SettingsHandler : MonoBehaviour
             resolutionDropdown.options.Add(new TMP_Dropdown.OptionData() { text = resolutionText });
         }
         Resolution currentResolution = SettingsManager.instance.GetCurrentResolution();
-        string currentResolutionText = currentResolution.width + "x" + currentResolution.height;
+        string currentResolutionText = currentResolution.width + "x" + currentResolution.height + "@" + 
+            currentResolution.refreshRate;
         resolutionDropdown.value = resolutionDropdown.options.FindIndex(option => option.text == currentResolutionText);
     }
 
