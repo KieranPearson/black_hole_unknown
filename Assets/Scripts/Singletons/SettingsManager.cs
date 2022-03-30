@@ -10,14 +10,20 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private int defaultResolutionHeight;
     [SerializeField] private int defaultResolutionRefreshRate;
     [SerializeField] private bool defaultFullscreen;
+    [SerializeField] private float defaultMusicVolume;
+    [SerializeField] private float defaultSoundEffectsVolume;
 
     [SerializeField] private string resolutionWidthPrefKey;
     [SerializeField] private string resolutionHeightPrefKey;
     [SerializeField] private string isFullscreenPrefKey;
+    [SerializeField] private string musicVolumePrefKey;
+    [SerializeField] private string soundEffectsVolumePrefKey;
 
     private Resolution[] resolutions; // width, height, refresh_rate
     private Resolution currentResolution;
     private bool isFullscreen;
+    private float musicVolume;
+    private float soundEffectsVolume;
 
     private void Awake()
     {
@@ -98,9 +104,58 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    public bool IsFullscreen()
+    {
+        return isFullscreen;
+    }
+
+    public void RequestFullscreenChange(bool isFullscreen)
+    {
+        if (this.isFullscreen == isFullscreen) return;
+        this.isFullscreen = isFullscreen;
+        UpdateDisplay();
+    }
+
     private void UpdateDisplay()
     {
         Screen.SetResolution(currentResolution.width, currentResolution.height, isFullscreen);
+    }
+
+    private void LoadMusicVolume()
+    {
+        musicVolume = defaultMusicVolume;
+        if (PlayerPrefs.HasKey(musicVolumePrefKey))
+        {
+            float loadedMusicVolume = PlayerPrefs.GetInt(musicVolumePrefKey);
+            if (loadedMusicVolume > 1 || loadedMusicVolume < 0) return;
+            musicVolume = loadedMusicVolume;
+        }
+    }
+
+    public float GetMusicVolume()
+    {
+        return musicVolume;
+    }
+
+    private void LoadSoundEffectsVolume()
+    {
+        soundEffectsVolume = defaultSoundEffectsVolume;
+        if (PlayerPrefs.HasKey(soundEffectsVolumePrefKey))
+        {
+            float loadedSoundEffectsVolume = PlayerPrefs.GetInt(soundEffectsVolumePrefKey);
+            if (loadedSoundEffectsVolume > 1 || loadedSoundEffectsVolume < 0) return;
+            soundEffectsVolume = loadedSoundEffectsVolume;
+        }
+    }
+
+    public float GetSoundEffectsVolume()
+    {
+        return soundEffectsVolume;
+    }
+
+    private void UpdateAudio()
+    {
+        // update the music & sound effects audio volume
     }
 
     private void Start()
@@ -108,5 +163,8 @@ public class SettingsManager : MonoBehaviour
         LoadResolution();
         LoadFullscreen();
         UpdateDisplay();
+        LoadMusicVolume();
+        LoadSoundEffectsVolume();
+        UpdateAudio();
     }
 }

@@ -4503,9 +4503,13 @@ MonoBehaviour:
   defaultResolutionHeight: 720
   defaultResolutionRefreshRate: 60
   defaultFullscreen: 1
+  defaultMusicVolume: 0.5
+  defaultSoundEffectsVolume: 0.5
   resolutionWidthPrefKey: resolutionWidth
   resolutionHeightPrefKey: resolutionHeight
   isFullscreenPrefKey: isFullscreen
+  musicVolumePrefKey: musicVolume
+  soundEffectsVolumePrefKey: soundEffectsVolume
 --- !u!4 &640656483
 Transform:
   m_ObjectHideFlags: 0
