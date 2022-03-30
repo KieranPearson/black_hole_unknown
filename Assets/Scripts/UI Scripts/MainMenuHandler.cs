@@ -8,7 +8,7 @@ public class MainMenuHandler : MonoBehaviour
 
     private void Awake()
     {
-        uiController = transform.parent.gameObject.GetComponent<UIController>();
+        uiController = GetComponent<UIController>();
     }
 
     public void PlayButtonClicked()
