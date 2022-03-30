@@ -19,6 +19,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private string musicVolumePrefKey;
     [SerializeField] private string soundEffectsVolumePrefKey;
 
+    public static event System.Action OnSettingsLoaded;
+
     private Resolution[] resolutions; // width, height, refresh_rate
     private Resolution currentResolution;
     private bool isFullscreen;
@@ -159,6 +161,11 @@ public class SettingsManager : MonoBehaviour
         // update the music & sound effects audio volume
     }
 
+    public Resolution GetCurrentResolution()
+    {
+        return currentResolution;
+    }
+
     private void Start()
     {
         LoadResolution();
@@ -167,5 +174,6 @@ public class SettingsManager : MonoBehaviour
         LoadMusicVolume();
         LoadSoundEffectsVolume();
         UpdateAudio();
+        OnSettingsLoaded?.Invoke();
     }
 }
