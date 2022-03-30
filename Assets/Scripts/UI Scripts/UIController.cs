@@ -39,10 +39,10 @@ public class UIController : MonoBehaviour
 
     private void Start()
     {
-        activeMenuGroup = mainMenuGroup;
-        activeTransition = Transition.None;
-        transitionTo = null;
-        GetMenuGroupGameObject(activeMenuGroup).SetActive(true);
+        mainMenuGroup.alpha = 0;
+        mainMenu.SetActive(true);
+        transitionTo = mainMenuGroup;
+        activeTransition = Transition.In;
     }
 
     private void DisplayMenu(CanvasGroup canvasGroup)
