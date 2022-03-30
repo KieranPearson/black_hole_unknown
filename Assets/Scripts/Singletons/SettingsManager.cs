@@ -28,6 +28,7 @@ public class SettingsManager : MonoBehaviour
     private bool isFullscreen;
     private float musicVolume;
     private float soundEffectsVolume;
+    private bool changesMade;
 
     private void Awake()
     {
@@ -92,6 +93,7 @@ public class SettingsManager : MonoBehaviour
         currentResolution = (Resolution)requestedResolution;
         currentRefreshRate = refreshRate;
         UpdateDisplay();
+        changesMade = true;
     }
 
     private void LoadFullscreen()
@@ -119,6 +121,7 @@ public class SettingsManager : MonoBehaviour
         if (this.isFullscreen == isFullscreen) return;
         this.isFullscreen = isFullscreen;
         UpdateDisplay();
+        changesMade = true;
     }
 
     private void UpdateDisplay()
@@ -187,5 +190,21 @@ public class SettingsManager : MonoBehaviour
         LoadSoundEffectsVolume();
         UpdateAudio();
         OnSettingsLoaded?.Invoke();
+    }
+
+    private void SaveSettings()
+    {
+        if (!changesMade) return;
+        PlayerPrefs.SetInt(resolutionWidthPrefKey, currentResolution.width);
+        PlayerPrefs.SetInt(resolutionHeightPrefKey, currentResolution.height);
+        PlayerPrefs.SetInt(refreshRatePrefKey, currentRefreshRate);
+        PlayerPrefs.SetInt(isFullscreenPrefKey, isFullscreen ? 1 : 0);
+        PlayerPrefs.SetFloat(musicVolumePrefKey, musicVolume);
+        PlayerPrefs.SetFloat(soundEffectsVolumePrefKey, soundEffectsVolume);
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveSettings();
     }
 }
