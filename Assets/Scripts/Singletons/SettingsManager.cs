@@ -87,9 +87,9 @@ public class SettingsManager : MonoBehaviour
 
     public void RequestResolutionChange(int width, int height, int refreshRate)
     {
-        if (currentResolution.width == width && currentResolution.height == height) return;
         Resolution? requestedResolution = GetResolutionByWidthHeight(width, height);
         if (requestedResolution == null) return;
+        Debug.Log("aaaaa");
         currentResolution = (Resolution)requestedResolution;
         currentRefreshRate = refreshRate;
         UpdateDisplay();

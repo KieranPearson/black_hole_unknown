@@ -13,13 +13,17 @@ public class SettingsHandler : MonoBehaviour
 
     public void ApplyButtonClicked()
     {
-        string[] resolutionValues = resolutionDropdown.value.ToString().Split('x');
+        string selected = resolutionDropdown.options[resolutionDropdown.value].text;
+        string[] resolutionValues = selected.Split('x');
         if (resolutionValues.Length == 2)
         {
-            int resWidth = int.Parse(resolutionValues[0]);
+            int resWidth;
+            int resHeight;
+            int refreshRate;
+            int.TryParse(resolutionValues[0], out resWidth);
             string[] heightAndRefreshRate = resolutionValues[1].Split('@');
-            int resHeight = int.Parse(heightAndRefreshRate[0]);
-            int refreshRate = int.Parse(heightAndRefreshRate[1]);
+            int.TryParse(heightAndRefreshRate[0], out resHeight);
+            int.TryParse(heightAndRefreshRate[1], out refreshRate);
             if (resWidth != 0 && resHeight != 0)
             {
                 SettingsManager.instance.RequestResolutionChange(resWidth, resHeight, refreshRate);
