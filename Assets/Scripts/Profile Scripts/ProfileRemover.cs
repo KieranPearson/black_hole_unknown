@@ -8,9 +8,16 @@ public static class ProfileRemover
 {
     public static void DeleteProfile(Profile profile)
     {
-        if (File.Exists(GetPath(profile.GetName())))
+        try
         {
-            File.Delete(GetPath(profile.GetName()));
+            if (File.Exists(GetPath(profile.GetName())))
+            {
+                File.Delete(GetPath(profile.GetName()));
+            }
+        }
+        catch (Exception)
+        {
+            return;
         }
     }
 
