@@ -6,8 +6,11 @@ public class ProfileManager : MonoBehaviour
 {
     public static ProfileManager instance { get; private set; }
 
+    public static event System.Action OnProfilesLoaded;
+
     private List<Profile> profiles;
     private List<Profile> updatedProfiles;
+    private Profile activeProfile;
 
     private void Awake()
     {
@@ -26,6 +29,7 @@ public class ProfileManager : MonoBehaviour
     {
         profiles = ProfilesLoader.LoadProfiles();
         updatedProfiles = new List<Profile>();
+        OnProfilesLoaded?.Invoke();
     }
 
     private void SaveProfiles()
@@ -34,6 +38,11 @@ public class ProfileManager : MonoBehaviour
         {
             ProfileSaver.SaveProfile(updatedProfiles[i]);
         }
+    }
+
+    public List<Profile> GetProfiles()
+    {
+        return profiles;
     }
 
     private void Start()

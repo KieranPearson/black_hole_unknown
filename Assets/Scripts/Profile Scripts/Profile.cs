@@ -9,4 +9,19 @@ public class Profile
     {
         return name;
     }
+
+    public int GetHighscore()
+    {
+        return highscore;
+    }
+
+    public void SetName(string name)
+    {
+        this.name = name;
+    }
+
+    public void SetHighscore(int highscore)
+    {
+        this.highscore = highscore;
+    }
 }
