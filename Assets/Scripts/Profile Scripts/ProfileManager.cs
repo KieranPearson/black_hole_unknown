@@ -6,7 +6,8 @@ public class ProfileManager : MonoBehaviour
 {
     public static ProfileManager instance { get; private set; }
 
-    private static List<Profile> profiles;
+    private List<Profile> profiles;
+    private List<Profile> updatedProfiles;
 
     private void Awake()
     {
@@ -24,6 +25,14 @@ public class ProfileManager : MonoBehaviour
     private void LoadProfiles()
     {
         profiles = ProfilesLoader.LoadProfiles();
+    }
+
+    private void SaveProfiles()
+    {
+        for (int i = 0; i < updatedProfiles.Count; i++)
+        {
+
+        }
     }
 
     private void Start()
