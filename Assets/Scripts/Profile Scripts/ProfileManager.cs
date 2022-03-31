@@ -8,8 +8,6 @@ public class ProfileManager : MonoBehaviour
 
     private static List<Profile> profiles;
 
-    [SerializeField] private string profilesFileName;
-
     private void Awake()
     {
         if (instance)
@@ -25,8 +23,7 @@ public class ProfileManager : MonoBehaviour
 
     private void LoadProfiles()
     {
-        profiles = new List<Profile>();
-
+        profiles = ProfilesLoader.LoadProfiles();
     }
 
     private void Start()
