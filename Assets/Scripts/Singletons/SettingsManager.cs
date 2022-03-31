@@ -202,6 +202,7 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetInt(isFullscreenPrefKey, isFullscreen ? 1 : 0);
         PlayerPrefs.SetFloat(musicVolumePrefKey, musicVolume);
         PlayerPrefs.SetFloat(soundEffectsVolumePrefKey, soundEffectsVolume);
+        PlayerPrefs.Save();
     }
 
     private void OnApplicationQuit()

@@ -27,7 +27,6 @@ public class SettingsHandler : MonoBehaviour
             if (resWidth != 0 && resHeight != 0)
             {
                 SettingsManager.instance.RequestResolutionChange(resWidth, resHeight, refreshRate);
-                Debug.Log(refreshRate);
             }
         }
         SettingsManager.instance.RequestFullscreenChange(isFullscreenToggle.isOn);
