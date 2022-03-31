@@ -6493,7 +6493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8090de4135c43648b0272b342c9c7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 3982265686066156731, guid: 87119a94031707a40a480e21aecde10d, type: 3}
+  slotPrefab: {fileID: 6700140359801608834, guid: 958d4686d1e31d44c839f15d9d9d361c, type: 3}
   createSlotPrefab: {fileID: 3529047423431579941, guid: 518226b5f7e8f4740bb219e3cbea9e43, type: 3}
   content: {fileID: 73339161}
 --- !u!1 &1147674408
@@ -6533,7 +6533,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: -17}
+  m_SizeDelta: {x: 20, y: -1}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1147674410
 MonoBehaviour:
@@ -6597,7 +6597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.18431373, g: 0.38431376, b: 0.46274513, a: 1}
+  m_Color: {r: 0, g: 0.1882353, b: 0.2627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -8023,7 +8023,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 0.9999995}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -8040,7 +8040,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.18823531, b: 0.2627451, a: 1}
+  m_Color: {r: 0.18431373, g: 0.38431373, b: 0.4627451, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

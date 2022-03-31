@@ -9,6 +9,7 @@ public class ProfileSlot : MonoBehaviour
     [SerializeField] private TMP_Text highscoreText;
 
     public static event System.Action<string> OnProfileSelected;
+    public static event System.Action<string> OnProfileDeleted;
 
     private void Awake()
     {
@@ -29,5 +30,11 @@ public class ProfileSlot : MonoBehaviour
     public void SelectProfileButtonClicked()
     {
         OnProfileSelected?.Invoke(nameText.text);
+    }
+
+    public void DeleteProfileButtonClicked()
+    {
+        OnProfileDeleted?.Invoke(nameText.text);
+        Destroy(gameObject);
     }
 }

@@ -10,6 +10,7 @@ public class ProfileManager : MonoBehaviour
 
     private List<Profile> profiles;
     private List<Profile> profilesToSave;
+    private List<Profile> profilesToDelete;
     private Profile activeProfile;
 
     private void Awake()
@@ -29,6 +30,7 @@ public class ProfileManager : MonoBehaviour
     {
         profiles = ProfilesLoader.LoadProfiles();
         profilesToSave = new List<Profile>();
+        profilesToDelete = new List<Profile>();
         OnProfilesLoaded?.Invoke();
     }
 
@@ -37,6 +39,14 @@ public class ProfileManager : MonoBehaviour
         for (int i = 0; i < profilesToSave.Count; i++)
         {
             ProfileSaver.SaveProfile(profilesToSave[i]);
+        }
+    }
+
+    private void DeleteProfiles()
+    {
+        for (int i = 0; i < profilesToDelete.Count; i++)
+        {
+            ProfileRemover.DeleteProfile(profilesToDelete[i]);
         }
     }
 
@@ -87,16 +97,36 @@ public class ProfileManager : MonoBehaviour
         // start game
     }
 
+    private void AddProfileToDelete(Profile profile)
+    {
+        if (profilesToDelete.Contains(profile)) return;
+        profilesToDelete.Add(profile);
+    }
+
+    private void ProfileSlot_OnProfileDeleted(string profileName)
+    {
+        Profile profileToDelete = GetProfileByName(profileName);
+        if (profileToDelete == null) return;
+        if (IsAProfileToSave(profileToDelete))
+        {
+            profilesToSave.Remove(profileToDelete);
+        }
+        profiles.Remove(profileToDelete);
+        AddProfileToDelete(profileToDelete);
+    }
+
     void OnEnable()
     {
         ProfileSlotNew.OnNewProfile += ProfileSlotNew_OnNewProfile;
         ProfileSlot.OnProfileSelected += ProfileSlot_OnProfileSelected;
+        ProfileSlot.OnProfileDeleted += ProfileSlot_OnProfileDeleted;
     }
 
     void OnDisable()
     {
         ProfileSlotNew.OnNewProfile -= ProfileSlotNew_OnNewProfile;
         ProfileSlot.OnProfileSelected -= ProfileSlot_OnProfileSelected;
+        ProfileSlot.OnProfileDeleted -= ProfileSlot_OnProfileDeleted;
     }
 
     private void Start()
@@ -107,5 +137,6 @@ public class ProfileManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveProfiles();
+        DeleteProfiles();
     }
 }
