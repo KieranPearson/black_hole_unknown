@@ -25,18 +25,24 @@ public class ProfileManager : MonoBehaviour
     private void LoadProfiles()
     {
         profiles = ProfilesLoader.LoadProfiles();
+        updatedProfiles = new List<Profile>();
     }
 
     private void SaveProfiles()
     {
         for (int i = 0; i < updatedProfiles.Count; i++)
         {
-
+            ProfileSaver.SaveProfile(updatedProfiles[i]);
         }
     }
 
     private void Start()
     {
         LoadProfiles();
+    }
+
+    private void OnApplicationQuit()
+    {
+        SaveProfiles();
     }
 }
