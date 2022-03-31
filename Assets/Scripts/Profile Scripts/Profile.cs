@@ -5,6 +5,12 @@ public class Profile
     private string name;
     private int highscore;
 
+    public Profile(string name)
+    {
+        this.name = name;
+        highscore = 0;
+    }
+
     public string GetName()
     {
         return name;
