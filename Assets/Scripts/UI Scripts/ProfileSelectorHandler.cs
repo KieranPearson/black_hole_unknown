@@ -8,6 +8,8 @@ public class ProfileSelectorHandler : MonoBehaviour
     [SerializeField] private GameObject createSlotPrefab;
     [SerializeField] private Transform content;
 
+    private bool hasPopulatedProfilesList;
+
     private void PopulateProfilesList()
     {
         List<Profile> profiles = ProfileManager.instance.GetProfiles();
@@ -23,6 +25,7 @@ public class ProfileSelectorHandler : MonoBehaviour
         GameObject newProfileSlot = Instantiate(createSlotPrefab);
         newProfileSlot.name = "NewProfileSlot";
         newProfileSlot.transform.SetParent(content, false);
+        hasPopulatedProfilesList = true;
     }
 
     private void ProfileManager_OnProfilesLoaded()
@@ -38,5 +41,16 @@ public class ProfileSelectorHandler : MonoBehaviour
     void OnDisable()
     {
         ProfileManager.OnProfilesLoaded -= ProfileManager_OnProfilesLoaded;
+    }
+
+    private void CheckProfilesPopulated()
+    {
+        if (hasPopulatedProfilesList) return;
+        PopulateProfilesList();
+    }
+
+    private void Start()
+    {
+        CheckProfilesPopulated();
     }
 }
