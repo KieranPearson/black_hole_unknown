@@ -85,7 +85,7 @@ public class ProfileManager : MonoBehaviour
         profiles.Add(newProfile);
         MarkProfileToSave(newProfile);
         activeProfile = newProfile;
-        // start game
+        GameManager.instance.StartGame();
     }
 
     private void ProfileSlot_OnProfileSelected(string profileName)
@@ -94,7 +94,7 @@ public class ProfileManager : MonoBehaviour
         if (selectedProfile == null) return;
         MarkProfileToSave(selectedProfile);
         activeProfile = selectedProfile;
-        // start game
+        GameManager.instance.StartGame();
     }
 
     private void AddProfileToDelete(Profile profile)
