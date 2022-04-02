@@ -10,37 +10,89 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private int enemyColumns;
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
+    [SerializeField] private GameObject playerObject;
 
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private static int enemiesRemaining;
+    private static Profile activeProfile;
 
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
+    private Transform playerTransform;
 
-    private static Profile activeProfile;
+    private void Awake()
+    {
+        enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
+        enemiesTransform = enemiesObject.transform;
+        playerTransform = playerObject.transform;
+    }
 
     public static List<List<GameObject>> GetAliveEnemies()
     {
         return aliveEnemies;
     }
 
-    private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
+    private Vector2Int? GetColumnRowOfEnemy(GameObject enemy)
     {
-        enemiesRemaining--;
+        for (int column = 0; column < enemies.GetLength(0); column++)
+        {
+            for (int row = 0; row < enemies.GetLength(1); row++)
+            {
+                if (enemies[column, row] != enemy) continue;
+                return new Vector2Int(column, row);
+            }
+        }
+        return null;
+    }
+
+    private Vector2Int? GetColumnRowOfAliveEnemy(GameObject enemy)
+    {
         for (int column = 0; column < aliveEnemies.Count; column++)
         {
             for (int i = 0; i < aliveEnemies[column].Count; i++)
             {
                 if (aliveEnemies[column][i] != enemy) continue;
-                aliveEnemies[column].RemoveAt(i);
-                if (aliveEnemies[column].Count == 0)
-                {
-                    aliveEnemies.RemoveAt(column);
-                }
-                break;
+                return new Vector2Int(column, i);
             }
         }
+        return null;
+    }
+
+    private void SetEnemyDestroyed(int column, int row)
+    {
+        enemiesRemaining--;
+        aliveEnemies[column].RemoveAt(row);
+        if (aliveEnemies[column].Count == 0)
+        {
+            aliveEnemies.RemoveAt(column);
+        }
+    }
+
+    private void SyncEnemyDeath(GameObject enemy)
+    {
+        Vector2Int? enemyColumnRow = GetColumnRowOfEnemy(enemy);
+        if (enemyColumnRow == null) return;
+        int column = enemyColumnRow.Value.x;
+        int row = enemyColumnRow.Value.y;
+        activeProfile.AddDestroyedEnemey(column, row);
+    }
+
+    private void EnemyDestroyed(GameObject enemy, bool isLoaded)
+    {
+        Vector2Int? enemyAliveColumnRow = GetColumnRowOfAliveEnemy(enemy);
+        int column = enemyAliveColumnRow.Value.x;
+        int row = enemyAliveColumnRow.Value.y;
+        if (enemyAliveColumnRow == null) return;
+        SetEnemyDestroyed(column, row);
+
+        if (isLoaded) return;
+        SyncEnemyDeath(enemy);
+    }
+
+    private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
+    {
+        EnemyDestroyed(enemy, false);
     }
 
     private GameObject CreateEnemy(Vector2 position)
@@ -88,10 +140,17 @@ public class LevelManager : MonoBehaviour
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
-    private void Awake()
+    private void LoadDestroyedEnemies()
     {
-        enemiesTransform = enemiesObject.transform;
-        enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
+        List<int[]> destroyedEnemies = activeProfile.GetDestroyedEnemies();
+        for (int i = 0; i < destroyedEnemies.Count; i++)
+        {
+            int column = destroyedEnemies[i][0];
+            int row = destroyedEnemies[i][1];
+            GameObject enemy = enemies[column, row];
+            enemy.SetActive(false);
+            EnemyDestroyed(enemy, true);
+        }
     }
 
     private void LoadLevel()
@@ -103,17 +162,22 @@ public class LevelManager : MonoBehaviour
         float enemiesSpeed = activeProfile.GetEnemiesSpeed();
         enemiesTransform.position = new Vector3(enemiesXPosition, enemiesYPosition, 0);
         enemiesMovement.SetCurrentSpeed(enemiesSpeed);
+
+        float playerPositionX = activeProfile.GetPlayerXPosition();
+        float playerPositionY = playerTransform.position.y;
+        float playerPositionZ = playerTransform.position.z;
+        playerTransform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+
+        LoadDestroyedEnemies();
     }
 
     void Start()
     {
         GenerateEnemyGrid();
         LoadLevel();
-
-        
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         SyncProfileSessionData();
     }
@@ -123,5 +187,6 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetEnemiesXPosition(enemiesTransform.position.x);
         activeProfile.SetEnemiesYPosition(enemiesTransform.position.y);
         activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
+        activeProfile.SetPlayerXPosition(playerTransform.position.x);
     }
 }

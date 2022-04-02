@@ -69,7 +69,11 @@ public class Profile
         return enemiesSpeed;
     }
 
-    //
+    public float GetPlayerXPosition()
+    {
+        return playerXPosition;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -93,5 +97,15 @@ public class Profile
     public void SetHighscore(int highscore)
     {
         this.highscore = highscore;
+    }
+
+    public void SetPlayerXPosition(float playerXPosition)
+    {
+        this.playerXPosition = playerXPosition;
+    }
+
+    public void AddDestroyedEnemey(int column, int row)
+    {
+        destroyedEnemies.Add(new int[2] {column, row});
     }
 }

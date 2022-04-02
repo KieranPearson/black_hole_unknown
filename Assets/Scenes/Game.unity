@@ -2800,6 +2800,7 @@ MonoBehaviour:
   enemyColumns: 11
   enemyRowPadding: 1.9
   enemyColumnPadding: 1.9
+  playerObject: {fileID: 293290724}
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0
