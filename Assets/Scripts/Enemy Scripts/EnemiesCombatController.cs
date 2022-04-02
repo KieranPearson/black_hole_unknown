@@ -20,6 +20,15 @@ public class EnemiesCombatController : MonoBehaviour
     {
         List<List<GameObject>> aliveEnemies = LevelManager.GetAliveEnemies();
         if (aliveEnemies.Count == 0) return;
+
+        int chanceEnemyShoots = Random.Range(0, 15);
+        if (chanceEnemyShoots != 0) return;
+        int columnSelected = Random.Range(0, aliveEnemies.Count);
+        List<GameObject> column = aliveEnemies[columnSelected];
+        GameObject enemy = column[0];
+        OnEnemyShoot?.Invoke(enemy);
+
+        /*
         if ((Time.time - lastShootTime) < shootRate) return;
 
         int enemiesToShoot = Random.Range(1, maxEnemiesShootAtOnce);
@@ -31,5 +40,6 @@ public class EnemiesCombatController : MonoBehaviour
             OnEnemyShoot?.Invoke(enemy);
         }
         lastShootTime = Time.time;
+        */
     }
 }
