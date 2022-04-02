@@ -3927,8 +3927,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3866600414477967740, guid: 692b5e668e4179c4baa2d72f7a13ad7a, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866600414477967740, guid: 692b5e668e4179c4baa2d72f7a13ad7a, type: 3}
       propertyPath: m_BlocksRaycasts
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3866600414477967742, guid: 692b5e668e4179c4baa2d72f7a13ad7a, type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5207105129837828589, guid: 692b5e668e4179c4baa2d72f7a13ad7a, type: 3}
       propertyPath: fadeIn
