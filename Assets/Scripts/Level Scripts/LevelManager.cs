@@ -5,7 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private GameObject enemyPrefab;
-    [SerializeField] private Transform enemiesTransform;
+    [SerializeField] private GameObject enemiesObject;
     [SerializeField] private int enemyRows;
     [SerializeField] private int enemyColumns;
     [SerializeField] private float enemyRowPadding;
@@ -14,6 +14,11 @@ public class LevelManager : MonoBehaviour
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private static int enemiesRemaining;
+
+    private Transform enemiesTransform;
+    private EnemiesMovement enemiesMovement;
+
+    private static Profile activeProfile;
 
     public static List<List<GameObject>> GetAliveEnemies()
     {
@@ -83,9 +88,40 @@ public class LevelManager : MonoBehaviour
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
+    private void Awake()
+    {
+        enemiesTransform = enemiesObject.transform;
+        enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
+    }
+
+    private void LoadLevel()
+    {
+        activeProfile = ProfileManager.instance.GetActiveProfile();
+
+        float enemiesXPosition = activeProfile.GetEnemiesXPosition();
+        float enemiesYPosition = activeProfile.GetEnemiesYPosition();
+        float enemiesSpeed = activeProfile.GetEnemiesSpeed();
+        enemiesTransform.position = new Vector3(enemiesXPosition, enemiesYPosition, 0);
+        enemiesMovement.SetCurrentSpeed(enemiesSpeed);
+    }
+
     void Start()
     {
         GenerateEnemyGrid();
-        enemiesTransform.position = new Vector3(0, 5, 0);
+        LoadLevel();
+
+        
+    }
+
+    private void Update()
+    {
+        SyncProfileSessionData();
+    }
+
+    private void SyncProfileSessionData()
+    {
+        activeProfile.SetEnemiesXPosition(enemiesTransform.position.x);
+        activeProfile.SetEnemiesYPosition(enemiesTransform.position.y);
+        activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
     }
 }

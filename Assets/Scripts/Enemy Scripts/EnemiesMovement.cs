@@ -24,6 +24,21 @@ public class EnemiesMovement : MonoBehaviour
         }
     }
 
+    public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public float GetCurrentSpeed()
+    {
+        return currentSpeed;
+    }
+
+    public void SetCurrentSpeed(float currentSpeed)
+    {
+        this.currentSpeed = currentSpeed;
+    }
+
     private void MoveDown()
     {
         Vector3 position = transform.position;
@@ -48,7 +63,7 @@ public class EnemiesMovement : MonoBehaviour
 
     private void Start()
     {
-        currentSpeed = speed;
+        
     }
 
     void FixedUpdate()

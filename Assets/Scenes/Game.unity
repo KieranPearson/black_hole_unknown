@@ -2795,7 +2795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 6501029125428009736, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
-  enemiesTransform: {fileID: 1599791850}
+  enemiesObject: {fileID: 1599791849}
   enemyRows: 5
   enemyColumns: 11
   enemyRowPadding: 1.9
