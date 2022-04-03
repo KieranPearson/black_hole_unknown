@@ -16,7 +16,7 @@ public class LevelManager : MonoBehaviour
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private static int enemiesRemaining;
     private static Profile activeProfile;
-
+    private static List<GameObject> activeProjectiles = new List<GameObject>();
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
@@ -130,14 +130,58 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private bool isProjectileInActiveProjectiles(GameObject projectile)
+    {
+        for (int i = 0; i < activeProjectiles.Count; i++)
+        {
+            if (activeProjectiles[i] == projectile) return true;
+        }
+        return false;
+    }
+
+    private void Combat_OnProjectileFired(GameObject projectile)
+    {
+        if (isProjectileInActiveProjectiles(projectile)) return;
+        activeProjectiles.Add(projectile);
+    }
+
+    private void ProjectileRemoved(GameObject projectile)
+    {
+        if (!isProjectileInActiveProjectiles(projectile)) return;
+        activeProjectiles.Remove(projectile);
+    }
+
+    private void DisableOffscreen_OnProjectileRemoved(GameObject projectile)
+    {
+        ProjectileRemoved(projectile);
+    }
+
+    private void AsteroidCollisionHandler_OnProjectileRemoved(GameObject projectile)
+    {
+        ProjectileRemoved(projectile);
+    }
+
+    private void EnemyCollisionHandler_OnProjectileRemoved(GameObject projectile)
+    {
+        ProjectileRemoved(projectile);
+    }
+
     void OnEnable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
+        Combat.OnProjectileFired += Combat_OnProjectileFired;
+        DisableOffscreen.OnProjectileRemoved += DisableOffscreen_OnProjectileRemoved;
+        AsteroidCollisionHandler.OnProjectileRemoved += AsteroidCollisionHandler_OnProjectileRemoved;
+        EnemyCollisionHandler.OnProjectileRemoved += EnemyCollisionHandler_OnProjectileRemoved;
     }
 
     void OnDisable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
+        Combat.OnProjectileFired -= Combat_OnProjectileFired;
+        DisableOffscreen.OnProjectileRemoved -= DisableOffscreen_OnProjectileRemoved;
+        AsteroidCollisionHandler.OnProjectileRemoved -= AsteroidCollisionHandler_OnProjectileRemoved;
+        EnemyCollisionHandler.OnProjectileRemoved -= EnemyCollisionHandler_OnProjectileRemoved;
     }
 
     private void LoadDestroyedEnemies()

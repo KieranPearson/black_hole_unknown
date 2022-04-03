@@ -7,8 +7,9 @@ public class Combat : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate;
-    [SerializeField] private Vector2 fireDirection;
     [SerializeField] private int projectilePoolSize;
+
+    public static event System.Action<GameObject> OnProjectileFired;
 
     private GameObject projectiles;
     private float projectileSpawnOffset;
@@ -65,7 +66,7 @@ public class Combat : MonoBehaviour
         FireOnce();
     }
 
-    private void SpawnProjectile()
+    private void UseProjectile()
     {
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += projectileSpawnOffset;
@@ -79,6 +80,7 @@ public class Combat : MonoBehaviour
         {
             currentProjectile = 0;
         }
+        OnProjectileFired?.Invoke(projectile);
     }
 
     public void FireOnce()
@@ -86,7 +88,7 @@ public class Combat : MonoBehaviour
         float fireTime = Time.time;
         if ((fireTime - lastFired) < fireRate) return;
         lastFired = fireTime;
-        SpawnProjectile();
+        UseProjectile();
     }
 
     public void ToggleFire(bool toggle)
