@@ -12,8 +12,8 @@ public class Profile
 
     private List<int[]> destroyedEnemies; // {column, row}
     // {x, y}
-    private List<int[]> playerProjectilePositions;
-    private List<int[]> enemyProjectilePositions;
+    private List<float[]> playerProjectilePositions;
+    private List<float[]> enemyProjectilePositions;
 
     private float enemiesXPosition;
     private float enemiesYPosition;
@@ -26,8 +26,8 @@ public class Profile
         this.name = name;
         highscore = 0;
         destroyedEnemies = new List<int[]>();
-        playerProjectilePositions = new List<int[]>();
-        enemyProjectilePositions = new List<int[]>();
+        playerProjectilePositions = new List<float[]>();
+        enemyProjectilePositions = new List<float[]>();
         enemiesXPosition = 0;
         enemiesYPosition = 5;
         enemiesSpeed = 0.5f;
@@ -107,5 +107,25 @@ public class Profile
     public void AddDestroyedEnemey(int column, int row)
     {
         destroyedEnemies.Add(new int[2] {column, row});
+    }
+
+    public void AddPlayerProjectilePosition(float x, float y)
+    {
+        playerProjectilePositions.Add(new float[2] {x, y});
+    }
+
+    public void AddEnemyProjectilePosition(float x, float y)
+    {
+        enemyProjectilePositions.Add(new float[2] { x, y });
+    }
+
+    public void RemovePlayerProjectilePosition(int index)
+    {
+        playerProjectilePositions.RemoveAt(index);
+    }
+
+    public void RemoveEnemyProjectilePosition(int index)
+    {
+        enemyProjectilePositions.RemoveAt(index);
     }
 }
