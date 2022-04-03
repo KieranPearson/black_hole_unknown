@@ -230,6 +230,30 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void LoadPlayerProjectiles()
+    {
+        List<float[]> playerProjectilePositions = activeProfile.GetPlayerProjectilePositions();
+        for (int i = 0; i < playerProjectilePositions.Count; i++)
+        {
+            float xPosition = playerProjectilePositions[i][0];
+            float yPosition = playerProjectilePositions[i][1];
+            GameObject projectile = ProjectileLoader.instance.LoadPlayerProjectile(xPosition, yPosition);
+            activePlayerProjectiles.Add(projectile);
+        }
+    }
+
+    private void LoadEnemyProjectiles()
+    {
+        List<float[]> enemyProjectilePositions = activeProfile.GetEnemyProjectilePositions();
+        for (int i = 0; i < enemyProjectilePositions.Count; i++)
+        {
+            float xPosition = enemyProjectilePositions[i][0];
+            float yPosition = enemyProjectilePositions[i][1];
+            GameObject projectile = ProjectileLoader.instance.LoadEnemyProjectile(xPosition, yPosition);
+            activeEnemyProjectiles.Add(projectile);
+        }
+    }
+
     private void LoadLevel()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
@@ -246,6 +270,8 @@ public class LevelManager : MonoBehaviour
         playerTransform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
 
         LoadDestroyedEnemies();
+        LoadPlayerProjectiles();
+        LoadEnemyProjectiles();
     }
 
     void Start()
@@ -254,16 +280,33 @@ public class LevelManager : MonoBehaviour
         LoadLevel();
     }
 
-    private void FixedUpdate()
+    private void OnApplicationFocus()
     {
-        SyncProfileSessionData();
-    }
-
-    private void SyncProfileSessionData()
-    {
+        SyncPlayerProjectilePositions();
+        SyncEnemyProjectilePositions();
         activeProfile.SetEnemiesXPosition(enemiesTransform.position.x);
         activeProfile.SetEnemiesYPosition(enemiesTransform.position.y);
         activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
+    }
+
+    private void SyncPlayerProjectilePositions()
+    {
+        activeProfile.ClearPlayerProjectilePositions();
+        for (int i = 0; i < activePlayerProjectiles.Count; i++)
+        {
+            Vector3 position = activePlayerProjectiles[i].transform.position;
+            activeProfile.AddPlayerProjectilePosition(position.x, position.y);
+        }
+    }
+
+    private void SyncEnemyProjectilePositions()
+    {
+        activeProfile.ClearEnemyProjectilePositions();
+        for (int i = 0; i < activeEnemyProjectiles.Count; i++)
+        {
+            Vector3 position = activeEnemyProjectiles[i].transform.position;
+            activeProfile.AddEnemyProjectilePosition(position.x, position.y);
+        }
     }
 }

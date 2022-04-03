@@ -74,6 +74,16 @@ public class Profile
         return playerXPosition;
     }
 
+    public List<float[]> GetPlayerProjectilePositions()
+    {
+        return playerProjectilePositions;
+    }
+
+    public List<float[]> GetEnemyProjectilePositions()
+    {
+        return enemyProjectilePositions;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -127,5 +137,15 @@ public class Profile
     public void RemoveEnemyProjectilePosition(int index)
     {
         enemyProjectilePositions.RemoveAt(index);
+    }
+
+    public void ClearPlayerProjectilePositions()
+    {
+        playerProjectilePositions.Clear();
+    }
+
+    public void ClearEnemyProjectilePositions()
+    {
+        enemyProjectilePositions.Clear();
     }
 }

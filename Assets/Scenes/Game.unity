@@ -897,7 +897,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3265392371253117475, guid: b6dd30e3c05317c40bf0d6ce90786864, type: 3}
   fireRate: 0.75
-  fireDirection: {x: 0, y: 0}
   projectilePoolSize: 3
 --- !u!1001 &294517732
 PrefabInstance:
@@ -1025,6 +1024,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 340729585}
+  - component: {fileID: 340729586}
   m_Layer: 0
   m_Name: Projectiles
   m_TagString: Projectiles
@@ -1046,6 +1046,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &340729586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 340729584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2093570a990e6294389aa11c64a05196, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerProjectilePrefab: {fileID: 3265392371253117475, guid: b6dd30e3c05317c40bf0d6ce90786864, type: 3}
+  enemyProjectilePrefab: {fileID: 3265392371253117475, guid: 5d8149f63cf12d34fa6260a57746e0b6, type: 3}
 --- !u!1001 &384218132
 PrefabInstance:
   m_ObjectHideFlags: 0
