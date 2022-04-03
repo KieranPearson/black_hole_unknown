@@ -280,14 +280,19 @@ public class LevelManager : MonoBehaviour
         LoadLevel();
     }
 
-    private void OnApplicationFocus()
+    private void FixedUpdate()
     {
-        SyncPlayerProjectilePositions();
-        SyncEnemyProjectilePositions();
+        SyncProfileData();
+    }
+
+    private void SyncProfileData()
+    {
         activeProfile.SetEnemiesXPosition(enemiesTransform.position.x);
         activeProfile.SetEnemiesYPosition(enemiesTransform.position.y);
         activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
+        SyncPlayerProjectilePositions();
+        SyncEnemyProjectilePositions();
     }
 
     private void SyncPlayerProjectilePositions()
