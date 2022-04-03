@@ -11,13 +11,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
+    [SerializeField] private Transform projectiles;
 
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private static int enemiesRemaining;
     private static Profile activeProfile;
-    private static List<GameObject> activePlayerProjectiles = new List<GameObject>();
-    private static List<GameObject> activeEnemyProjectiles = new List<GameObject>();
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
@@ -131,93 +130,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private int? getProjectileIndexInActivePlayerProjectiles(GameObject projectile)
-    {
-        for (int i = 0; i < activePlayerProjectiles.Count; i++)
-        {
-            if (activePlayerProjectiles[i] == projectile) return i;
-        }
-        return null;
-    }
-
-    private int? getProjectileIndexInActiveEnemyProjectiles(GameObject projectile)
-    {
-        for (int i = 0; i < activeEnemyProjectiles.Count; i++)
-        {
-            if (activeEnemyProjectiles[i] == projectile) return i;
-        }
-        return null;
-    }
-
-    private void Combat_OnProjectileFired(GameObject projectile)
-    {
-        Vector3 projectilePosition = projectile.transform.position;
-        if (projectile.CompareTag("PlayerProjectile"))
-        {
-            if (getProjectileIndexInActivePlayerProjectiles(projectile) != null) return;
-            activePlayerProjectiles.Add(projectile);
-            activeProfile.AddPlayerProjectilePosition(projectilePosition.x, projectilePosition.y);
-        }
-        else if (projectile.CompareTag("EnemyProjectile"))
-        {
-            if (getProjectileIndexInActiveEnemyProjectiles(projectile) != null) return;
-            activeEnemyProjectiles.Add(projectile);
-            activeProfile.AddEnemyProjectilePosition(projectilePosition.x, projectilePosition.y);
-        }
-    }
-
-    private void ProjectileRemoved(GameObject projectile)
-    {
-        if (projectile.CompareTag("PlayerProjectile"))
-        {
-            int? projectileIndex = getProjectileIndexInActivePlayerProjectiles(projectile);
-            if (projectileIndex == null) return;
-            activePlayerProjectiles.Remove(projectile);
-            activeProfile.RemovePlayerProjectilePosition((int) projectileIndex);
-        }
-        else if (projectile.CompareTag("EnemyProjectile"))
-        {
-            int? projectileIndex = getProjectileIndexInActiveEnemyProjectiles(projectile);
-            if (projectileIndex == null) return;
-            activeEnemyProjectiles.Remove(projectile);
-            activeProfile.RemoveEnemyProjectilePosition((int) projectileIndex);
-        }
-    }
-
-    private void DisableOffscreen_OnProjectileRemoved(GameObject projectile)
-    {
-        ProjectileRemoved(projectile);
-    }
-
-    private void AsteroidCollisionHandler_OnProjectileRemoved(GameObject projectile)
-    {
-        ProjectileRemoved(projectile);
-    }
-
-    private void EnemyCollisionHandler_OnProjectileRemoved(GameObject projectile)
-    {
-        ProjectileRemoved(projectile);
-    }
-
     void OnEnable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
-        Combat.OnProjectileFired += Combat_OnProjectileFired;
-        DisableOffscreen.OnProjectileRemoved += DisableOffscreen_OnProjectileRemoved;
-        AsteroidCollisionHandler.OnProjectileRemoved += AsteroidCollisionHandler_OnProjectileRemoved;
-        EnemyCollisionHandler.OnProjectileRemoved += EnemyCollisionHandler_OnProjectileRemoved;
-
         GameQuitHandler.OnRequestDataSync += GameQuitHandler_OnRequestDataSync;
     }
 
     void OnDisable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
-        Combat.OnProjectileFired -= Combat_OnProjectileFired;
-        DisableOffscreen.OnProjectileRemoved -= DisableOffscreen_OnProjectileRemoved;
-        AsteroidCollisionHandler.OnProjectileRemoved -= AsteroidCollisionHandler_OnProjectileRemoved;
-        EnemyCollisionHandler.OnProjectileRemoved -= EnemyCollisionHandler_OnProjectileRemoved;
-
         GameQuitHandler.OnRequestDataSync -= GameQuitHandler_OnRequestDataSync;
     }
 
@@ -242,7 +163,6 @@ public class LevelManager : MonoBehaviour
             float xPosition = playerProjectilePositions[i][0];
             float yPosition = playerProjectilePositions[i][1];
             GameObject projectile = ProjectileLoader.instance.LoadPlayerProjectile(xPosition, yPosition);
-            activePlayerProjectiles.Add(projectile);
         }
     }
 
@@ -254,7 +174,6 @@ public class LevelManager : MonoBehaviour
             float xPosition = enemyProjectilePositions[i][0];
             float yPosition = enemyProjectilePositions[i][1];
             GameObject projectile = ProjectileLoader.instance.LoadEnemyProjectile(xPosition, yPosition);
-            activeEnemyProjectiles.Add(projectile);
         }
     }
 
@@ -296,27 +215,26 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetEnemiesYPosition(enemiesTransform.position.y);
         activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
-        SyncPlayerProjectilePositions();
-        SyncEnemyProjectilePositions();
+        SyncProjectilePositions();
     }
 
-    private void SyncPlayerProjectilePositions()
-    {
-        activeProfile.ClearPlayerProjectilePositions();
-        for (int i = 0; i < activePlayerProjectiles.Count; i++)
-        {
-            Vector3 position = activePlayerProjectiles[i].transform.position;
-            activeProfile.AddPlayerProjectilePosition(position.x, position.y);
-        }
-    }
-
-    private void SyncEnemyProjectilePositions()
+    private void SyncProjectilePositions()
     {
         activeProfile.ClearEnemyProjectilePositions();
-        for (int i = 0; i < activeEnemyProjectiles.Count; i++)
+        activeProfile.ClearPlayerProjectilePositions();
+        for (int i = 0; i < projectiles.childCount; i++)
         {
-            Vector3 position = activeEnemyProjectiles[i].transform.position;
-            activeProfile.AddEnemyProjectilePosition(position.x, position.y);
+            GameObject projectile = projectiles.GetChild(i).gameObject;
+            if (!projectile.activeSelf) continue;
+            Vector3 position = projectile.transform.position;
+            if (projectile.CompareTag("EnemyProjectile"))
+            {
+                activeProfile.AddEnemyProjectilePosition(position.x, position.y);
+            }
+            else if (projectile.CompareTag("PlayerProjectile"))
+            {
+                activeProfile.AddPlayerProjectilePosition(position.x, position.y);
+            }
         }
     }
 }

@@ -2859,6 +2859,7 @@ MonoBehaviour:
   enemyRowPadding: 1.9
   enemyColumnPadding: 1.9
   playerObject: {fileID: 293290724}
+  projectiles: {fileID: 340729585}
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0

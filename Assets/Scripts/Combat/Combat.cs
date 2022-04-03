@@ -9,8 +9,6 @@ public class Combat : MonoBehaviour
     [SerializeField] private float fireRate;
     [SerializeField] private int projectilePoolSize;
 
-    public static event System.Action<GameObject> OnProjectileFired;
-
     private GameObject projectiles;
     private float projectileSpawnOffset;
     private float lastFired;
@@ -80,7 +78,6 @@ public class Combat : MonoBehaviour
         {
             currentProjectile = 0;
         }
-        OnProjectileFired?.Invoke(projectile);
     }
 
     public void FireOnce()

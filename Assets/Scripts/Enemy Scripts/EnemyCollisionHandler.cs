@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyCollisionHandler : MonoBehaviour
 {
     public static event System.Action<GameObject> OnEnemyDestroyed;
-    public static event System.Action<GameObject> OnProjectileRemoved;
 
     private BoxCollider2D boxCollider;
 
@@ -22,7 +21,6 @@ public class EnemyCollisionHandler : MonoBehaviour
             OnEnemyDestroyed?.Invoke(gameObject);
             collider.gameObject.SetActive(false);
             gameObject.SetActive(false);
-            OnProjectileRemoved?.Invoke(collider.gameObject);
         } else if (collider.gameObject.CompareTag("Asteroid"))
         {
             collider.gameObject.SetActive(false);

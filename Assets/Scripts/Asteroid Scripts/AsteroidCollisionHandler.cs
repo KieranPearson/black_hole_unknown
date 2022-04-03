@@ -9,8 +9,6 @@ public class AsteroidCollisionHandler : MonoBehaviour
     [SerializeField] private Sprite[] asteroidSprites;
     [SerializeField] private int damage = 0;
 
-    public static event System.Action<GameObject> OnProjectileRemoved;
-
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
 
@@ -26,7 +24,6 @@ public class AsteroidCollisionHandler : MonoBehaviour
     private void ProjectileHit(GameObject projectile)
     {
         projectile.SetActive(false);
-        OnProjectileRemoved?.Invoke(projectile);
         TakeDamage();
     }
 
