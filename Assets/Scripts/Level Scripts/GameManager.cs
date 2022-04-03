@@ -35,13 +35,20 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(sceneBuildIndex:1); // load game scene
     }
 
+    private void GameQuitHandler_OnRequestDataSync()
+    {
+        GameQuitHandler.DataSynced();
+    }
+
     void OnEnable()
     {
         Fader.OnScreenFadedOut += Fader_OnFadedOut;
+        GameQuitHandler.OnRequestDataSync += GameQuitHandler_OnRequestDataSync;
     }
 
     void OnDisable()
     {
         Fader.OnScreenFadedOut -= Fader_OnFadedOut;
+        GameQuitHandler.OnRequestDataSync -= GameQuitHandler_OnRequestDataSync;
     }
 }

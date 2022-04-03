@@ -206,6 +206,8 @@ public class LevelManager : MonoBehaviour
         DisableOffscreen.OnProjectileRemoved += DisableOffscreen_OnProjectileRemoved;
         AsteroidCollisionHandler.OnProjectileRemoved += AsteroidCollisionHandler_OnProjectileRemoved;
         EnemyCollisionHandler.OnProjectileRemoved += EnemyCollisionHandler_OnProjectileRemoved;
+
+        GameQuitHandler.OnRequestDataSync += GameQuitHandler_OnRequestDataSync;
     }
 
     void OnDisable()
@@ -215,6 +217,8 @@ public class LevelManager : MonoBehaviour
         DisableOffscreen.OnProjectileRemoved -= DisableOffscreen_OnProjectileRemoved;
         AsteroidCollisionHandler.OnProjectileRemoved -= AsteroidCollisionHandler_OnProjectileRemoved;
         EnemyCollisionHandler.OnProjectileRemoved -= EnemyCollisionHandler_OnProjectileRemoved;
+
+        GameQuitHandler.OnRequestDataSync -= GameQuitHandler_OnRequestDataSync;
     }
 
     private void LoadDestroyedEnemies()
@@ -280,9 +284,10 @@ public class LevelManager : MonoBehaviour
         LoadLevel();
     }
 
-    private void FixedUpdate()
+    private void GameQuitHandler_OnRequestDataSync()
     {
         SyncProfileData();
+        GameQuitHandler.DataSynced();
     }
 
     private void SyncProfileData()

@@ -61,11 +61,6 @@ public class EnemiesMovement : MonoBehaviour
         rb2 = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
-    {
-        
-    }
-
     void FixedUpdate()
     {
         Move();

@@ -6,8 +6,12 @@ public class GameQuitHandler : MonoBehaviour
 {
     public static GameQuitHandler instance { get; private set; }
 
-    private static bool isAllowedToQuit = false;
-    
+    public static event System.Action OnRequestDataSync;
+    public static event System.Action OnRequestDataSave;
+
+    private static bool isDataSynced = false;
+    private static bool isDataSaved = false;
+
     private void Awake()
     {
         if (instance)
@@ -17,17 +21,38 @@ public class GameQuitHandler : MonoBehaviour
         else
         {
             instance = this;
+            DontDestroyOnLoad(gameObject);
         }
     }
 
-    public static void AllowQuitting()
+    public static void DataSynced()
     {
-        isAllowedToQuit = true;
+        isDataSynced = true;
+    }
+
+    public static void DataSaved()
+    {
+        isDataSaved = true;
+    }
+
+    IEnumerator ForceSave()
+    {
+        while (!isDataSynced)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
+        OnRequestDataSave?.Invoke();
+        while (!isDataSaved)
+        {
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     static bool WantsToQuit()
     {
-        return isAllowedToQuit;
+        OnRequestDataSync?.Invoke();
+        instance.StartCoroutine("ForceSave");
+        return true;
     }
 
     private void Start()

@@ -9617,6 +9617,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1834997303}
+  - component: {fileID: 1834997304}
   m_Layer: 0
   m_Name: GameQuitHandler
   m_TagString: Untagged
@@ -9638,6 +9639,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1834997304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1834997302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdec73d6004f1cf43b75c305cf78fbb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1867332624
 GameObject:
   m_ObjectHideFlags: 0

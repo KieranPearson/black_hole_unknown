@@ -127,6 +127,8 @@ public class ProfileManager : MonoBehaviour
         ProfileSlotNew.OnNewProfile += ProfileSlotNew_OnNewProfile;
         ProfileSlot.OnProfileSelected += ProfileSlot_OnProfileSelected;
         ProfileSlot.OnProfileDeleted += ProfileSlot_OnProfileDeleted;
+
+        GameQuitHandler.OnRequestDataSave += GameQuitHandler_OnRequestDataSave;
     }
 
     void OnDisable()
@@ -136,14 +138,15 @@ public class ProfileManager : MonoBehaviour
         ProfileSlot.OnProfileDeleted -= ProfileSlot_OnProfileDeleted;
     }
 
-    private void Start()
-    {
-        LoadProfiles();
-    }
-
-    private void OnApplicationQuit()
+    private void GameQuitHandler_OnRequestDataSave()
     {
         SaveProfiles();
         DeleteProfiles();
+        GameQuitHandler.DataSaved();
+    }
+
+    private void Start()
+    {
+        LoadProfiles();
     }
 }
