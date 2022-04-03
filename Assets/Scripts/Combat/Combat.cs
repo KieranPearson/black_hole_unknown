@@ -8,12 +8,14 @@ public class Combat : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate;
     [SerializeField] private Vector2 fireDirection;
+    [SerializeField] private int projectilePoolSize;
 
     private GameObject projectiles;
     private float projectileSpawnOffset;
     private float lastFired;
-
     private bool isFiring = false;
+    private GameObject[] projectilePool;
+    private int currentProjectile;
 
     private void CalculateSpawnOffset()
     {
@@ -28,9 +30,23 @@ public class Combat : MonoBehaviour
         }
     }
 
+    private void SetupProjectilePool()
+    {
+        projectilePool = new GameObject[projectilePoolSize];
+        for (int i = 0; i < projectilePoolSize; i++)
+        {
+            GameObject newProjectile = Instantiate(projectilePrefab);
+            newProjectile.name = projectilePrefab.name;
+            newProjectile.SetActive(false);
+            newProjectile.transform.parent = projectiles.transform;
+            projectilePool[i] = newProjectile;
+        }
+    }
+
     void Awake()
     {
         projectiles = GameObject.FindWithTag("Projectiles");
+        SetupProjectilePool();
     }
 
     void Start()
@@ -53,9 +69,16 @@ public class Combat : MonoBehaviour
     {
         Vector3 spawnPosition = transform.position;
         spawnPosition.y += projectileSpawnOffset;
-        projectilePrefab.transform.position = spawnPosition;
-        GameObject newProjectile = Instantiate(projectilePrefab);
-        newProjectile.transform.parent = projectiles.transform;
+
+        GameObject projectile = projectilePool[currentProjectile];
+        projectile.transform.parent = projectiles.transform;
+        projectile.transform.position = spawnPosition;
+        projectile.SetActive(true);
+        currentProjectile++;
+        if (currentProjectile >= projectilePoolSize)
+        {
+            currentProjectile = 0;
+        }
     }
 
     public void FireOnce()

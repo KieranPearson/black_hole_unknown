@@ -26,11 +26,11 @@ public class AsteroidCollisionHandler : MonoBehaviour
         GameObject colliderObj = collider.gameObject;
         if (colliderObj.CompareTag("PlayerProjectile"))
         {
-            Destroy(collider.gameObject);
+            collider.gameObject.SetActive(false);
             TakeDamage();
         } else if (colliderObj.CompareTag("EnemyProjectile"))
         {
-            Destroy(collider.gameObject);
+            collider.gameObject.SetActive(false);
             TakeDamage();
         }
     }
