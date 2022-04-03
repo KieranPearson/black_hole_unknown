@@ -24,6 +24,8 @@ public class ProfileManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+
+        activeProfile = new Profile("EditorTestProfile");
     }
 
     private void LoadProfiles()
