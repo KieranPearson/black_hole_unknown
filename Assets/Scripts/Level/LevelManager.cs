@@ -12,7 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private Transform projectiles;
-    [SerializeField] private Transform asteroids;
+    [SerializeField] private Asteroids asteroids;
 
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
@@ -181,13 +181,15 @@ public class LevelManager : MonoBehaviour
     private void LoadAsteroidDamage()
     {
         List<List<int>> asteroidDamageStates = activeProfile.GetAsteroidDamageStates();
+        Transform[] asteroidClusters = asteroids.GetAsteroidClusters();
         for (int clusterIndex = 0; clusterIndex < asteroidDamageStates.Count; clusterIndex++)
         {
-            Transform asteroidCluster = asteroids.GetChild(clusterIndex);
+            AsteroidCluster asteroidCluster = asteroidClusters[clusterIndex].GetComponent<AsteroidCluster>();
+            GameObject[] asteroidsInCluster = asteroidCluster.GetAsteroids();
             int clusterSize = asteroidDamageStates[clusterIndex].Count;
             for (int asteroidIndex = 0; asteroidIndex < clusterSize; asteroidIndex++)
             {
-                GameObject asteroid = asteroidCluster.GetChild(asteroidIndex).gameObject;
+                GameObject asteroid = asteroidsInCluster[asteroidIndex];
                 AsteroidCollisionHandler asteroidCollision = asteroid.GetComponent<AsteroidCollisionHandler>();
                 int newDamage = asteroidDamageStates[clusterIndex][asteroidIndex];
                 asteroidCollision.SetDamage(newDamage);
@@ -236,6 +238,7 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
         SyncProjectilePositions();
         SyncAsteroidDamage();
+        
     }
 
     private void SyncProjectilePositions()
@@ -261,15 +264,16 @@ public class LevelManager : MonoBehaviour
     private void SyncAsteroidDamage()
     {
         activeProfile.ClearAsteroidDamageStates();
-        for (int clusterIndex = 0; clusterIndex < asteroids.childCount; clusterIndex++)
+        Transform[] asteroidClusters = asteroids.GetAsteroidClusters();
+        for (int clusterIndex = 0; clusterIndex < asteroidClusters.Length; clusterIndex++)
         {
-            Transform asteroidCluster = asteroids.GetChild(clusterIndex);
+            AsteroidCluster asteroidCluster = asteroidClusters[clusterIndex].GetComponent<AsteroidCluster>();
             activeProfile.AddAsteroidCluster();
-            for (int asteroidIndex = 0; asteroidIndex < asteroidCluster.childCount; asteroidIndex++)
+            GameObject[] asteroidsInCluster = asteroidCluster.GetAsteroids();
+            for (int asteroidIndex = 0; asteroidIndex < asteroidsInCluster.Length; asteroidIndex++)
             {
-                GameObject asteroid = asteroidCluster.GetChild(asteroidIndex).gameObject;
+                GameObject asteroid = asteroidsInCluster[asteroidIndex];
                 AsteroidCollisionHandler asteroidCollision = asteroid.GetComponent<AsteroidCollisionHandler>();
-                
                 if (!asteroid.activeSelf)
                 {
                     activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetMaxDamage() + 1);

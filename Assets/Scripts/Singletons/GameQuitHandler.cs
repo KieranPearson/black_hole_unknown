@@ -21,6 +21,7 @@ public class GameQuitHandler : MonoBehaviour
         else
         {
             instance = this;
+            Application.wantsToQuit += WantsToQuit;
             DontDestroyOnLoad(gameObject);
         }
     }
@@ -53,10 +54,5 @@ public class GameQuitHandler : MonoBehaviour
         OnRequestDataSync?.Invoke();
         instance.StartCoroutine("ForceSave");
         return true;
-    }
-
-    private void Start()
-    {
-        Application.wantsToQuit += WantsToQuit;
     }
 }
