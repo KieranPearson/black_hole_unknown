@@ -14,11 +14,11 @@ public class AsteroidCollisionHandler : MonoBehaviour
 
     private int maxDamage;
 
-    void Start()
+    private void Awake()
     {
-        maxDamage = asteroidSprites.Length - 1;
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
+        maxDamage = asteroidSprites.Length - 1;
     }
 
     private void ProjectileHit(GameObject projectile)
@@ -82,6 +82,7 @@ public class AsteroidCollisionHandler : MonoBehaviour
         this.damage = damage;
         if (damage > maxDamage)
         {
+            damage = maxDamage;
             gameObject.SetActive(false);
             return;
         }

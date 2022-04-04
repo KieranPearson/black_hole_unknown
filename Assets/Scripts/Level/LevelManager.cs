@@ -264,6 +264,7 @@ public class LevelManager : MonoBehaviour
     private void SyncAsteroidDamage()
     {
         activeProfile.ClearAsteroidDamageStates();
+
         Transform[] asteroidClusters = asteroids.GetAsteroidClusters();
         for (int clusterIndex = 0; clusterIndex < asteroidClusters.Length; clusterIndex++)
         {
