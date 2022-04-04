@@ -6,8 +6,10 @@ public class Profile
 {
     private string name;
     private int highscore;
-
     private int currentScore;
+    private int level;
+    private int lives;
+
     private List<int[]> destroyedEnemies;
     private List<float[]> playerProjectilePositions;
     private List<float[]> enemyProjectilePositions;
@@ -17,10 +19,23 @@ public class Profile
     private float enemiesSpeed;
     private float playerXPosition;
 
+    public Profile()
+    {
+        SetDefaults();
+    }
+
     public Profile(string name)
     {
         this.name = name;
+        SetDefaults();
+    }
+
+    private void SetDefaults()
+    {
         highscore = 0;
+        currentScore = 0;
+        level = 1;
+        lives = 3;
         destroyedEnemies = new List<int[]>();
         playerProjectilePositions = new List<float[]>();
         enemyProjectilePositions = new List<float[]>();
@@ -30,6 +45,19 @@ public class Profile
         enemiesSpeed = 0.5f;
         playerXPosition = 0;
     }
+
+    public void ClearLevelSpecificData()
+    {
+        Profile defaultProfile = new Profile();
+        this.destroyedEnemies = defaultProfile.GetDestroyedEnemies();
+        this.playerProjectilePositions = defaultProfile.GetPlayerProjectilePositions();
+        this.enemyProjectilePositions = defaultProfile.GetEnemyProjectilePositions();
+        this.asteroidDamageStates = defaultProfile.GetAsteroidDamageStates();
+        this.enemiesXPosition = defaultProfile.GetEnemiesXPosition();
+        this.enemiesYPosition = defaultProfile.GetEnemiesYPosition();
+        this.enemiesSpeed = defaultProfile.GetEnemiesSpeed();
+        this.playerXPosition = defaultProfile.GetPlayerXPosition();
+}
 
     public string GetName()
     {
@@ -86,6 +114,16 @@ public class Profile
         return asteroidDamageStates;
     }
 
+    public int GetLevel()
+    {
+        return level;
+    }
+
+    public int GetLives()
+    {
+        return lives;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -114,6 +152,21 @@ public class Profile
     public void SetPlayerXPosition(float playerXPosition)
     {
         this.playerXPosition = playerXPosition;
+    }
+
+    public void SetLevel(int level)
+    {
+        this.level = level;
+    }
+
+    public void SetLives(int lives)
+    {
+        this.lives = lives;
+    }
+
+    public void SetCurrentScore(int currentScore)
+    {
+        this.currentScore = currentScore;
     }
 
     public void AddDestroyedEnemey(int column, int row)

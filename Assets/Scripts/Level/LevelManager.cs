@@ -14,19 +14,73 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform projectiles;
     [SerializeField] private Asteroids asteroids;
 
+    public static event System.Action OnLevelLoaded;
+    public static event System.Action OnNewLevelStarted;
     private static GameObject[,] enemies;
+    private static List<List<GameObject>> allEnemies = new List<List<GameObject>>();
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private static int enemiesRemaining;
     private static Profile activeProfile;
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
+    private int totalEnemies;
 
     private void Awake()
     {
         enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
         enemiesTransform = enemiesObject.transform;
         playerTransform = playerObject.transform;
+        totalEnemies = enemyRows * enemyColumns;
+        enemiesRemaining = totalEnemies;
+    }
+
+    private void ClearAllProjectiles()
+    {
+        for (int i = 0; i < projectiles.childCount; i++)
+        {
+            GameObject projectile = projectiles.GetChild(i).gameObject;
+            projectile.SetActive(false);
+        }
+    }
+
+    private void RefreshEnemies()
+    {
+        enemiesObject.SetActive(false);
+        aliveEnemies.Clear();
+        enemiesRemaining = totalEnemies;
+        for (int column = 0; column < enemyColumns; column++)
+        {
+            List<GameObject> enemiesInColumn = new List<GameObject>();
+            for (int row = 0; row < enemyRows; row++)
+            {
+                GameObject enemy = enemies[column, row];
+                enemiesInColumn.Add(enemy);
+                enemy.SetActive(true);
+            }
+            aliveEnemies.Add(enemiesInColumn);
+        }
+        Vector3 enemiesPosition = enemiesTransform.position;
+        float newX = activeProfile.GetEnemiesXPosition();
+        float newY = activeProfile.GetEnemiesYPosition();
+        enemiesTransform.position = new Vector3(newX, newY, enemiesPosition.z);
+        enemiesObject.SetActive(true);
+    }
+
+    private void RefreshPlayer()
+    {
+        Vector3 playerPosition = playerTransform.position;
+        float newX = activeProfile.GetPlayerXPosition();
+        playerTransform.position = new Vector3(newX, playerPosition.y, playerPosition.z);
+    }
+
+    private void StartNewLevel()
+    {
+        Debug.Log("Start New Level!");
+        activeProfile.ClearLevelSpecificData();
+        ClearAllProjectiles();
+        RefreshEnemies();
+        RefreshPlayer();
     }
 
     public static List<List<GameObject>> GetAliveEnemies()
@@ -62,7 +116,6 @@ public class LevelManager : MonoBehaviour
 
     private void SetEnemyDestroyed(int column, int row)
     {
-        enemiesRemaining--;
         aliveEnemies[column].RemoveAt(row);
         if (aliveEnemies[column].Count == 0)
         {
@@ -82,11 +135,16 @@ public class LevelManager : MonoBehaviour
     private void EnemyDestroyed(GameObject enemy, bool isLoaded)
     {
         Vector2Int? enemyAliveColumnRow = GetColumnRowOfAliveEnemy(enemy);
+        if (enemyAliveColumnRow == null) return;
         int column = enemyAliveColumnRow.Value.x;
         int row = enemyAliveColumnRow.Value.y;
-        if (enemyAliveColumnRow == null) return;
         SetEnemyDestroyed(column, row);
-
+        enemiesRemaining--;
+        enemy.SetActive(false);
+        if (enemiesRemaining <= 0)
+        {
+            StartNewLevel();
+        }
         if (isLoaded) return;
         SyncEnemyDeath(enemy);
     }
@@ -124,8 +182,8 @@ public class LevelManager : MonoBehaviour
                 enemies[column, row] = enemy;
                 enemiesInColumn.Add(enemy);
                 spawnPosY += enemyRowPadding;
-                enemiesRemaining++;
             }
+            allEnemies.Add(enemiesInColumn);
             aliveEnemies.Add(enemiesInColumn);
             spawnPosX += enemyColumnPadding;
         }
@@ -216,6 +274,8 @@ public class LevelManager : MonoBehaviour
         LoadPlayerProjectiles();
         LoadEnemyProjectiles();
         LoadAsteroidDamage();
+
+        OnLevelLoaded?.Invoke();
     }
 
     void Start()

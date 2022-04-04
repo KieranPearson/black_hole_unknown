@@ -20,7 +20,7 @@ public class EnemyCollisionHandler : MonoBehaviour
         {
             OnEnemyDestroyed?.Invoke(gameObject);
             collider.gameObject.SetActive(false);
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
         } else if (collider.gameObject.CompareTag("Asteroid"))
         {
             collider.gameObject.SetActive(false);
