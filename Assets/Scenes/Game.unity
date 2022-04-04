@@ -576,8 +576,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3265392371253117475, guid: b6dd30e3c05317c40bf0d6ce90786864, type: 3}
-  fireRate: 0.05
-  projectilePoolSize: 30
+  fireRate: 0.75
+  projectilePoolSize: 3
 --- !u!1 &340729584
 GameObject:
   m_ObjectHideFlags: 0
