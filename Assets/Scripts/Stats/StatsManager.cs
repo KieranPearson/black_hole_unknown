@@ -61,6 +61,11 @@ public class StatsManager : MonoBehaviour
         displayStats.UpdateAll();
     }
 
+    private void LevelManager_OnNewLevelStarted()
+    {
+        ChangeLevel(1);
+    }
+
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
     {
         ChangeScore(scoreForEnemy);
@@ -69,12 +74,14 @@ public class StatsManager : MonoBehaviour
     void OnEnable()
     {
         LevelManager.OnLevelLoaded += LevelManager_OnLevelLoaded;
+        LevelManager.OnNewLevelStarted += LevelManager_OnNewLevelStarted;
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
     void OnDisable()
     {
         LevelManager.OnLevelLoaded -= LevelManager_OnLevelLoaded;
+        LevelManager.OnNewLevelStarted -= LevelManager_OnNewLevelStarted;
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 }

@@ -74,13 +74,32 @@ public class LevelManager : MonoBehaviour
         playerTransform.position = new Vector3(newX, playerPosition.y, playerPosition.z);
     }
 
+    private void RefreshAsteroids()
+    {
+        Transform[] asteroidClusters = asteroids.GetAsteroidClusters();
+        for (int clusterIndex = 0; clusterIndex < asteroidClusters.Length; clusterIndex++)
+        {
+            AsteroidCluster asteroidCluster = asteroidClusters[clusterIndex].GetComponent<AsteroidCluster>();
+
+            GameObject[] asteroidsInCluster = asteroidCluster.GetAsteroids();
+            for (int asteroidIndex = 0; asteroidIndex < asteroidsInCluster.Length; asteroidIndex++)
+            {
+                GameObject asteroid = asteroidsInCluster[asteroidIndex];
+                asteroid.SetActive(true);
+                AsteroidCollisionHandler asteroidCollision = asteroid.GetComponent<AsteroidCollisionHandler>();
+                asteroidCollision.SetDamage(0);
+            }
+        }
+    }
+
     private void StartNewLevel()
     {
-        Debug.Log("Start New Level!");
         activeProfile.ClearLevelSpecificData();
         ClearAllProjectiles();
         RefreshEnemies();
         RefreshPlayer();
+        RefreshAsteroids();
+        OnNewLevelStarted?.Invoke();
     }
 
     public static List<List<GameObject>> GetAliveEnemies()
