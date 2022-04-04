@@ -7,18 +7,14 @@ public class Profile
     private string name;
     private int highscore;
 
-
     private int currentScore;
-
-    private List<int[]> destroyedEnemies; // {column, row}
-    // {x, y}
+    private List<int[]> destroyedEnemies;
     private List<float[]> playerProjectilePositions;
     private List<float[]> enemyProjectilePositions;
-
+    private List<List<int>> asteroidDamageStates;
     private float enemiesXPosition;
     private float enemiesYPosition;
     private float enemiesSpeed;
-
     private float playerXPosition;
 
     public Profile(string name)
@@ -28,6 +24,7 @@ public class Profile
         destroyedEnemies = new List<int[]>();
         playerProjectilePositions = new List<float[]>();
         enemyProjectilePositions = new List<float[]>();
+        asteroidDamageStates = new List<List<int>>();
         enemiesXPosition = 0;
         enemiesYPosition = 5;
         enemiesSpeed = 0.5f;
@@ -84,6 +81,11 @@ public class Profile
         return enemyProjectilePositions;
     }
 
+    public List<List<int>> GetAsteroidDamageStates()
+    {
+        return asteroidDamageStates;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -129,6 +131,17 @@ public class Profile
         enemyProjectilePositions.Add(new float[2] { x, y });
     }
 
+    public void AddAsteroidCluster()
+    {
+
+        asteroidDamageStates.Add(new List<int>());
+    }
+
+    public void AddAsteroidDamage(int clusterIndex, int damage)
+    {
+        asteroidDamageStates[clusterIndex].Add(damage);
+    }
+
     public void RemovePlayerProjectilePosition(int index)
     {
         playerProjectilePositions.RemoveAt(index);
@@ -147,5 +160,10 @@ public class Profile
     public void ClearEnemyProjectilePositions()
     {
         enemyProjectilePositions.Clear();
+    }
+
+    public void ClearAsteroidDamageStates()
+    {
+        asteroidDamageStates.Clear();
     }
 }

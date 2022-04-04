@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
     [SerializeField] private Transform projectiles;
+    [SerializeField] private Transform asteroids;
 
     private static GameObject[,] enemies;
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
@@ -177,6 +178,23 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void LoadAsteroidDamage()
+    {
+        List<List<int>> asteroidDamageStates = activeProfile.GetAsteroidDamageStates();
+        for (int clusterIndex = 0; clusterIndex < asteroidDamageStates.Count; clusterIndex++)
+        {
+            Transform asteroidCluster = asteroids.GetChild(clusterIndex);
+            int clusterSize = asteroidDamageStates[clusterIndex].Count;
+            for (int asteroidIndex = 0; asteroidIndex < clusterSize; asteroidIndex++)
+            {
+                GameObject asteroid = asteroidCluster.GetChild(asteroidIndex).gameObject;
+                AsteroidCollisionHandler asteroidCollision = asteroid.GetComponent<AsteroidCollisionHandler>();
+                int newDamage = asteroidDamageStates[clusterIndex][asteroidIndex];
+                asteroidCollision.SetDamage(newDamage);
+            }
+        }
+    }
+
     private void LoadLevel()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
@@ -195,6 +213,7 @@ public class LevelManager : MonoBehaviour
         LoadDestroyedEnemies();
         LoadPlayerProjectiles();
         LoadEnemyProjectiles();
+        LoadAsteroidDamage();
     }
 
     void Start()
@@ -216,6 +235,7 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetEnemiesSpeed(enemiesMovement.GetCurrentSpeed());
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
         SyncProjectilePositions();
+        SyncAsteroidDamage();
     }
 
     private void SyncProjectilePositions()
@@ -234,6 +254,28 @@ public class LevelManager : MonoBehaviour
             else if (projectile.CompareTag("PlayerProjectile"))
             {
                 activeProfile.AddPlayerProjectilePosition(position.x, position.y);
+            }
+        }
+    }
+
+    private void SyncAsteroidDamage()
+    {
+        activeProfile.ClearAsteroidDamageStates();
+        for (int clusterIndex = 0; clusterIndex < asteroids.childCount; clusterIndex++)
+        {
+            Transform asteroidCluster = asteroids.GetChild(clusterIndex);
+            activeProfile.AddAsteroidCluster();
+            for (int asteroidIndex = 0; asteroidIndex < asteroidCluster.childCount; asteroidIndex++)
+            {
+                GameObject asteroid = asteroidCluster.GetChild(asteroidIndex).gameObject;
+                AsteroidCollisionHandler asteroidCollision = asteroid.GetComponent<AsteroidCollisionHandler>();
+                
+                if (!asteroid.activeSelf)
+                {
+                    activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetMaxDamage() + 1);
+                    continue;
+                }
+                activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetDamage());
             }
         }
     }

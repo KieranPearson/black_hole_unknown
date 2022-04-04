@@ -39,6 +39,12 @@ public class AsteroidCollisionHandler : MonoBehaviour
         }
     }
 
+    private void UpdateAsteroidDamage()
+    {
+        UpdateSprite();
+        UpdateBoxCollider();
+    }
+
     private void TakeDamage()
     {
         if (damage == maxDamage)
@@ -47,8 +53,7 @@ public class AsteroidCollisionHandler : MonoBehaviour
             return;
         }
         damage++;
-        UpdateSprite();
-        UpdateBoxCollider();
+        UpdateAsteroidDamage();
     }
 
     private void UpdateSprite()
@@ -60,5 +65,26 @@ public class AsteroidCollisionHandler : MonoBehaviour
     {
         Vector2 spriteSize = spriteRenderer.sprite.bounds.size;
         boxCollider.size = spriteSize;
+    }
+
+    public int GetMaxDamage()
+    {
+        return maxDamage;
+    }
+
+    public int GetDamage()
+    {
+        return damage;
+    }
+
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+        if (damage > maxDamage)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+        UpdateAsteroidDamage();
     }
 }

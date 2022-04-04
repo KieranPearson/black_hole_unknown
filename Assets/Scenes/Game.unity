@@ -1013,7 +1013,7 @@ Transform:
   - {fileID: 133467210}
   - {fileID: 494497393}
   m_Father: {fileID: 1612431132}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &340729584
 GameObject:
@@ -1257,7 +1257,7 @@ Transform:
   - {fileID: 693697407}
   - {fileID: 1831426774}
   m_Father: {fileID: 1612431132}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &466507672
 PrefabInstance:
@@ -1439,7 +1439,7 @@ Transform:
   - {fileID: 1767604237}
   - {fileID: 2029626883}
   m_Father: {fileID: 1612431132}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &519420028
 GameObject:
@@ -2860,6 +2860,7 @@ MonoBehaviour:
   enemyColumnPadding: 1.9
   playerObject: {fileID: 293290724}
   projectiles: {fileID: 340729585}
+  asteroids: {fileID: 1612431132}
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0
@@ -3315,10 +3316,10 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 497500415}
-  - {fileID: 2104167274}
-  - {fileID: 317514737}
   - {fileID: 460416734}
+  - {fileID: 2104167274}
+  - {fileID: 497500415}
+  - {fileID: 317514737}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
