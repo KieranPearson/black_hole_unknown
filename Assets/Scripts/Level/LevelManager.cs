@@ -159,13 +159,13 @@ public class LevelManager : MonoBehaviour
         int row = enemyAliveColumnRow.Value.y;
         SetEnemyDestroyed(column, row);
         enemiesRemaining--;
+        if (isLoaded) return;
+        SyncEnemyDeath(enemy);
         enemy.SetActive(false);
         if (enemiesRemaining <= 0)
         {
             StartNewLevel();
         }
-        if (isLoaded) return;
-        SyncEnemyDeath(enemy);
     }
 
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
