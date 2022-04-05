@@ -1034,11 +1034,14 @@ MonoBehaviour:
   projectiles: {fileID: 340729585}
   asteroids: {fileID: 1612431133}
   enemyEndGameYPosition: -7
-  enemySpeedIncreaseOnDestruction: 0.05
-  enemySpeedOn3Remaining: 5
-  enemySpeedOn2Remaining: 8
-  enemySpeedOn1Remaining: 11
-  enemiesYPositionOnNewLevel: 3
+  enemySpeedIncreaseOnDestruction: 0.06
+  enemySpeedOn3Remaining: 6
+  enemySpeedOn2Remaining: 9
+  enemySpeedOn1Remaining: 12
+  enemiesStartPositionYOnLevel2: 4.5
+  enemiesStartPositionYOnLevel3: 4
+  enemiesStartPositionYOnLevel4: 3.5
+  enemiesStartPositionYOnLevel5OrMore: 3
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0

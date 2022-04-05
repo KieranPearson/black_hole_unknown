@@ -18,7 +18,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemySpeedOn3Remaining;
     [SerializeField] private float enemySpeedOn2Remaining;
     [SerializeField] private float enemySpeedOn1Remaining;
-    [SerializeField] private float enemiesYPositionOnNewLevel;
+    [SerializeField] private float enemiesStartPositionYOnLevel2;
+    [SerializeField] private float enemiesStartPositionYOnLevel3;
+    [SerializeField] private float enemiesStartPositionYOnLevel4;
+    [SerializeField] private float enemiesStartPositionYOnLevel5OrMore;
 
     public static LevelManager instance { get; private set; }
 
@@ -120,12 +123,34 @@ public class LevelManager : MonoBehaviour
         RefreshAsteroids();
     }
 
+    private void SetNewLevelEnemiesYPosition()
+    {
+        int currentLevel = activeProfile.GetLevel() + 1;
+        float newEnemiesYPosition;
+        switch (currentLevel)
+        {
+            case 2:
+                newEnemiesYPosition = enemiesStartPositionYOnLevel2;
+                break;
+            case 3:
+                newEnemiesYPosition = enemiesStartPositionYOnLevel3;
+                break;
+            case 4:
+                newEnemiesYPosition = enemiesStartPositionYOnLevel4;
+                break;
+            default:
+                newEnemiesYPosition = enemiesStartPositionYOnLevel5OrMore;
+                break;
+        }
+        activeProfile.SetEnemiesYPosition(newEnemiesYPosition);
+        Vector3 enemiesPosition = enemiesTransform.position;
+        enemiesTransform.position = new Vector3(enemiesPosition.x, newEnemiesYPosition, enemiesPosition.z);
+    }
+
     private void StartNewLevel()
     {
         RefreshGame();
-        activeProfile.SetEnemiesYPosition(enemiesYPositionOnNewLevel);
-        Vector3 enemiesPosition = enemiesTransform.position;
-        enemiesTransform.position = new Vector3(enemiesPosition.x, enemiesYPositionOnNewLevel, enemiesPosition.z);
+        SetNewLevelEnemiesYPosition();
         OnNewLevelStarted?.Invoke();
     }
 
