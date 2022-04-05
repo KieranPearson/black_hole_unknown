@@ -85,6 +85,16 @@ public class ProfileManager : MonoBehaviour
         profilesToSave.Add(profile);
     }
 
+    private void RemoveFromProfileToDeleteByName(string name)
+    {
+        for (int i = 0; i < profilesToDelete.Count; i++)
+        {
+            Profile profile = profilesToDelete[i];
+            if (profile.GetName() != name) continue;
+            profilesToDelete.Remove(profile);
+        }
+    }
+
     private void ProfileSlotNew_OnNewProfile(string profileName)
     {
         if (GetProfileByName(profileName) != null) return;
@@ -92,6 +102,7 @@ public class ProfileManager : MonoBehaviour
         profiles.Add(newProfile);
         MarkProfileToSave(newProfile);
         activeProfile = newProfile;
+        RemoveFromProfileToDeleteByName(profileName);
         GameManager.instance.StartGame();
     }
 
