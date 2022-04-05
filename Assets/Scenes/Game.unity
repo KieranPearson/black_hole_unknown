@@ -1246,7 +1246,10 @@ MonoBehaviour:
   projectiles: {fileID: 340729585}
   asteroids: {fileID: 1612431133}
   enemyEndGameYPosition: -7
-  enemySpeedIncreaseOnDestruction: 0.1
+  enemySpeedIncreaseOnDestruction: 0.05
+  enemySpeedOn3Remaining: 5
+  enemySpeedOn2Remaining: 8
+  enemySpeedOn1Remaining: 11
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0
@@ -1318,7 +1321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c688cebc7b11f846b2651dde0fef66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDownAmount: 0.25
+  moveDownAmount: 0.5
 --- !u!50 &1599791853
 Rigidbody2D:
   serializedVersion: 4

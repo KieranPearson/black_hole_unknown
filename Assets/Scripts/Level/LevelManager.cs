@@ -15,6 +15,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Asteroids asteroids;
     [SerializeField] private float enemyEndGameYPosition;
     [SerializeField] private float enemySpeedIncreaseOnDestruction;
+    [SerializeField] private float enemySpeedOn3Remaining;
+    [SerializeField] private float enemySpeedOn2Remaining;
+    [SerializeField] private float enemySpeedOn1Remaining;
 
     public static event System.Action OnLevelLoaded;
     public static event System.Action OnNewLevelStarted;
@@ -179,7 +182,22 @@ public class LevelManager : MonoBehaviour
     private void UpdateEnemySpeed()
     {
         float enemiesDestroyed = Mathf.Clamp((totalEnemies - enemiesRemaining), 0, totalEnemies);
-        float newSpeed = 0.5f + (enemiesDestroyed * enemySpeedIncreaseOnDestruction);
+        float newSpeed = 0.5f;
+        switch (enemiesRemaining)
+        {
+            case 3:
+                newSpeed = enemySpeedOn3Remaining;
+                break;
+            case 2:
+                newSpeed = enemySpeedOn2Remaining;
+                break;
+            case 1:
+                newSpeed = enemySpeedOn1Remaining;
+                break;
+            default:
+                newSpeed += (enemiesDestroyed * enemySpeedIncreaseOnDestruction);
+                break;
+        }
         activeProfile.SetEnemiesSpeed(newSpeed);
         enemiesMovement.SetSpeed(newSpeed);
     }
