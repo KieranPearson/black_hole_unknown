@@ -1038,6 +1038,7 @@ MonoBehaviour:
   enemySpeedOn3Remaining: 5
   enemySpeedOn2Remaining: 8
   enemySpeedOn1Remaining: 11
+  enemiesYPositionOnNewLevel: 3
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0
@@ -1110,7 +1111,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c688cebc7b11f846b2651dde0fef66c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDownAmount: 0.5
+  moveDownAmount: 0.6
 --- !u!50 &1599791853
 Rigidbody2D:
   serializedVersion: 4

@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemySpeedOn3Remaining;
     [SerializeField] private float enemySpeedOn2Remaining;
     [SerializeField] private float enemySpeedOn1Remaining;
+    [SerializeField] private float enemiesYPositionOnNewLevel;
 
     public static LevelManager instance { get; private set; }
 
@@ -122,6 +123,9 @@ public class LevelManager : MonoBehaviour
     private void StartNewLevel()
     {
         RefreshGame();
+        activeProfile.SetEnemiesYPosition(enemiesYPositionOnNewLevel);
+        Vector3 enemiesPosition = enemiesTransform.position;
+        enemiesTransform.position = new Vector3(enemiesPosition.x, enemiesYPositionOnNewLevel, enemiesPosition.z);
         OnNewLevelStarted?.Invoke();
     }
 
