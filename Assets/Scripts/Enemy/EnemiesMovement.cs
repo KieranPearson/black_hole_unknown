@@ -36,20 +36,21 @@ public class EnemiesMovement : MonoBehaviour
         return currentSpeed;
     }
 
-    public void SetCurrentSpeed(float currentSpeed)
+    public void SetStartSpeed(float speed)
     {
-        this.currentSpeed = currentSpeed;
+        this.speed = Mathf.Abs(speed);
+        this.currentSpeed = speed;
     }
 
     public void SetSpeed(float newSpeed)
     {
-        float newCurrentSpeed = newSpeed;
-        if (currentSpeed < 0)
+        this.speed = Mathf.Abs(newSpeed);
+        if (this.currentSpeed < 0)
         {
-            newCurrentSpeed = -newSpeed;
+            this.currentSpeed = -newSpeed;
+            return;
         }
-        speed = newSpeed;
-        currentSpeed = newCurrentSpeed;
+        this.currentSpeed = newSpeed;
     }
 
     private void MoveDown()

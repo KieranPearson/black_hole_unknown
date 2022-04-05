@@ -178,9 +178,8 @@ public class LevelManager : MonoBehaviour
 
     private void UpdateEnemySpeed()
     {
-        float newSpeed = 0.5f;
-        float enemiesDestroyed = (totalEnemies - enemiesRemaining);
-        newSpeed += enemiesDestroyed * enemySpeedIncreaseOnDestruction;
+        float enemiesDestroyed = Mathf.Clamp((totalEnemies - enemiesRemaining), 0, totalEnemies);
+        float newSpeed = 0.5f + (enemiesDestroyed * enemySpeedIncreaseOnDestruction);
         activeProfile.SetEnemiesSpeed(newSpeed);
         enemiesMovement.SetSpeed(newSpeed);
     }
@@ -331,7 +330,7 @@ public class LevelManager : MonoBehaviour
         float enemiesYPosition = activeProfile.GetEnemiesYPosition();
         float enemiesSpeed = activeProfile.GetEnemiesSpeed();
         enemiesTransform.position = new Vector3(enemiesXPosition, enemiesYPosition, 0);
-        enemiesMovement.SetSpeed(enemiesSpeed);
+        enemiesMovement.SetStartSpeed(enemiesSpeed);
 
         float playerPositionX = activeProfile.GetPlayerXPosition();
         float playerPositionY = playerTransform.position.y;
