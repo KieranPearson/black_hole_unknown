@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemiesCombatController : MonoBehaviour
 {
+    [SerializeField] private int chanceEnemyFires;
+
     public static event System.Action<GameObject> OnEnemyShoot;
 
     void FixedUpdate()
@@ -16,7 +18,7 @@ public class EnemiesCombatController : MonoBehaviour
         List<List<GameObject>> aliveEnemies = LevelManager.GetAliveEnemies();
         if (aliveEnemies.Count == 0) return;
 
-        int chanceEnemyShoots = Random.Range(0, 15);
+        int chanceEnemyShoots = Random.Range(0, chanceEnemyFires);
         if (chanceEnemyShoots != 0) return;
         int columnSelected = Random.Range(0, aliveEnemies.Count);
         List<GameObject> column = aliveEnemies[columnSelected];
