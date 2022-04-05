@@ -5,9 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnemiesMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
     [SerializeField] private float moveDownAmount;
 
+    public static event System.Action OnEnemiesMovedDown;
+
+    private float speed;
     private float currentSpeed;
     private Rigidbody2D rb2;
 
@@ -39,11 +41,23 @@ public class EnemiesMovement : MonoBehaviour
         this.currentSpeed = currentSpeed;
     }
 
+    public void SetSpeed(float newSpeed)
+    {
+        float newCurrentSpeed = newSpeed;
+        if (currentSpeed < 0)
+        {
+            newCurrentSpeed = -newSpeed;
+        }
+        speed = newSpeed;
+        currentSpeed = newCurrentSpeed;
+    }
+
     private void MoveDown()
     {
         Vector3 position = transform.position;
         position.y = position.y - moveDownAmount;
         transform.position = position;
+        OnEnemiesMovedDown?.Invoke();
     }
 
     void OnEnable()

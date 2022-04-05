@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider2D))]
-public class EnemyCollisionHandler : MonoBehaviour
+public class PlayerCollisionHandler : MonoBehaviour
 {
-    public static event System.Action<GameObject> OnEnemyDestroyed;
+    public static event System.Action OnPlayerHit;
 
     private BoxCollider2D boxCollider;
 
@@ -17,13 +17,10 @@ public class EnemyCollisionHandler : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         GameObject colliderObject = collider.gameObject;
-        if (colliderObject.CompareTag("PlayerProjectile"))
-        {
-            OnEnemyDestroyed?.Invoke(gameObject);
-            colliderObject.SetActive(false);
-        } else if (colliderObject.CompareTag("Asteroid"))
+        if (colliderObject.CompareTag("EnemyProjectile"))
         {
             colliderObject.SetActive(false);
+            OnPlayerHit?.Invoke();
         }
     }
 }

@@ -13,9 +13,12 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject playerObject;
     [SerializeField] private Transform projectiles;
     [SerializeField] private Asteroids asteroids;
+    [SerializeField] private float enemyEndGameYPosition;
+    [SerializeField] private float enemySpeedIncreaseOnDestruction;
 
     public static event System.Action OnLevelLoaded;
     public static event System.Action OnNewLevelStarted;
+    public static event System.Action OnGameReset;
     private static GameObject[,] enemies;
     private static List<List<GameObject>> allEnemies = new List<List<GameObject>>();
     private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
@@ -92,14 +95,36 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void StartNewLevel()
+    private void RefreshGame()
     {
         activeProfile.ClearLevelSpecificData();
         ClearAllProjectiles();
         RefreshEnemies();
+        UpdateEnemySpeed();
         RefreshPlayer();
         RefreshAsteroids();
+    }
+
+    private void StartNewLevel()
+    {
+        RefreshGame();
         OnNewLevelStarted?.Invoke();
+    }
+
+    private void ResetGame()
+    {
+        RefreshGame();
+        OnGameReset?.Invoke();
+    }
+
+    private void CheckIfEnemiesAtEndGamePosition()
+    {
+        for (int column = 0; column < aliveEnemies.Count; column++)
+        {
+            Transform enemyTransform = aliveEnemies[column][0].transform;
+            if (enemyTransform.position.y > enemyEndGameYPosition) continue;
+            ResetGame();
+        }
     }
 
     public static List<List<GameObject>> GetAliveEnemies()
@@ -151,6 +176,15 @@ public class LevelManager : MonoBehaviour
         activeProfile.AddDestroyedEnemey(column, row);
     }
 
+    private void UpdateEnemySpeed()
+    {
+        float newSpeed = 0.5f;
+        float enemiesDestroyed = (totalEnemies - enemiesRemaining);
+        newSpeed += enemiesDestroyed * enemySpeedIncreaseOnDestruction;
+        activeProfile.SetEnemiesSpeed(newSpeed);
+        enemiesMovement.SetSpeed(newSpeed);
+    }
+
     private void EnemyDestroyed(GameObject enemy, bool isLoaded)
     {
         Vector2Int? enemyAliveColumnRow = GetColumnRowOfAliveEnemy(enemy);
@@ -160,6 +194,7 @@ public class LevelManager : MonoBehaviour
         SetEnemyDestroyed(column, row);
         enemiesRemaining--;
         if (isLoaded) return;
+        UpdateEnemySpeed();
         SyncEnemyDeath(enemy);
         enemy.SetActive(false);
         if (enemiesRemaining <= 0)
@@ -208,16 +243,30 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void StatsManager_OnAllLivesLost()
+    {
+        ResetGame();
+    }
+
+    private void EnemiesMovement_OnEnemiesMovedDown()
+    {
+        CheckIfEnemiesAtEndGamePosition();
+    }
+
     void OnEnable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
         GameQuitHandler.OnRequestDataSync += GameQuitHandler_OnRequestDataSync;
+        StatsManager.OnAllLivesLost += StatsManager_OnAllLivesLost;
+        EnemiesMovement.OnEnemiesMovedDown += EnemiesMovement_OnEnemiesMovedDown;
     }
 
     void OnDisable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
         GameQuitHandler.OnRequestDataSync -= GameQuitHandler_OnRequestDataSync;
+        StatsManager.OnAllLivesLost -= StatsManager_OnAllLivesLost;
+        EnemiesMovement.OnEnemiesMovedDown -= EnemiesMovement_OnEnemiesMovedDown;
     }
 
     private void LoadDestroyedEnemies()
@@ -282,7 +331,7 @@ public class LevelManager : MonoBehaviour
         float enemiesYPosition = activeProfile.GetEnemiesYPosition();
         float enemiesSpeed = activeProfile.GetEnemiesSpeed();
         enemiesTransform.position = new Vector3(enemiesXPosition, enemiesYPosition, 0);
-        enemiesMovement.SetCurrentSpeed(enemiesSpeed);
+        enemiesMovement.SetSpeed(enemiesSpeed);
 
         float playerPositionX = activeProfile.GetPlayerXPosition();
         float playerPositionY = playerTransform.position.y;

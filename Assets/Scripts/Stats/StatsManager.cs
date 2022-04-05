@@ -9,6 +9,8 @@ public class StatsManager : MonoBehaviour
 
     public static StatsManager instance { get; private set; }
 
+    public static event System.Action OnAllLivesLost;
+
     private Profile activeProfile;
     private DisplayStats displayStats;
 
@@ -53,6 +55,18 @@ public class StatsManager : MonoBehaviour
         int lives = activeProfile.GetLives();
         activeProfile.SetLives(lives + amount);
         displayStats.UpdateLives();
+        if (activeProfile.GetLives() <= 0)
+        {
+            OnAllLivesLost?.Invoke();
+        }
+    }
+
+    private void ResetGameStats()
+    {
+        activeProfile.SetLevel(1);
+        activeProfile.SetLives(3);
+        activeProfile.SetCurrentScore(0);
+        displayStats.UpdateAll();
     }
 
     private void LevelManager_OnLevelLoaded()
@@ -71,11 +85,23 @@ public class StatsManager : MonoBehaviour
         ChangeScore(scoreForEnemy);
     }
 
+    private void LevelManager_OnGameReset()
+    {
+        ResetGameStats();
+    }
+
+    private void PlayerCollisionHandler_OnPlayerHit()
+    {
+        ChangeLives(-1);
+    }
+
     void OnEnable()
     {
         LevelManager.OnLevelLoaded += LevelManager_OnLevelLoaded;
         LevelManager.OnNewLevelStarted += LevelManager_OnNewLevelStarted;
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
+        LevelManager.OnGameReset += LevelManager_OnGameReset;
+        PlayerCollisionHandler.OnPlayerHit += PlayerCollisionHandler_OnPlayerHit;
     }
 
     void OnDisable()
@@ -83,5 +109,7 @@ public class StatsManager : MonoBehaviour
         LevelManager.OnLevelLoaded -= LevelManager_OnLevelLoaded;
         LevelManager.OnNewLevelStarted -= LevelManager_OnNewLevelStarted;
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
+        LevelManager.OnGameReset -= LevelManager_OnGameReset;
+        PlayerCollisionHandler.OnPlayerHit -= PlayerCollisionHandler_OnPlayerHit;
     }
 }
