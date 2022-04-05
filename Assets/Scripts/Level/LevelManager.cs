@@ -385,7 +385,6 @@ public class LevelManager : MonoBehaviour
     {
         GenerateEnemyGrid();
         LoadLevel();
-        Debug.Log("Level started");
     }
 
     private void GameQuitHandler_OnRequestDataSync()
