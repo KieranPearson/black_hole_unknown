@@ -15,9 +15,8 @@ public class EnemiesCombatController : MonoBehaviour
 
     private void EnemiesShoot()
     {
-        List<List<GameObject>> aliveEnemies = LevelManager.GetAliveEnemies();
+        List<List<GameObject>> aliveEnemies = LevelManager.instance.GetAliveEnemies();
         if (aliveEnemies.Count == 0) return;
-
         int chanceEnemyShoots = Random.Range(0, chanceEnemyFires);
         if (chanceEnemyShoots != 0) return;
         int columnSelected = Random.Range(0, aliveEnemies.Count);

@@ -19,14 +19,16 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemySpeedOn2Remaining;
     [SerializeField] private float enemySpeedOn1Remaining;
 
+    public static LevelManager instance { get; private set; }
+
     public static event System.Action OnLevelLoaded;
     public static event System.Action OnNewLevelStarted;
     public static event System.Action OnGameReset;
-    private static GameObject[,] enemies;
-    private static List<List<GameObject>> allEnemies = new List<List<GameObject>>();
-    private static List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
-    private static int enemiesRemaining;
-    private static Profile activeProfile;
+    private GameObject[,] enemies;
+    private List<List<GameObject>> allEnemies = new List<List<GameObject>>();
+    private List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
+    private int enemiesRemaining;
+    private Profile activeProfile;
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
@@ -34,6 +36,15 @@ public class LevelManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
+
         enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
         enemiesTransform = enemiesObject.transform;
         playerTransform = playerObject.transform;
@@ -130,7 +141,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public static List<List<GameObject>> GetAliveEnemies()
+    public List<List<GameObject>> GetAliveEnemies()
     {
         return aliveEnemies;
     }
@@ -270,12 +281,18 @@ public class LevelManager : MonoBehaviour
         CheckIfEnemiesAtEndGamePosition();
     }
 
+    private void OpenMainMenuCommand_OnExitingLevel()
+    {
+        SyncProfileData();
+    }
+
     void OnEnable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
         GameQuitHandler.OnRequestDataSync += GameQuitHandler_OnRequestDataSync;
         StatsManager.OnAllLivesLost += StatsManager_OnAllLivesLost;
         EnemiesMovement.OnEnemiesMovedDown += EnemiesMovement_OnEnemiesMovedDown;
+        OpenMainMenuCommand.OnExitingLevel += OpenMainMenuCommand_OnExitingLevel;
     }
 
     void OnDisable()
@@ -284,6 +301,7 @@ public class LevelManager : MonoBehaviour
         GameQuitHandler.OnRequestDataSync -= GameQuitHandler_OnRequestDataSync;
         StatsManager.OnAllLivesLost -= StatsManager_OnAllLivesLost;
         EnemiesMovement.OnEnemiesMovedDown -= EnemiesMovement_OnEnemiesMovedDown;
+        OpenMainMenuCommand.OnExitingLevel -= OpenMainMenuCommand_OnExitingLevel;
     }
 
     private void LoadDestroyedEnemies()
@@ -367,6 +385,7 @@ public class LevelManager : MonoBehaviour
     {
         GenerateEnemyGrid();
         LoadLevel();
+        Debug.Log("Level started");
     }
 
     private void GameQuitHandler_OnRequestDataSync()

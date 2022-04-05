@@ -11,6 +11,8 @@ public class SettingsHandler : MonoBehaviour
     [SerializeField] private Slider musicVolumeSlider;
     [SerializeField] private Slider soundEffectsVolumeSlider;
 
+    private bool settingsLoaded;
+
     public void ApplyButtonClicked()
     {
         string selected = resolutionDropdown.options[resolutionDropdown.value].text;
@@ -67,6 +69,7 @@ public class SettingsHandler : MonoBehaviour
         UpdateIsFullscreen();
         UpdateMusicVolume();
         UpdateSoundEffectsVolume();
+        settingsLoaded = true;
     }
 
     void OnEnable()
@@ -81,6 +84,9 @@ public class SettingsHandler : MonoBehaviour
 
     void Start()
     {
-        
+        if (!settingsLoaded)
+        {
+            SettingsManager_OnSettingsLoaded();
+        }
     }
 }

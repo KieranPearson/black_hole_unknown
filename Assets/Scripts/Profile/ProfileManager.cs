@@ -62,6 +62,11 @@ public class ProfileManager : MonoBehaviour
         return activeProfile;
     }
 
+    public void RemoveActiveProfile()
+    {
+        activeProfile = null;
+    }
+
     private Profile GetProfileByName(string profileName)
     {
         for (int i = 0; i < profiles.Count; i++)

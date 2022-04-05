@@ -9,6 +9,7 @@ public class PlayerInput : MonoBehaviour
     private Command keySpacebarPress;
     private Command keyAPress;
     private Command keyDPress;
+    private Command keyEscPress;
 
     private Command keySpacebarRelease;
     private Command keyARelease;
@@ -19,6 +20,7 @@ public class PlayerInput : MonoBehaviour
         if (key == KeyCode.Space) keySpacebarPress = command;
         else if (key == KeyCode.A) keyAPress = command;
         else if (key == KeyCode.D) keyDPress = command;
+        else if (key == KeyCode.Escape) keyEscPress = command;
     }
 
     public void MapCommandOnRelease(KeyCode key, Command command)
@@ -36,6 +38,7 @@ public class PlayerInput : MonoBehaviour
         MapCommandOnPress(KeyCode.Space, new FireCommand(combat));
         MapCommandOnPress(KeyCode.A, new MoveLeftCommand(playerController));
         MapCommandOnPress(KeyCode.D, new MoveRightCommand(playerController));
+        MapCommandOnPress(KeyCode.Escape, new OpenMainMenuCommand());
 
         MapCommandOnRelease(KeyCode.Space, new StopFiringCommand(combat));
         MapCommandOnRelease(KeyCode.A, new StopMovingLeftCommand(playerController));
@@ -52,6 +55,8 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKey(KeyCode.Space)) keySpacebarPress.Execute();
         if (Input.GetKey(KeyCode.A)) keyAPress.Execute();
         if (Input.GetKey(KeyCode.D)) keyDPress.Execute();
+
+        if (Input.GetKeyDown(KeyCode.Escape)) keyEscPress.Execute();
 
         if (Input.GetKeyUp(KeyCode.Space)) keySpacebarRelease.Execute();
         if (Input.GetKeyUp(KeyCode.A)) keyARelease.Execute();
