@@ -19,10 +19,6 @@ public class AsteroidCollisionHandler : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
-    }
-
-    private void Start()
-    {
         maxDamage = asteroidSprites.Length - 1;
     }
 
