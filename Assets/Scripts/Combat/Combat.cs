@@ -35,8 +35,8 @@ public class Combat : MonoBehaviour
         for (int i = 0; i < projectilePoolSize; i++)
         {
             GameObject newProjectile = Instantiate(projectilePrefab);
-            newProjectile.name = projectilePrefab.name;
             newProjectile.SetActive(false);
+            newProjectile.name = projectilePrefab.name;
             newProjectile.transform.parent = projectiles.transform;
             projectilePool[i] = newProjectile;
         }
@@ -70,7 +70,6 @@ public class Combat : MonoBehaviour
         spawnPosition.y += projectileSpawnOffset;
 
         GameObject projectile = projectilePool[currentProjectile];
-        projectile.transform.parent = projectiles.transform;
         projectile.transform.position = spawnPosition;
         projectile.SetActive(true);
         currentProjectile++;
