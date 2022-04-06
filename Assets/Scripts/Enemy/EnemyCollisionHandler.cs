@@ -6,6 +6,7 @@ using UnityEngine;
 public class EnemyCollisionHandler : MonoBehaviour
 {
     public static event System.Action<GameObject> OnEnemyDestroyed;
+    public static event System.Action<Vector2, float> OnImpact;
 
     private BoxCollider2D boxCollider;
 
@@ -19,10 +20,14 @@ public class EnemyCollisionHandler : MonoBehaviour
         GameObject colliderObject = collider.gameObject;
         if (colliderObject.CompareTag("PlayerProjectile"))
         {
+            Vector3 position = transform.position;
+            OnImpact?.Invoke(new Vector2(position.x, position.y), 1f);
             OnEnemyDestroyed?.Invoke(gameObject);
             colliderObject.SetActive(false);
         } else if (colliderObject.CompareTag("Asteroid"))
         {
+            Vector3 asteroidPosition = colliderObject.transform.position;
+            OnImpact?.Invoke(new Vector2(asteroidPosition.x, asteroidPosition.y), 0.6f);
             colliderObject.SetActive(false);
         }
     }

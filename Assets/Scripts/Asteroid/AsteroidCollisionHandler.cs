@@ -9,20 +9,27 @@ public class AsteroidCollisionHandler : MonoBehaviour
     [SerializeField] private Sprite[] asteroidSprites;
     [SerializeField] private int damage = 0;
 
+    public static event System.Action<Vector2, float> OnImpact;
+
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
-
     private int maxDamage;
 
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
+    }
+
+    private void Start()
+    {
         maxDamage = asteroidSprites.Length - 1;
     }
 
     private void ProjectileHit(GameObject projectile)
     {
+        Vector3 position = transform.position;
+        OnImpact?.Invoke(new Vector2(position.x, position.y), 0.6f);
         projectile.SetActive(false);
         TakeDamage();
     }

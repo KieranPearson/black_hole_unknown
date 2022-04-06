@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerCollisionHandler : MonoBehaviour
 {
     public static event System.Action OnPlayerHit;
+    public static event System.Action<Vector2, float> OnImpact;
 
     private BoxCollider2D boxCollider;
 
@@ -19,6 +20,8 @@ public class PlayerCollisionHandler : MonoBehaviour
         GameObject colliderObject = collider.gameObject;
         if (colliderObject.CompareTag("EnemyProjectile"))
         {
+            Vector3 position = transform.position;
+            OnImpact?.Invoke(new Vector2(position.x, position.y), 1f);
             colliderObject.SetActive(false);
             OnPlayerHit?.Invoke();
         }

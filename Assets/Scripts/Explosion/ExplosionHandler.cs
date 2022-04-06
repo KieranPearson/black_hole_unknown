@@ -28,13 +28,15 @@ public class ExplosionHandler : MonoBehaviour
         SetupExplosionPool();
     }
 
-    private void DisplayExplosion(Vector2 position)
+    private void DisplayExplosion(Vector2 position, float size)
     {
         GameObject explosion = explosionPool[currentExplosion];
+        Transform explosionTransform = explosion.transform;
         explosion.SetActive(false);
-        Vector3 explosionPosition = explosion.transform.position;
+        Vector3 explosionPosition = explosionTransform.position;
         Vector3 newPosition = new Vector3(position.x, position.y, explosionPosition.z);
-        explosion.transform.position = newPosition;
+        explosionTransform.position = newPosition;
+        explosionTransform.localScale = new Vector3(size, size, explosionTransform.localScale.z);
         explosion.SetActive(true);
         currentExplosion++;
         if (currentExplosion >= explosionPoolSize)
@@ -45,11 +47,17 @@ public class ExplosionHandler : MonoBehaviour
 
     void OnEnable()
     {
-        //AsteroidCollisionHandler.OnImpact += DisplayExplosion;
+        AsteroidCollisionHandler.OnImpact += DisplayExplosion;
+        ProjectileCollisionHandler.OnImpact += DisplayExplosion;
+        EnemyCollisionHandler.OnImpact += DisplayExplosion;
+        PlayerCollisionHandler.OnImpact += DisplayExplosion;
     }
 
     void OnDisable()
     {
-        //AsteroidCollisionHandler.OnImpact -= DisplayExplosion;
+        AsteroidCollisionHandler.OnImpact -= DisplayExplosion;
+        ProjectileCollisionHandler.OnImpact -= DisplayExplosion;
+        EnemyCollisionHandler.OnImpact -= DisplayExplosion;
+        PlayerCollisionHandler.OnImpact -= DisplayExplosion;
     }
 }
