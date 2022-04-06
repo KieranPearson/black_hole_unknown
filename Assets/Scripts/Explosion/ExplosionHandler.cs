@@ -32,7 +32,6 @@ public class ExplosionHandler : MonoBehaviour
     {
         GameObject explosion = explosionPool[currentExplosion];
         Transform explosionTransform = explosion.transform;
-        explosion.SetActive(false);
         Vector3 explosionPosition = explosionTransform.position;
         Vector3 newPosition = new Vector3(position.x, position.y, explosionPosition.z);
         explosionTransform.position = newPosition;

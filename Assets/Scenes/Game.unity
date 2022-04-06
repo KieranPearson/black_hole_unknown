@@ -685,7 +685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 8907105247064317813, guid: 56f25b60194bb5840962c5175629453a, type: 3}
-  explosionPoolSize: 20
+  explosionPoolSize: 15
 --- !u!1 &728214823
 GameObject:
   m_ObjectHideFlags: 0
