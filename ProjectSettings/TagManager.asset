@@ -22,9 +22,9 @@ TagManager:
   - Asteroid
   - PlayerProjectile
   - EnemyProjectile
-  - 
-  - 
-  - 
+  - ClonePowerup
+  - RapidFirePowerup
+  - SlowEnemyFirePowerup
   - 
   - 
   - 
