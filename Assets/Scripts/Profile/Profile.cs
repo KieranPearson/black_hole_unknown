@@ -134,6 +134,16 @@ public class Profile
         return activePowerup;
     }
 
+    public float GetPowerupXPosition()
+    {
+        return powerupXPosition;
+    }
+
+    public float GetPowerupYPosition()
+    {
+        return powerupYPosition;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -233,5 +243,15 @@ public class Profile
     public void SetActivePowerup(string activePowerup)
     {
         this.activePowerup = activePowerup;
+    }
+
+    public void SetPowerupXPosition(float powerupXPosition)
+    {
+        this.powerupXPosition = powerupXPosition;
+    }
+
+    public void SetPowerupYPosition(float powerupYPosition)
+    {
+        this.powerupYPosition = powerupYPosition;
     }
 }

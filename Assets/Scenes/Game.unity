@@ -590,9 +590,10 @@ GameObject:
   - component: {fileID: 550431452}
   - component: {fileID: 550431453}
   - component: {fileID: 550431451}
+  - component: {fileID: 550431454}
   m_Layer: 0
   m_Name: Powerup
-  m_TagString: Untagged
+  m_TagString: RapidfirePowerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -708,6 +709,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bottomOfScreenOnly: 1
+--- !u!114 &550431454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550431448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20c8a0a924fec64fa84fd052d6dff1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rapidfirePowerupSprite: {fileID: 21300000, guid: 60341b42f67d87b4fa1696b6f97d7d4d, type: 3}
+  clonePowerupSprite: {fileID: 21300000, guid: 715f7a21a2656bb43a44c7eea49d2d99, type: 3}
+  slowMissilesPowerupSprite: {fileID: 21300000, guid: 146b2b11759bc38489c849a843900175, type: 3}
 --- !u!1 &564580522
 GameObject:
   m_ObjectHideFlags: 0

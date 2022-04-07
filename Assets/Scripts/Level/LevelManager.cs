@@ -38,6 +38,7 @@ public class LevelManager : MonoBehaviour
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
     private int totalEnemies;
+    private PowerupManager powerupManager;
 
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class LevelManager : MonoBehaviour
         playerTransform = playerObject.transform;
         totalEnemies = enemyRows * enemyColumns;
         enemiesRemaining = totalEnemies;
+        powerupManager = PowerupManager.instance;
     }
 
     private void ClearAllProjectiles()
@@ -432,7 +434,7 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
         SyncProjectilePositions();
         SyncAsteroidDamage();
-        
+        SyncPowerup();
     }
 
     private void SyncProjectilePositions()
@@ -477,5 +479,16 @@ public class LevelManager : MonoBehaviour
                 activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetDamage());
             }
         }
+    }
+
+    private void SyncPowerup()
+    {
+        string activePowerup = powerupManager.GetActivePowerup();
+        activeProfile.SetActivePowerup(activePowerup);
+        Debug.Log(activePowerup);
+        if (activePowerup == "None") return;
+        Vector2 powerupPosition = powerupManager.GetPowerupPosition();
+        activeProfile.SetPowerupXPosition(powerupPosition.x);
+        activeProfile.SetPowerupYPosition(powerupPosition.y);
     }
 }

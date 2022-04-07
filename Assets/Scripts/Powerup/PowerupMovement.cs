@@ -14,6 +14,7 @@ public class PowerupMovement : MonoBehaviour
 
     public void MoveUp()
     {
+        rb2.velocity = Vector3.zero;
         rb2.AddForce(transform.up * 7f, ForceMode2D.Impulse);
     }
 }

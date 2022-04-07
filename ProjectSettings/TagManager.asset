@@ -9,6 +9,9 @@ TagManager:
   - Enemy
   - EnemyProjectile
   - Projectiles
+  - ClonePowerup
+  - RapidfirePowerup
+  - SlowMissilesPowerup
   layers:
   - Default
   - TransparentFX
@@ -22,9 +25,9 @@ TagManager:
   - Asteroid
   - PlayerProjectile
   - EnemyProjectile
-  - ClonePowerup
-  - RapidFirePowerup
-  - SlowEnemyFirePowerup
+  - 
+  - 
+  - 
   - 
   - 
   - 
