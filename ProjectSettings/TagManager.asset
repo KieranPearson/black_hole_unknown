@@ -61,6 +61,9 @@ TagManager:
   - name: Player
     uniqueID: 645672717
     locked: 0
+  - name: Powerup
+    uniqueID: 1093953753
+    locked: 0
   - name: Explosion
     uniqueID: 2899992243
     locked: 0
