@@ -37,7 +37,7 @@ public class SettingsHandler : MonoBehaviour
     private void UpdateResolutionDropdown()
     {
         Resolution[] resolutions = SettingsManager.instance.GetResolutions();
-        for (int i = 0; i < resolutions.Length; i++)
+        for (int i = resolutions.Length - 1; i >= 0; i--)
         {
             string resolutionText = resolutions[i].width + "x" + resolutions[i].height + "@" + resolutions[i].refreshRate;
             resolutionDropdown.options.Add(new TMP_Dropdown.OptionData() { text = resolutionText });
