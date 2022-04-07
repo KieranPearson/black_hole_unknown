@@ -5,7 +5,7 @@ using UnityEngine;
 public class PowerupManager : MonoBehaviour
 {
     [SerializeField] GameObject powerup;
-    [SerializeField] int chanceOfPowerup;
+    [SerializeField] int percentChanceOfPowerup;
 
     public static PowerupManager instance { get; private set; }
 
@@ -83,6 +83,8 @@ public class PowerupManager : MonoBehaviour
 
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
     {
+        int powerupSpawnChance = Random.Range(1, 101);
+        if (powerupSpawnChance > percentChanceOfPowerup) return;
         Vector3 enemyPosition = enemy.transform.position;
         SpawnPowerup(new Vector2(enemyPosition.x, enemyPosition.y));
     }
