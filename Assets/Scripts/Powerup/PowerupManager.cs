@@ -99,7 +99,7 @@ public class PowerupManager : MonoBehaviour
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
-    public string GetActivePowerup()
+    public string GetActivePowerupName()
     {
         if (!powerup.activeSelf) return "None";
         return powerup.tag;
@@ -109,5 +109,30 @@ public class PowerupManager : MonoBehaviour
     {
         Vector3 powerupPosition = powerupTransform.position;
         return new Vector2(powerupPosition.x, powerupPosition.y);
+    }
+
+    private PowerupType? GetPowerupTypeByName(string powerupName)
+    {
+        switch (powerupName)
+        {
+            case "RapidfirePowerup":
+                return PowerupType.RapidfirePowerup;
+            case "ClonePowerup":
+                return PowerupType.ClonePowerup;
+            case "SlowMissilesPowerup":
+                return PowerupType.SlowMissilesPowerup;
+            default:
+                return null;
+        }
+    }
+
+    public void DisplayPowerup(Vector2 position, string powerupName)
+    {
+        PowerupType? powerupType = GetPowerupTypeByName(powerupName);
+        if (powerupType == null) return;
+        Vector3 powerupPosition = powerupTransform.position;
+        powerupTransform.position = new Vector3(position.x, position.y, powerupPosition.z);
+        powerup.SetActive(true);
+        SetPowerupType((PowerupType) powerupType);
     }
 }

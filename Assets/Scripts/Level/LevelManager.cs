@@ -391,6 +391,15 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void LoadPowerup()
+    {
+        string activePowerup = activeProfile.GetActivePowerup();
+        if (activePowerup == "None") return;
+        float powerupXPosition = activeProfile.GetPowerupXPosition();
+        float powerupYPosition = activeProfile.GetPowerupYPosition();
+        powerupManager.DisplayPowerup(new Vector2(powerupXPosition, powerupYPosition), activePowerup);
+    }
+
     private void LoadLevel()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
@@ -410,6 +419,7 @@ public class LevelManager : MonoBehaviour
         LoadPlayerProjectiles();
         LoadEnemyProjectiles();
         LoadAsteroidDamage();
+        LoadPowerup();
 
         OnLevelLoaded?.Invoke();
     }
@@ -483,9 +493,8 @@ public class LevelManager : MonoBehaviour
 
     private void SyncPowerup()
     {
-        string activePowerup = powerupManager.GetActivePowerup();
+        string activePowerup = powerupManager.GetActivePowerupName();
         activeProfile.SetActivePowerup(activePowerup);
-        Debug.Log(activePowerup);
         if (activePowerup == "None") return;
         Vector2 powerupPosition = powerupManager.GetPowerupPosition();
         activeProfile.SetPowerupXPosition(powerupPosition.x);

@@ -45,11 +45,16 @@ public class Profile
         playerProjectilePositions = new List<float[]>();
         enemyProjectilePositions = new List<float[]>();
         asteroidDamageStates = new List<List<int>>();
-        enemiesXPosition = 0;
-        enemiesYPosition = 5;
+        enemiesXPosition = 0f;
+        enemiesYPosition = 5f;
         enemiesSpeed = 0.5f;
-        playerXPosition = 0;
-    }
+        playerXPosition = 0f;
+        activePowerup = "None";
+        powerupXPosition = 0f;
+        powerupYPosition = 0f;
+        usingPowerup = false;
+        powerupRemainingSeconds = 0;
+}
 
     public void ClearLevelSpecificData()
     {
