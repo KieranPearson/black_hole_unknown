@@ -6,12 +6,22 @@ public class PowerupManager : MonoBehaviour
 {
     [SerializeField] GameObject powerup;
 
+    public static PowerupManager instance { get; private set; }
+
     private Transform powerupTransform;
     private bool powerupActive;
     private PowerupMovement powerupMovement;
 
     private void Awake()
     {
+        if (instance)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+        }
         powerupTransform = powerup.transform;
         powerupMovement = powerup.GetComponent<PowerupMovement>();
     }
@@ -19,7 +29,8 @@ public class PowerupManager : MonoBehaviour
     private void SpawnPowerup(Vector2 position)
     {
         if (powerup.activeSelf) return;
-        powerupTransform.position = position;
+        Vector3 powerupPosition = powerupTransform.position;
+        powerupTransform.position = new Vector3(position.x, position.y, powerupPosition.z);
         powerup.SetActive(true);
         powerupMovement.MoveUp();
     }

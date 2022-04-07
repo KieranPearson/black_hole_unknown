@@ -18,6 +18,11 @@ public class Profile
     private float enemiesYPosition;
     private float enemiesSpeed;
     private float playerXPosition;
+    private string activePowerup;
+    private float powerupXPosition;
+    private float powerupYPosition;
+    private bool usingPowerup;
+    private int powerupRemainingSeconds;
 
     public Profile()
     {
@@ -124,6 +129,11 @@ public class Profile
         return lives;
     }
 
+    public string GetActivePowerup()
+    {
+        return activePowerup;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -218,5 +228,10 @@ public class Profile
     public void ClearAsteroidDamageStates()
     {
         asteroidDamageStates.Clear();
+    }
+
+    public void SetActivePowerup(string activePowerup)
+    {
+        this.activePowerup = activePowerup;
     }
 }
