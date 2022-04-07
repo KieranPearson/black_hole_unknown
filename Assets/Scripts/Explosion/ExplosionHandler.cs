@@ -50,6 +50,7 @@ public class ExplosionHandler : MonoBehaviour
         ProjectileCollisionHandler.OnImpact += DisplayExplosion;
         EnemyCollisionHandler.OnImpact += DisplayExplosion;
         PlayerCollisionHandler.OnImpact += DisplayExplosion;
+        PowerupCollisionHandler.OnImpact += DisplayExplosion;
     }
 
     void OnDisable()
@@ -58,5 +59,6 @@ public class ExplosionHandler : MonoBehaviour
         ProjectileCollisionHandler.OnImpact -= DisplayExplosion;
         EnemyCollisionHandler.OnImpact -= DisplayExplosion;
         PlayerCollisionHandler.OnImpact -= DisplayExplosion;
+        PowerupCollisionHandler.OnImpact -= DisplayExplosion;
     }
 }
