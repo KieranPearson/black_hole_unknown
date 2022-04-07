@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PowerupHandler : MonoBehaviour
+public class PowerupMovement : MonoBehaviour
 {
-    [SerializeField] private float speed;
-
     Rigidbody2D rb2;
 
     void Awake()
@@ -14,7 +12,7 @@ public class PowerupHandler : MonoBehaviour
         rb2 = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable()
+    public void MoveUp()
     {
         rb2.AddForce(transform.up * 7f, ForceMode2D.Impulse);
     }

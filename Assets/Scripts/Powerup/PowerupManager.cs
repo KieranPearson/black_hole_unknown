@@ -8,17 +8,20 @@ public class PowerupManager : MonoBehaviour
 
     private Transform powerupTransform;
     private bool powerupActive;
+    private PowerupMovement powerupMovement;
 
     private void Awake()
     {
         powerupTransform = powerup.transform;
+        powerupMovement = powerup.GetComponent<PowerupMovement>();
     }
 
     private void SpawnPowerup(Vector2 position)
     {
-        powerup.SetActive(false);
+        if (powerup.activeSelf) return;
         powerupTransform.position = position;
         powerup.SetActive(true);
+        powerupMovement.MoveUp();
     }
 
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)

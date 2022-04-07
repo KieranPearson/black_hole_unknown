@@ -588,8 +588,8 @@ GameObject:
   - component: {fileID: 550431450}
   - component: {fileID: 550431449}
   - component: {fileID: 550431452}
-  - component: {fileID: 550431451}
   - component: {fileID: 550431453}
+  - component: {fileID: 550431451}
   m_Layer: 0
   m_Name: Powerup
   m_TagString: Untagged
@@ -674,7 +674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 583829d904131d147b0021270c3593d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
 --- !u!50 &550431452
 Rigidbody2D:
   serializedVersion: 4
