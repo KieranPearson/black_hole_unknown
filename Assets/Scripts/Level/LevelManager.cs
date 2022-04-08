@@ -31,6 +31,7 @@ public class LevelManager : MonoBehaviour
     public static event System.Action OnNewLevelStarted;
     public static event System.Action OnGameReset;
     private GameObject[,] enemies;
+    private List<Combat> enemiesCombat = new List<Combat>();
     private List<List<GameObject>> allEnemies = new List<List<GameObject>>();
     private List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
     private int enemiesRemaining;
@@ -289,7 +290,6 @@ public class LevelManager : MonoBehaviour
         int rowLength = enemies.GetLength(1);
         int columnLength_ = columnLength - 1;
         int rowLength_ = rowLength - 1;
-
         float spawnPosX = -(columnLength_ * (enemyColumnPadding)) / 2f;
         for (int column = 0; column < columnLength; column++)
         {
@@ -301,6 +301,7 @@ public class LevelManager : MonoBehaviour
                 enemies[column, row] = enemy;
                 enemiesInColumn.Add(enemy);
                 spawnPosY += enemyRowPadding;
+                enemiesCombat.Add(enemy.GetComponent<Combat>());
             }
             allEnemies.Add(enemiesInColumn);
             aliveEnemies.Add(enemiesInColumn);
@@ -488,5 +489,10 @@ public class LevelManager : MonoBehaviour
                 activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetDamage());
             }
         }
+    }
+
+    public List<Combat> GetAllEnemiesCombat()
+    {
+        return enemiesCombat;
     }
 }

@@ -178,7 +178,13 @@ public class PowerupManager : MonoBehaviour
 
     private void UseSlowMissilesPowerup()
     {
-        //enemyProjectileMovement.SetSpeed(0.5f);
+        /*
+        List<Combat> enemiesCombat = LevelManager.instance.GetAllEnemiesCombat();
+        for (int i = 0; i < enemiesCombat.Count; i++)
+        {
+            enemiesCombat[i].SetProjectilesSpeed(0.5f);
+        }
+        */
     }
 
     public void PowerupPickedUp()

@@ -8,20 +8,24 @@ public class Combat : MonoBehaviour
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private float fireRate;
     [SerializeField] private int projectilePoolSize;
+    [SerializeField] private float projectileSpeed;
+    [SerializeField] private bool projectilesMoveDown;
 
     private GameObject projectiles;
     private float projectileSpawnOffset;
     private float lastFired;
     private bool isFiring = false;
     private GameObject[] projectilePool;
+    private ProjectileMovement[] projectilesMovement;
     private int currentProjectile;
     private float currentFireRate;
+    private float currentProjectileSpeed;
 
     private void CalculateSpawnOffset()
     {
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         if (projectilePrefab == null) return;
-        if (projectilePrefab.GetComponent<ProjectileMovement>().getMovesDown())
+        if (projectilesMoveDown)
         {
             projectileSpawnOffset = -(spriteRenderer.sprite.bounds.size.y / 2) - 0.6f;
         } else
@@ -33,6 +37,7 @@ public class Combat : MonoBehaviour
     private void SetupProjectilePool()
     {
         projectilePool = new GameObject[projectilePoolSize];
+        projectilesMovement = new ProjectileMovement[projectilePoolSize];
         for (int i = 0; i < projectilePoolSize; i++)
         {
             GameObject newProjectile = Instantiate(projectilePrefab);
@@ -40,6 +45,7 @@ public class Combat : MonoBehaviour
             newProjectile.name = projectilePrefab.name;
             newProjectile.transform.parent = projectiles.transform;
             projectilePool[i] = newProjectile;
+            projectilesMovement[i] = newProjectile.GetComponent<ProjectileMovement>();
         }
     }
 
@@ -53,6 +59,11 @@ public class Combat : MonoBehaviour
     {
         CalculateSpawnOffset();
         currentFireRate = fireRate;
+        if (projectilesMoveDown)
+        {
+            projectileSpeed = -projectileSpeed;
+        }
+        currentProjectileSpeed = projectileSpeed;
     }
 
     void FixedUpdate()
@@ -74,6 +85,7 @@ public class Combat : MonoBehaviour
         GameObject projectile = projectilePool[currentProjectile];
         projectile.transform.position = spawnPosition;
         projectile.SetActive(true);
+        projectilesMovement[currentProjectile].SetSpeed(currentProjectileSpeed);
         currentProjectile++;
         if (currentProjectile >= projectilePoolSize)
         {
@@ -102,5 +114,23 @@ public class Combat : MonoBehaviour
     public void SetDefaultFireRate()
     {
         this.currentFireRate = fireRate;
+    }
+
+    public void SetProjectilesSpeed(float newSpeed)
+    {
+        currentProjectileSpeed = newSpeed;
+        for (int i = 0; i < projectilePoolSize; i++)
+        {
+            projectilesMovement[i].SetSpeed(newSpeed);
+        }
+    }
+
+    public void SetProjectilesDefaultSpeed()
+    {
+        currentProjectileSpeed = projectileSpeed;
+        for (int i = 0; i < projectilePoolSize; i++)
+        {
+            projectilesMovement[i].SetSpeed(projectileSpeed);
+        }
     }
 }
