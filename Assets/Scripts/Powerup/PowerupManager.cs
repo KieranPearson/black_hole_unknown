@@ -85,17 +85,16 @@ public class PowerupManager : MonoBehaviour
 
     private void SpawnPowerup(Vector2 position)
     {
-        if (powerup.activeSelf) return;
         Vector3 powerupPosition = powerupTransform.position;
         powerupTransform.position = new Vector3(position.x, position.y, powerupPosition.z);
         powerup.SetActive(true);
         powerupMovement.MoveUp();
         RandomisePowerup();
-        
     }
 
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
     {
+        if (powerup.activeSelf || activeProfile.GetUsingPowerup()) return;
         int powerupSpawnChance = Random.Range(1, 101);
         if (powerupSpawnChance > percentChanceOfPowerup) return;
         Vector3 enemyPosition = enemy.transform.position;
