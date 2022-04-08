@@ -15,6 +15,7 @@ public class Combat : MonoBehaviour
     private bool isFiring = false;
     private GameObject[] projectilePool;
     private int currentProjectile;
+    private float currentFireRate;
 
     private void CalculateSpawnOffset()
     {
@@ -51,6 +52,7 @@ public class Combat : MonoBehaviour
     void Start()
     {
         CalculateSpawnOffset();
+        currentFireRate = fireRate;
     }
 
     void FixedUpdate()
@@ -82,7 +84,7 @@ public class Combat : MonoBehaviour
     public void FireOnce()
     {
         float fireTime = Time.time;
-        if ((fireTime - lastFired) < fireRate) return;
+        if ((fireTime - lastFired) < currentFireRate) return;
         lastFired = fireTime;
         UseProjectile();
     }
@@ -90,5 +92,15 @@ public class Combat : MonoBehaviour
     public void ToggleFire(bool toggle)
     {
         isFiring = toggle;
+    }
+
+    public void SetFireRate(float fireRate)
+    {
+        this.currentFireRate = fireRate;
+    }
+
+    public void SetDefaultFireRate()
+    {
+        this.currentFireRate = fireRate;
     }
 }

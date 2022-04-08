@@ -7,6 +7,10 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] GameObject powerup;
     [SerializeField] int percentChanceOfPowerup;
 
+    [SerializeField] GameObject playerClone;
+    [SerializeField] Combat playerCombat;
+    [SerializeField] ProjectileMovement enemyProjectileMovement;
+
     public static PowerupManager instance { get; private set; }
 
     private Transform powerupTransform;

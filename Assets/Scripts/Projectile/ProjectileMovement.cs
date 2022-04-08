@@ -9,6 +9,7 @@ public class ProjectileMovement : MonoBehaviour
     [SerializeField] private bool movesDown;
 
     Rigidbody2D rb2;
+    private float currentSpeed;
 
     public bool getMovesDown()
     {
@@ -22,10 +23,21 @@ public class ProjectileMovement : MonoBehaviour
         {
             speed = -speed;
         }
+        currentSpeed = speed;
     }
 
     void FixedUpdate()
     {
-        rb2.velocity = new Vector2(0, speed);
+        rb2.velocity = new Vector2(0, currentSpeed);
+    }
+
+    public void SetSpeed(float newSpeed)
+    {
+        this.currentSpeed = newSpeed;
+    }
+
+    public void SetDefaultSpeed()
+    {
+        currentSpeed = speed;
     }
 }

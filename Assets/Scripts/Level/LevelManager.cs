@@ -23,6 +23,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemiesStartPositionYOnLevel3;
     [SerializeField] private float enemiesStartPositionYOnLevel4;
     [SerializeField] private float enemiesStartPositionYOnLevel5OrMore;
+    [SerializeField] private Transform playerCloneTransform;
 
     public static LevelManager instance { get; private set; }
 
@@ -96,6 +97,10 @@ public class LevelManager : MonoBehaviour
         Vector3 playerPosition = playerTransform.position;
         float newX = activeProfile.GetPlayerXPosition();
         playerTransform.position = new Vector3(newX, playerPosition.y, playerPosition.z);
+
+        Vector3 playerClonePosition = playerCloneTransform.position;
+        newX -= 2f;
+        playerCloneTransform.position = new Vector3(newX, playerClonePosition.y, playerClonePosition.z);
     }
 
     private void RefreshAsteroids()
@@ -414,6 +419,9 @@ public class LevelManager : MonoBehaviour
         float playerPositionY = playerTransform.position.y;
         float playerPositionZ = playerTransform.position.z;
         playerTransform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+
+        Vector3 playerClonePosition = playerCloneTransform.position;
+        playerCloneTransform.position = new Vector3(playerPositionX - 2f, playerClonePosition.y, playerClonePosition.z);
 
         LoadDestroyedEnemies();
         LoadPlayerProjectiles();
