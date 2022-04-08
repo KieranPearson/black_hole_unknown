@@ -186,9 +186,8 @@ public class PowerupManager : MonoBehaviour
     private void UseClonePowerup()
     {
         Vector3 playerPosition = playerTransform.position;
-        float newPositionX = playerPosition.x - 2f;
         Vector3 playerClonePosition = playerClone.transform.position;
-        playerClone.transform.position = new Vector3(newPositionX, playerClonePosition.y, playerClonePosition.z);
+        playerClone.transform.position = new Vector3(playerPosition.x, playerClonePosition.y, playerClonePosition.z);
         playerClone.SetActive(true);
     }
 

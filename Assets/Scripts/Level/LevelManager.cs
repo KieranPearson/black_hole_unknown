@@ -100,7 +100,6 @@ public class LevelManager : MonoBehaviour
         playerTransform.position = new Vector3(newX, playerPosition.y, playerPosition.z);
 
         Vector3 playerClonePosition = playerCloneTransform.position;
-        newX -= 2f;
         playerCloneTransform.position = new Vector3(newX, playerClonePosition.y, playerClonePosition.z);
     }
 
@@ -413,7 +412,7 @@ public class LevelManager : MonoBehaviour
         playerTransform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
 
         Vector3 playerClonePosition = playerCloneTransform.position;
-        playerCloneTransform.position = new Vector3(playerPositionX - 2f, playerClonePosition.y, playerClonePosition.z);
+        playerCloneTransform.position = new Vector3(playerPositionX, playerClonePosition.y, playerClonePosition.z);
 
         LoadDestroyedEnemies();
         LoadPlayerProjectiles();
