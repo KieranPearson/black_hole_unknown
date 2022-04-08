@@ -465,6 +465,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f30ea4c74ad8d47a663e7086e92c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &293290734 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6052519698405716691, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
+  m_PrefabInstance: {fileID: 6052519698128285749}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &340729584
 GameObject:
   m_ObjectHideFlags: 0
@@ -1118,6 +1123,9 @@ MonoBehaviour:
   playerCombat: {fileID: 293290727}
   enemyProjectileMovement: {fileID: 8506088823035649302, guid: 5d8149f63cf12d34fa6260a57746e0b6, type: 3}
   powerupDuration: 15
+  playerTransform: {fileID: 293290734}
+  rapidfireSpeed: 0.25
+  slowMissilesSpeed: 0.5
 --- !u!1 &1031945806
 GameObject:
   m_ObjectHideFlags: 0

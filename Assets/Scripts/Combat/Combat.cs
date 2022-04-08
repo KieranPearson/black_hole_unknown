@@ -118,6 +118,7 @@ public class Combat : MonoBehaviour
 
     public void SetProjectilesSpeed(float newSpeed)
     {
+        if (projectilesMoveDown) newSpeed = -newSpeed;
         currentProjectileSpeed = newSpeed;
         for (int i = 0; i < projectilePoolSize; i++)
         {

@@ -11,6 +11,9 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] Combat playerCombat;
     [SerializeField] ProjectileMovement enemyProjectileMovement;
     [SerializeField] int powerupDuration;
+    [SerializeField] Transform playerTransform;
+    [SerializeField] float rapidfireSpeed;
+    [SerializeField] float slowMissilesSpeed;
 
     public static PowerupManager instance { get; private set; }
 
@@ -168,23 +171,25 @@ public class PowerupManager : MonoBehaviour
 
     private void UseRapidfirePowerup()
     {
-        playerCombat.SetFireRate(0.25f);
+        playerCombat.SetFireRate(rapidfireSpeed);
     }
 
     private void UseClonePowerup()
     {
+        Vector3 playerPosition = playerTransform.position;
+        float newPositionX = playerPosition.x - 2f;
+        Vector3 playerClonePosition = playerClone.transform.position;
+        playerClone.transform.position = new Vector3(newPositionX, playerClonePosition.y, playerClonePosition.z);
         playerClone.SetActive(true);
     }
 
     private void UseSlowMissilesPowerup()
     {
-        /*
         List<Combat> enemiesCombat = LevelManager.instance.GetAllEnemiesCombat();
         for (int i = 0; i < enemiesCombat.Count; i++)
         {
-            enemiesCombat[i].SetProjectilesSpeed(0.5f);
+            enemiesCombat[i].SetProjectilesSpeed(slowMissilesSpeed);
         }
-        */
     }
 
     public void PowerupPickedUp()
