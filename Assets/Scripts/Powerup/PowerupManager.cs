@@ -201,8 +201,27 @@ public class PowerupManager : MonoBehaviour
         }
     }
 
+    private void PowerupExpired()
+    {
+        activeProfile.SetUsingPowerup(false);
+        RemovePowerupEffects();
+    }
+
+    IEnumerator PowerupDurationTick()
+    {
+        while (activeProfile.GetPowerupRemainingSeconds() > 0)
+        {
+            int remainingTime = activeProfile.GetPowerupRemainingSeconds() - 1;
+            activeProfile.SetPowerupRemainingSeconds(remainingTime);
+            yield return new WaitForSeconds(1f);
+        }
+        PowerupExpired();
+        yield return null;
+    }
+
     public void PowerupPickedUp()
     {
+        if (activeProfile.GetUsingPowerup()) return;
         switch (powerup.tag)
         {
             case "RapidfirePowerup":
@@ -220,5 +239,6 @@ public class PowerupManager : MonoBehaviour
         activeProfile.SetActivePowerup(powerup.tag);
         activeProfile.SetUsingPowerup(true);
         activeProfile.SetPowerupRemainingSeconds(powerupDuration);
+        StartCoroutine(PowerupDurationTick());
     }
 }
