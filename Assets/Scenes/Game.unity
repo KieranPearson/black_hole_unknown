@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerup: {fileID: 550431448}
-  percentChanceOfPowerup: 6
+  percentChanceOfPowerup: 10
   playerClone: {fileID: 148169035}
   playerCombat: {fileID: 293290727}
   enemyCombat: {fileID: -3947062780682599927, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
@@ -1526,7 +1526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15b1d7cf8fe9a5d41bc531f107144c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chanceEnemyFires: 10
+  chanceEnemyFires: 11
 --- !u!114 &1599791852
 MonoBehaviour:
   m_ObjectHideFlags: 0
