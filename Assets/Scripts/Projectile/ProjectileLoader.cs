@@ -7,6 +7,9 @@ public class ProjectileLoader : MonoBehaviour
     [SerializeField] private GameObject playerProjectilePrefab;
     [SerializeField] private GameObject enemyProjectilePrefab;
 
+    [SerializeField] private Combat playerCombat;
+    [SerializeField] private Combat enemyCombat;
+
     public static ProjectileLoader instance { get; private set; }
 
     private void Awake()
@@ -21,7 +24,8 @@ public class ProjectileLoader : MonoBehaviour
         }
     }
 
-    private GameObject LoadProjectile(GameObject projectilePrefab, float x, float y)
+    private GameObject LoadProjectile(GameObject projectilePrefab, float x, float y, 
+        float speed, bool movesDown)
     {
         GameObject projectile = Instantiate(projectilePrefab);
         projectile.name = projectilePrefab.name;
@@ -30,16 +34,23 @@ public class ProjectileLoader : MonoBehaviour
         projectile.transform.parent = transform;
         projectileTransform.position = new Vector3(x, y, projectilePosition.z);
         projectile.SetActive(true);
+        ProjectileMovement projectileMovement = projectile.GetComponent<ProjectileMovement>();
+        if (movesDown) speed = -speed;
+        projectileMovement.SetSpeed(speed);
         return projectile;
     }
 
     public GameObject LoadPlayerProjectile(float x, float y)
     {
-        return LoadProjectile(playerProjectilePrefab, x, y);
+        float speed = playerCombat.GetProjectilesDefaultSpeed();
+        bool movesDown = playerCombat.ProjectilesDefaultMoveDown();
+        return LoadProjectile(playerProjectilePrefab, x, y, speed, movesDown);
     }
 
     public GameObject LoadEnemyProjectile(float x, float y)
     {
-        return LoadProjectile(enemyProjectilePrefab, x, y);
+        float speed = enemyCombat.GetProjectilesDefaultSpeed();
+        bool movesDown = enemyCombat.ProjectilesDefaultMoveDown();
+        return LoadProjectile(enemyProjectilePrefab, x, y, speed, movesDown);
     }
 }

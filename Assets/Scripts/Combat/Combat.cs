@@ -134,4 +134,14 @@ public class Combat : MonoBehaviour
             projectilesMovement[i].SetSpeed(projectileSpeed);
         }
     }
+
+    public float GetProjectilesDefaultSpeed()
+    {
+        return projectileSpeed;
+    }
+
+    public bool ProjectilesDefaultMoveDown()
+    {
+        return projectilesMoveDown;
+    }
 }
