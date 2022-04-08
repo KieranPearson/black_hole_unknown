@@ -30,14 +30,4 @@ public class ProjectileMovement : MonoBehaviour
     {
         rb2.velocity = new Vector2(0, currentSpeed);
     }
-
-    public void SetSpeed(float newSpeed)
-    {
-        this.currentSpeed = newSpeed;
-    }
-
-    public void SetDefaultSpeed()
-    {
-        currentSpeed = speed;
-    }
 }

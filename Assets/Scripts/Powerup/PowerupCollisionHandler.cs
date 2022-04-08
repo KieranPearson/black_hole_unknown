@@ -25,5 +25,10 @@ public class PowerupCollisionHandler : MonoBehaviour
             OnImpact?.Invoke(new Vector2(position.x, position.y), 1f);
             gameObject.SetActive(false);
         }
+        else if (colliderObj.CompareTag("Player"))
+        {
+            PowerupManager.instance.PowerupPickedUp();
+            gameObject.SetActive(false);
+        }
     }
 }

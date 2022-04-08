@@ -149,6 +149,16 @@ public class Profile
         return powerupYPosition;
     }
 
+    public bool GetUsingPowerup()
+    {
+        return usingPowerup;
+    }
+
+    public int GetPowerupRemainingSeconds()
+    {
+        return powerupRemainingSeconds;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -258,5 +268,15 @@ public class Profile
     public void SetPowerupYPosition(float powerupYPosition)
     {
         this.powerupYPosition = powerupYPosition;
+    }
+
+    public void SetUsingPowerup(bool usingPowerup)
+    {
+        this.usingPowerup = usingPowerup;
+    }
+
+    public void SetPowerupRemainingSeconds(int powerupRemainingSeconds)
+    {
+        this.powerupRemainingSeconds = powerupRemainingSeconds;
     }
 }

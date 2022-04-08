@@ -10,6 +10,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] GameObject playerClone;
     [SerializeField] Combat playerCombat;
     [SerializeField] ProjectileMovement enemyProjectileMovement;
+    [SerializeField] int powerupDuration;
 
     public static PowerupManager instance { get; private set; }
 
@@ -21,6 +22,7 @@ public class PowerupManager : MonoBehaviour
         ClonePowerup,
         SlowMissilesPowerup
     };
+    private Profile activeProfile;
 
     private void Awake()
     {
@@ -35,6 +37,11 @@ public class PowerupManager : MonoBehaviour
         powerupTransform = powerup.transform;
         powerupMovement = powerup.GetComponent<PowerupMovement>();
         powerupTypeChanger = powerup.GetComponent<PowerupTypeChanger>();
+    }
+
+    private void Start()
+    {
+        activeProfile = ProfileManager.instance.GetActiveProfile();
     }
 
     private void SetPowerupType(PowerupType powerupType)
@@ -103,13 +110,13 @@ public class PowerupManager : MonoBehaviour
         EnemyCollisionHandler.OnEnemyDestroyed -= EnemyCollisionHandler_OnEnemyDestroyed;
     }
 
-    public string GetActivePowerupName()
+    private string GetActivePowerupName()
     {
         if (!powerup.activeSelf) return "None";
         return powerup.tag;
     }
 
-    public Vector2 GetPowerupPosition()
+    private Vector2 GetPowerupPosition()
     {
         Vector3 powerupPosition = powerupTransform.position;
         return new Vector2(powerupPosition.x, powerupPosition.y);
@@ -130,7 +137,7 @@ public class PowerupManager : MonoBehaviour
         }
     }
 
-    public void DisplayPowerup(Vector2 position, string powerupName)
+    private void DisplayPowerup(Vector2 position, string powerupName)
     {
         PowerupType? powerupType = GetPowerupTypeByName(powerupName);
         if (powerupType == null) return;
@@ -138,5 +145,60 @@ public class PowerupManager : MonoBehaviour
         powerupTransform.position = new Vector3(position.x, position.y, powerupPosition.z);
         powerup.SetActive(true);
         SetPowerupType((PowerupType) powerupType);
+    }
+
+    public void SyncPowerup()
+    {
+        string activePowerup = GetActivePowerupName();
+        activeProfile.SetActivePowerup(activePowerup);
+        if (activePowerup == "None") return;
+        Vector2 powerupPosition = GetPowerupPosition();
+        activeProfile.SetPowerupXPosition(powerupPosition.x);
+        activeProfile.SetPowerupYPosition(powerupPosition.y);
+    }
+
+    public void LoadPowerup()
+    {
+        string activePowerup = activeProfile.GetActivePowerup();
+        if (activePowerup == "None") return;
+        float powerupXPosition = activeProfile.GetPowerupXPosition();
+        float powerupYPosition = activeProfile.GetPowerupYPosition();
+        DisplayPowerup(new Vector2(powerupXPosition, powerupYPosition), activePowerup);
+    }
+
+    private void UseRapidfirePowerup()
+    {
+        playerCombat.SetFireRate(0.25f);
+    }
+
+    private void UseClonePowerup()
+    {
+        playerClone.SetActive(true);
+    }
+
+    private void UseSlowMissilesPowerup()
+    {
+        //enemyProjectileMovement.SetSpeed(0.5f);
+    }
+
+    public void PowerupPickedUp()
+    {
+        switch (powerup.tag)
+        {
+            case "RapidfirePowerup":
+                UseRapidfirePowerup();
+                break;
+            case "ClonePowerup":
+                UseClonePowerup();
+                break;
+            case "SlowMissilesPowerup":
+                UseSlowMissilesPowerup();
+                break;
+            default:
+                return;
+        }
+        activeProfile.SetActivePowerup(powerup.tag);
+        activeProfile.SetUsingPowerup(true);
+        activeProfile.SetPowerupRemainingSeconds(powerupDuration);
     }
 }

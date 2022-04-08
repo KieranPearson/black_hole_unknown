@@ -396,15 +396,6 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void LoadPowerup()
-    {
-        string activePowerup = activeProfile.GetActivePowerup();
-        if (activePowerup == "None") return;
-        float powerupXPosition = activeProfile.GetPowerupXPosition();
-        float powerupYPosition = activeProfile.GetPowerupYPosition();
-        powerupManager.DisplayPowerup(new Vector2(powerupXPosition, powerupYPosition), activePowerup);
-    }
-
     private void LoadLevel()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
@@ -427,7 +418,7 @@ public class LevelManager : MonoBehaviour
         LoadPlayerProjectiles();
         LoadEnemyProjectiles();
         LoadAsteroidDamage();
-        LoadPowerup();
+        powerupManager.LoadPowerup();
 
         OnLevelLoaded?.Invoke();
     }
@@ -452,7 +443,7 @@ public class LevelManager : MonoBehaviour
         activeProfile.SetPlayerXPosition(playerTransform.position.x);
         SyncProjectilePositions();
         SyncAsteroidDamage();
-        SyncPowerup();
+        powerupManager.SyncPowerup();
     }
 
     private void SyncProjectilePositions()
@@ -497,15 +488,5 @@ public class LevelManager : MonoBehaviour
                 activeProfile.AddAsteroidDamage(clusterIndex, asteroidCollision.GetDamage());
             }
         }
-    }
-
-    private void SyncPowerup()
-    {
-        string activePowerup = powerupManager.GetActivePowerupName();
-        activeProfile.SetActivePowerup(activePowerup);
-        if (activePowerup == "None") return;
-        Vector2 powerupPosition = powerupManager.GetPowerupPosition();
-        activeProfile.SetPowerupXPosition(powerupPosition.x);
-        activeProfile.SetPowerupYPosition(powerupPosition.y);
     }
 }
