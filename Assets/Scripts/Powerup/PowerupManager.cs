@@ -6,7 +6,6 @@ public class PowerupManager : MonoBehaviour
 {
     [SerializeField] GameObject powerup;
     [SerializeField] int percentChanceOfPowerup;
-
     [SerializeField] GameObject playerClone;
     [SerializeField] Combat playerCombat;
     [SerializeField] ProjectileMovement enemyProjectileMovement;
@@ -167,6 +166,17 @@ public class PowerupManager : MonoBehaviour
         float powerupXPosition = activeProfile.GetPowerupXPosition();
         float powerupYPosition = activeProfile.GetPowerupYPosition();
         DisplayPowerup(new Vector2(powerupXPosition, powerupYPosition), activePowerup);
+    }
+
+    private void RemovePowerupEffects()
+    {
+        playerCombat.SetDefaultFireRate();
+        playerClone.SetActive(false);
+        List<Combat> enemiesCombat = LevelManager.instance.GetAllEnemiesCombat();
+        for (int i = 0; i < enemiesCombat.Count; i++)
+        {
+            enemiesCombat[i].SetProjectilesDefaultSpeed();
+        }
     }
 
     private void UseRapidfirePowerup()
