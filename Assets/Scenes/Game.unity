@@ -623,7 +623,7 @@ GameObject:
   - component: {fileID: 550431456}
   m_Layer: 12
   m_Name: Powerup
-  m_TagString: RapidfirePowerup
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1120,10 +1120,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerup: {fileID: 550431448}
-  percentChanceOfPowerup: 6
+  percentChanceOfPowerup: 100
   playerClone: {fileID: 148169035}
   playerCombat: {fileID: 293290727}
-  enemyProjectileMovement: {fileID: 8506088823035649302, guid: 5d8149f63cf12d34fa6260a57746e0b6, type: 3}
+  enemyCombat: {fileID: -3947062780682599927, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
   powerupDuration: 10
   playerTransform: {fileID: 293290734}
   rapidfireSpeed: 0.25

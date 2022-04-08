@@ -8,7 +8,7 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] int percentChanceOfPowerup;
     [SerializeField] GameObject playerClone;
     [SerializeField] Combat playerCombat;
-    [SerializeField] ProjectileMovement enemyProjectileMovement;
+    [SerializeField] Combat enemyCombat;
     [SerializeField] int powerupDuration;
     [SerializeField] Transform playerTransform;
     [SerializeField] float rapidfireSpeed;
@@ -144,6 +144,7 @@ public class PowerupManager : MonoBehaviour
         if (powerupType == null) return;
         Vector3 powerupPosition = powerupTransform.position;
         powerupTransform.position = new Vector3(position.x, position.y, powerupPosition.z);
+        powerup.tag = powerupName;
         powerup.SetActive(true);
         SetPowerupType((PowerupType) powerupType);
     }
@@ -158,13 +159,25 @@ public class PowerupManager : MonoBehaviour
         activeProfile.SetPowerupYPosition(powerupPosition.y);
     }
 
-    public void LoadPowerup()
+    private void LoadPowerupInLevel()
     {
         string activePowerup = activeProfile.GetActivePowerup();
         if (activePowerup == "None") return;
         float powerupXPosition = activeProfile.GetPowerupXPosition();
         float powerupYPosition = activeProfile.GetPowerupYPosition();
         DisplayPowerup(new Vector2(powerupXPosition, powerupYPosition), activePowerup);
+    }
+
+    private void LoadPowerupInUse()
+    {
+        if (!activeProfile.GetUsingPowerup()) return;
+        EnablePowerupEffect();
+    }
+
+    public void LoadPowerup()
+    {
+        LoadPowerupInLevel();
+        LoadPowerupInUse();
     }
 
     private void RemovePowerupEffects()
@@ -175,6 +188,18 @@ public class PowerupManager : MonoBehaviour
         for (int i = 0; i < enemiesCombat.Count; i++)
         {
             enemiesCombat[i].SetProjectilesDefaultSpeed();
+        }
+
+        List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
+        if (loadedEnemyProjectileMovements.Count <= 0) return;
+        float enemyProjectileSpeed = enemyCombat.GetProjectilesDefaultSpeed();
+        if (enemyCombat.ProjectilesDefaultMoveDown())
+        {
+            enemyProjectileSpeed = -enemyProjectileSpeed;
+        }
+        for (int i = 0; i < loadedEnemyProjectileMovements.Count; i++)
+        {
+            loadedEnemyProjectileMovements[i].SetSpeed(enemyProjectileSpeed);
         }
     }
 
@@ -198,11 +223,24 @@ public class PowerupManager : MonoBehaviour
         {
             enemiesCombat[i].SetProjectilesSpeed(slowMissilesSpeed);
         }
+
+        List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
+        if (loadedEnemyProjectileMovements.Count <= 0) return;
+        float enemySlowProjectileSpeed = slowMissilesSpeed;
+        if (enemyCombat.ProjectilesDefaultMoveDown())
+        {
+            enemySlowProjectileSpeed = -enemySlowProjectileSpeed;
+        }
+        for (int i = 0; i < loadedEnemyProjectileMovements.Count; i++)
+        {
+            loadedEnemyProjectileMovements[i].SetSpeed(enemySlowProjectileSpeed);
+        }
     }
 
     private void PowerupExpired()
     {
         activeProfile.SetUsingPowerup(false);
+        activeProfile.SetPowerupUsed("None");
         RemovePowerupEffects();
     }
 
@@ -218,10 +256,9 @@ public class PowerupManager : MonoBehaviour
         yield return null;
     }
 
-    public void PowerupPickedUp()
+    private void EnablePowerupEffect()
     {
-        if (activeProfile.GetUsingPowerup()) return;
-        switch (powerup.tag)
+        switch (activeProfile.GetPowerupUsed())
         {
             case "RapidfirePowerup":
                 UseRapidfirePowerup();
@@ -235,9 +272,16 @@ public class PowerupManager : MonoBehaviour
             default:
                 return;
         }
-        activeProfile.SetActivePowerup(powerup.tag);
+        StartCoroutine(PowerupDurationTick());
+    }
+
+    public void PowerupPickedUp()
+    {
+        if (activeProfile.GetUsingPowerup()) return;
+        activeProfile.SetActivePowerup("None");
+        activeProfile.SetPowerupUsed(powerup.tag);
         activeProfile.SetUsingPowerup(true);
         activeProfile.SetPowerupRemainingSeconds(powerupDuration);
-        StartCoroutine(PowerupDurationTick());
+        EnablePowerupEffect();
     }
 }

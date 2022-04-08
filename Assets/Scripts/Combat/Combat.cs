@@ -52,18 +52,18 @@ public class Combat : MonoBehaviour
     void Awake()
     {
         projectiles = GameObject.FindWithTag("Projectiles");
-        SetupProjectilePool();
-    }
-
-    void Start()
-    {
-        CalculateSpawnOffset();
         currentFireRate = fireRate;
         if (projectilesMoveDown)
         {
             projectileSpeed = -projectileSpeed;
         }
         currentProjectileSpeed = projectileSpeed;
+        SetupProjectilePool();
+    }
+
+    void Start()
+    {
+        CalculateSpawnOffset();
     }
 
     void FixedUpdate()

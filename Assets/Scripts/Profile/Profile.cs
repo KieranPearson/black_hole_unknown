@@ -23,6 +23,7 @@ public class Profile
     private float powerupYPosition;
     private bool usingPowerup;
     private int powerupRemainingSeconds;
+    private string powerupUsed;
 
     public Profile()
     {
@@ -54,6 +55,7 @@ public class Profile
         powerupYPosition = 0f;
         usingPowerup = false;
         powerupRemainingSeconds = 0;
+        powerupUsed = "None";
 }
 
     public void ClearLevelSpecificData()
@@ -157,6 +159,11 @@ public class Profile
     public int GetPowerupRemainingSeconds()
     {
         return powerupRemainingSeconds;
+    }
+
+    public string GetPowerupUsed()
+    {
+        return powerupUsed;
     }
 
     public void SetEnemiesXPosition(float enemiesXPosition)
@@ -278,5 +285,10 @@ public class Profile
     public void SetPowerupRemainingSeconds(int powerupRemainingSeconds)
     {
         this.powerupRemainingSeconds = powerupRemainingSeconds;
+    }
+
+    public void SetPowerupUsed(string powerupUsed)
+    {
+        this.powerupUsed = powerupUsed;
     }
 }

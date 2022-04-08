@@ -10,6 +10,9 @@ public class ProjectileLoader : MonoBehaviour
     [SerializeField] private Combat playerCombat;
     [SerializeField] private Combat enemyCombat;
 
+    private List<GameObject> loadedEnemyProjectiles = new List<GameObject>();
+    private List<ProjectileMovement> enemyProjectileMovements = new List<ProjectileMovement>();
+
     public static ProjectileLoader instance { get; private set; }
 
     private void Awake()
@@ -51,6 +54,27 @@ public class ProjectileLoader : MonoBehaviour
     {
         float speed = enemyCombat.GetProjectilesDefaultSpeed();
         bool movesDown = enemyCombat.ProjectilesDefaultMoveDown();
-        return LoadProjectile(enemyProjectilePrefab, x, y, speed, movesDown);
+        GameObject loadedEnemyProjectile = LoadProjectile(enemyProjectilePrefab, x, y, speed, movesDown);
+        loadedEnemyProjectiles.Add(loadedEnemyProjectile);
+        enemyProjectileMovements.Add(loadedEnemyProjectile.GetComponent<ProjectileMovement>());
+        return loadedEnemyProjectile;
+    }
+
+    private void RefreshLoadedProjectiles()
+    {
+        if (loadedEnemyProjectiles.Count <= 0) return;
+        for (int i = 0; i < loadedEnemyProjectiles.Count; i++)
+        {
+            if (loadedEnemyProjectiles[i].activeSelf) continue;
+            Destroy(loadedEnemyProjectiles[i]);
+            loadedEnemyProjectiles.RemoveAt(i);
+            enemyProjectileMovements.RemoveAt(i);
+        }
+    }
+
+    public List<ProjectileMovement> GetEnemyProjectileMovements()
+    {
+        RefreshLoadedProjectiles();
+        return enemyProjectileMovements;
     }
 }
