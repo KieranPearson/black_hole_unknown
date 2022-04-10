@@ -7,19 +7,21 @@ public class ProjectileMovement : MonoBehaviour
 {
     Rigidbody2D rb2;
     private float currentSpeed;
+    private Vector2 currentVelocity;
 
-    void Start()
+    public void SetSpeed(float newSpeed)
+    {
+        this.currentSpeed = newSpeed;
+        currentVelocity.y = currentSpeed;
+    }
+
+    void Awake()
     {
         rb2 = GetComponent<Rigidbody2D>();
     }
 
     void FixedUpdate()
     {
-        rb2.velocity = new Vector2(0, currentSpeed);
-    }
-
-    public void SetSpeed(float newSpeed)
-    {
-        this.currentSpeed = newSpeed;
+        rb2.velocity = currentVelocity;
     }
 }

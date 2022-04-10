@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   powerup: {fileID: 550431448}
-  percentChanceOfPowerup: 10
+  percentChanceOfPowerup: 15
   playerClone: {fileID: 148169035}
   playerCombat: {fileID: 293290727}
   enemyCombat: {fileID: -3947062780682599927, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
@@ -1383,7 +1383,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716691, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -9.25
+      value: -8.5
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716691, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: m_LocalPosition.z
