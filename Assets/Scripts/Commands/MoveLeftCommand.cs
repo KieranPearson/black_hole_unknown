@@ -22,7 +22,8 @@ public class MoveLeftCommand : Command
         if (playerController)
         {
             playerController.UpdateState(this);
-        } else
+        } 
+        else
         {
             movement.MoveLeft();
         }

@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class PowerupManager : MonoBehaviour
 {
-    [SerializeField] GameObject powerup;
-    [SerializeField] int percentChanceOfPowerup;
-    [SerializeField] GameObject playerClone;
-    [SerializeField] Combat playerCombat;
-    [SerializeField] Combat enemyCombat;
-    [SerializeField] int powerupDuration;
-    [SerializeField] Transform playerTransform;
-    [SerializeField] float rapidfireSpeed;
-    [SerializeField] float slowMissilesSpeed;
+    [SerializeField] private GameObject powerup;
+    [SerializeField] private int percentChanceOfPowerup;
+    [SerializeField] private GameObject playerClone;
+    [SerializeField] private Combat playerCombat;
+    [SerializeField] private Combat enemyCombat;
+    [SerializeField] private int powerupDuration;
+    [SerializeField] private Transform playerTransform;
+    [SerializeField] private float rapidfireSpeed;
+    [SerializeField] private float slowMissilesSpeed;
+    [SerializeField] private BoxCollider2D playerCollider;
 
     public static PowerupManager instance { get; private set; }
 
@@ -189,6 +190,7 @@ public class PowerupManager : MonoBehaviour
         {
             enemiesCombat[i].SetProjectilesDefaultSpeed();
         }
+        playerCollider.enabled = true;
 
         List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
         if (loadedEnemyProjectileMovements.Count <= 0) return;
@@ -223,6 +225,7 @@ public class PowerupManager : MonoBehaviour
         {
             enemiesCombat[i].SetProjectilesSpeed(slowMissilesSpeed);
         }
+        playerCollider.enabled = false;
 
         List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
         if (loadedEnemyProjectileMovements.Count <= 0) return;

@@ -1128,6 +1128,7 @@ MonoBehaviour:
   playerTransform: {fileID: 293290734}
   rapidfireSpeed: 0.25
   slowMissilesSpeed: 0.5
+  playerCollider: {fileID: 293290725}
 --- !u!1 &1031945806
 GameObject:
   m_ObjectHideFlags: 0
