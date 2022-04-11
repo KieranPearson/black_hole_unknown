@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private Movement movement;
     private PlayerSpriteUpdater playerSpriteUpdater;
 
-    private void Start()
+    private void Awake()
     {
         movement = GetComponent<Movement>();
         playerSpriteUpdater = GetComponent<PlayerSpriteUpdater>();

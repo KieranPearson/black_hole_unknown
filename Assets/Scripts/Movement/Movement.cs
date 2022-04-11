@@ -11,11 +11,12 @@ public class Movement : MonoBehaviour
 
     private Rigidbody2D rb2;
     private Vector2 velocity;
-
     private Vector2 boundary;
     private float spriteWidth;
-
     private Vector2 direction;
+    private Vector3 newPosition;
+    private Vector2 newVelocity;
+    private Transform myTransform;
 
     private void CalculateBoundary()
     {
@@ -29,6 +30,7 @@ public class Movement : MonoBehaviour
     void Awake()
     {
         rb2 = gameObject.GetComponent<Rigidbody2D>();
+        myTransform = transform;
     }
 
     void Start()
@@ -64,22 +66,21 @@ public class Movement : MonoBehaviour
 
     private void SlowDown()
     {
-        if (rb2.velocity.x != 0)
-        {
-            rb2.velocity -= rb2.velocity / 20f;
-        }
+        if (rb2.velocity.x == 0f) return;
+        rb2.velocity -= rb2.velocity / 20f;
     }
 
     private void CheckOutOfBoundsX()
     {
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        newPosition.Set(myTransform.position.x, myTransform.position.y, myTransform.position.z);
         newPosition.x = Mathf.Clamp(newPosition.x, -boundary.x + spriteWidth, boundary.x - spriteWidth);
-        transform.position = newPosition;
+        myTransform.position = newPosition;
     }
 
     private void Move()
     {
         if (direction.x == 0 && direction.y == 0) return;
-        rb2.velocity = new Vector2(direction.x * speed, direction.y * speed);
+        newVelocity.Set(direction.x * speed, direction.y * speed);
+        rb2.velocity = newVelocity;
     }
 }

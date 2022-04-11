@@ -7,6 +7,11 @@ public class EnemyCombatHandler : MonoBehaviour
 {
     private Combat combat;
 
+    void Awake()
+    {
+        combat = GetComponent<Combat>();
+    }
+
     private void EnemiesCombatController_OnEnemyShoot(GameObject enemy)
     {
         if (enemy != gameObject) return;
@@ -21,10 +26,5 @@ public class EnemyCombatHandler : MonoBehaviour
     void OnDisable()
     {
         EnemiesCombatController.OnEnemyShoot -= EnemiesCombatController_OnEnemyShoot;
-    }
-
-    void Awake()
-    {
-        combat = GetComponent<Combat>();
     }
 }

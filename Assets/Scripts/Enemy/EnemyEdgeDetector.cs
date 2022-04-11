@@ -9,8 +9,19 @@ public class EnemyEdgeDetector : MonoBehaviour
 
     private Vector2 boundary;
     private float spriteWidth;
+    private Transform myTransform;
 
     public static event System.Action<bool> OnEnemyHitEdge;
+
+    private void Awake()
+    {
+        myTransform = transform;
+    }
+
+    void Start()
+    {
+        CalculateBoundary();
+    }
 
     private void CalculateBoundary()
     {
@@ -21,11 +32,6 @@ public class EnemyEdgeDetector : MonoBehaviour
         spriteWidth = spriteRenderer.sprite.bounds.size.x / 2;
     }
 
-    void Start()
-    {
-        CalculateBoundary();
-    }
-
     void FixedUpdate()
     {
         CheckForEdgeCollision();
@@ -33,7 +39,7 @@ public class EnemyEdgeDetector : MonoBehaviour
 
     private void CheckForEdgeCollision()
     {
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+        Vector3 newPosition = new Vector3(myTransform.position.x, myTransform.position.y, myTransform.position.z);
         if (newPosition.x <= (-boundary.x + spriteWidth))
         {
             OnEnemyHitEdge?.Invoke(true);

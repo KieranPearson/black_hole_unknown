@@ -8,11 +8,13 @@ public class ExplosionHandler : MonoBehaviour
     [SerializeField] private int explosionPoolSize;
 
     private GameObject[] explosionPool;
+    private Transform[] explosionTransformPool;
     private int currentExplosion;
 
     private void SetupExplosionPool()
     {
         explosionPool = new GameObject[explosionPoolSize];
+        explosionTransformPool = new Transform[explosionPoolSize];
         for (int i = 0; i < explosionPoolSize; i++)
         {
             GameObject newExplosion = Instantiate(explosionPrefab);
@@ -20,6 +22,7 @@ public class ExplosionHandler : MonoBehaviour
             newExplosion.name = explosionPrefab.name;
             newExplosion.transform.parent = transform;
             explosionPool[i] = newExplosion;
+            explosionTransformPool[i] = newExplosion.transform;
         }
     }
 
@@ -31,7 +34,7 @@ public class ExplosionHandler : MonoBehaviour
     private void DisplayExplosion(Vector2 position, float size)
     {
         GameObject explosion = explosionPool[currentExplosion];
-        Transform explosionTransform = explosion.transform;
+        Transform explosionTransform = explosionTransformPool[currentExplosion];
         Vector3 explosionPosition = explosionTransform.position;
         Vector3 newPosition = new Vector3(position.x, position.y, explosionPosition.z);
         explosionTransform.position = newPosition;
