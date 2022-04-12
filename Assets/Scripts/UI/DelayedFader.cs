@@ -22,6 +22,8 @@ public class DelayedFader : MonoBehaviour
     {
         canvasGroup.alpha = 0f;
         fadingOut = false;
+        waiting = false;
+        secondsRemaining = 0;
     }
 
     IEnumerator TickTime()
