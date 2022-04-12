@@ -14,7 +14,9 @@ public class AchievementManager : MonoBehaviour
         activeProfile = ProfileManager.instance.GetActiveProfile();
         if (Achievements.instance == null)
         {
-            Achievements newAchievements = gameObject.AddComponent<Achievements>();
+            GameObject achievementsObject = new GameObject();
+            achievementsObject.name = "Achievements";
+            Achievements newAchievements = achievementsObject.AddComponent<Achievements>();
             achievements = newAchievements.GetAchievements();
         }
         else

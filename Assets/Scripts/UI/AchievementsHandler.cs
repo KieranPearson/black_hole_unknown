@@ -13,6 +13,7 @@ public class AchievementsHandler : MonoBehaviour
     {
         RectTransform achievementSlotRect = achievementSlotPrefab.GetComponent<RectTransform>();
         Achievement[] achievements = Achievements.instance.GetAchievements();
+        if (achievements == null) return;
         for (int i = 0; i < achievements.Length; i++)
         {
             GameObject achievementSlot = Instantiate(achievementSlotPrefab);
