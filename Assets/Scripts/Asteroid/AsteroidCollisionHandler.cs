@@ -10,6 +10,7 @@ public class AsteroidCollisionHandler : MonoBehaviour
     [SerializeField] private int damage = 0;
 
     public static event System.Action<Vector2, float> OnImpact;
+    public static event System.Action OnPlayerShotAsteroid;
 
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
@@ -35,6 +36,7 @@ public class AsteroidCollisionHandler : MonoBehaviour
         GameObject colliderObj = collider.gameObject;
         if (colliderObj.CompareTag("PlayerProjectile"))
         {
+            OnPlayerShotAsteroid?.Invoke();
             ProjectileHit(collider.gameObject);
         } else if (colliderObj.CompareTag("EnemyProjectile"))
         {

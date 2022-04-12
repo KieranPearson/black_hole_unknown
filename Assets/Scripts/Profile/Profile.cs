@@ -25,6 +25,8 @@ public class Profile
     private bool usingPowerup;
     private int powerupRemainingSeconds;
     private string powerupUsed;
+    private bool powerupUsedDuringLevel;
+    private bool asteroidShotDuringLevel;
 
     public Profile()
     {
@@ -58,6 +60,8 @@ public class Profile
         usingPowerup = false;
         powerupRemainingSeconds = 0;
         powerupUsed = "None";
+        powerupUsedDuringLevel = false;
+        asteroidShotDuringLevel = false;
 }
 
     public void ClearLevelSpecificData()
@@ -171,6 +175,26 @@ public class Profile
     public List<string> GetAchievements()
     {
         return achievements;
+    }
+
+    public bool GetPowerupUsedDuringLevel()
+    {
+        return powerupUsedDuringLevel;
+    }
+
+    public bool GetAsteroidShotDuringLevel()
+    {
+        return asteroidShotDuringLevel;
+    }
+
+    public void SetPowerupUsedDuringLevel(bool powerupUsedDuringLevel)
+    {
+        this.powerupUsedDuringLevel = powerupUsedDuringLevel;
+    }
+
+    public void SetAsteroidShotDuringLevel(bool asteroidShotDuringLevel)
+    {
+        this.asteroidShotDuringLevel = asteroidShotDuringLevel;
     }
 
     public void SetEnemiesXPosition(float enemiesXPosition)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301573a0249013149800dc0f0cdcf831, type: 3}
   m_Name: Powerup
   m_EditorClassIdentifier: 
-  name: Powerup? Who needs 'em
+  name: Powerups? Who needs 'em
   description: Complete a level without any powerups
   icon: {fileID: 21300000, guid: 4cf892bc1551bf84ebe4f42a0d9d2fcb, type: 3}

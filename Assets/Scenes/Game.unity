@@ -672,7 +672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeSpeed: 0.75
-  secondsVisible: 5
+  secondsVisible: 6
 --- !u!1 &293290724 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6052519698405716689, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}

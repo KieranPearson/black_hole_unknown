@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     public static event System.Action OnLevelLoaded;
     public static event System.Action OnNewLevelStarted;
     public static event System.Action OnGameReset;
+    public static event System.Action<string> OnAchievementUnlocked;
 
     private GameObject[,] enemies;
     private List<Combat> enemiesCombat = new List<Combat>();
@@ -131,6 +132,8 @@ public class LevelManager : MonoBehaviour
         UpdateEnemySpeed();
         RefreshPlayer();
         RefreshAsteroids();
+        activeProfile.SetAsteroidShotDuringLevel(false);
+        activeProfile.SetPowerupUsedDuringLevel(false);
     }
 
     private void SetNewLevelEnemiesYPosition()
@@ -157,8 +160,21 @@ public class LevelManager : MonoBehaviour
         enemiesTransform.position = new Vector3(enemiesPosition.x, newEnemiesYPosition, enemiesPosition.z);
     }
 
+    private void UnlockAchievements()
+    {
+        if (!activeProfile.GetAsteroidShotDuringLevel())
+        {
+            OnAchievementUnlocked?.Invoke("Asteroidinary");
+        }
+        if (!activeProfile.GetPowerupUsedDuringLevel())
+        {
+            OnAchievementUnlocked?.Invoke("Powerups? Who needs 'em");
+        }
+    }
+
     private void StartNewLevel()
     {
+        UnlockAchievements();
         RefreshGame();
         SetNewLevelEnemiesYPosition();
         OnNewLevelStarted?.Invoke();
@@ -211,8 +227,15 @@ public class LevelManager : MonoBehaviour
         return null;
     }
 
+    private void CheckEnemyBehindFrontRow(int column, int row)
+    {
+        if (row == 0) return;
+        OnAchievementUnlocked?.Invoke("Sharpshooter");
+    }
+
     private void SetEnemyDestroyed(int column, int row)
     {
+        CheckEnemyBehindFrontRow(column, row);
         aliveEnemies[column].RemoveAt(row);
         if (aliveEnemies[column].Count == 0)
         {
@@ -326,6 +349,16 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 
+    private void HandlePlayerShotAsteroid()
+    {
+        activeProfile.SetAsteroidShotDuringLevel(true);
+    }
+
+    private void HandlePowerupPickedUp()
+    {
+        activeProfile.SetPowerupUsedDuringLevel(true);
+    }
+
     void OnEnable()
     {
         EnemyCollisionHandler.OnEnemyDestroyed += EnemyCollisionHandler_OnEnemyDestroyed;
@@ -333,6 +366,8 @@ public class LevelManager : MonoBehaviour
         StatsManager.OnAllLivesLost += StatsManager_OnAllLivesLost;
         EnemiesMovement.OnEnemiesMovedDown += EnemiesMovement_OnEnemiesMovedDown;
         OpenMainMenuCommand.OnExitingLevel += OpenMainMenuCommand_OnExitingLevel;
+        AsteroidCollisionHandler.OnPlayerShotAsteroid += HandlePlayerShotAsteroid;
+        PowerupCollisionHandler.OnPowerupPickedUp += HandlePowerupPickedUp;
     }
 
     void OnDisable()
@@ -342,6 +377,8 @@ public class LevelManager : MonoBehaviour
         StatsManager.OnAllLivesLost -= StatsManager_OnAllLivesLost;
         EnemiesMovement.OnEnemiesMovedDown -= EnemiesMovement_OnEnemiesMovedDown;
         OpenMainMenuCommand.OnExitingLevel -= OpenMainMenuCommand_OnExitingLevel;
+        AsteroidCollisionHandler.OnPlayerShotAsteroid -= HandlePlayerShotAsteroid;
+        PowerupCollisionHandler.OnPowerupPickedUp -= HandlePowerupPickedUp;
     }
 
     private void LoadDestroyedEnemies()

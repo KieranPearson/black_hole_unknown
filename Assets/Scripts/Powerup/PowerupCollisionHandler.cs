@@ -6,6 +6,7 @@ public class PowerupCollisionHandler : MonoBehaviour
 {
     public static event System.Action<Vector2, float> OnImpact;
     public static event System.Action<string> OnAchievementUnlocked;
+    public static event System.Action OnPowerupPickedUp;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -29,6 +30,7 @@ public class PowerupCollisionHandler : MonoBehaviour
         }
         else if (colliderObj.CompareTag("Player"))
         {
+            OnPowerupPickedUp?.Invoke();
             PowerupManager.instance.PowerupPickedUp();
             gameObject.SetActive(false);
         }
