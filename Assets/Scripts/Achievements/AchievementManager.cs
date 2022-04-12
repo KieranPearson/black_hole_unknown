@@ -1,9 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class AchievementManager : MonoBehaviour
 {
+    [SerializeField] private GameObject achievementUI;
+    [SerializeField] private TMP_Text achievementName;
+    [SerializeField] private TMP_Text achievementDescription;
+    [SerializeField] private Image achievementIcon;
+
     private Queue<Achievement> achievementsQueue = new Queue<Achievement>();
     private bool displayingAchievement = false;
     private Profile activeProfile;
@@ -11,18 +18,8 @@ public class AchievementManager : MonoBehaviour
 
     private void Start()
     {
+        achievements = Achievements.instance.GetAchievements();
         activeProfile = ProfileManager.instance.GetActiveProfile();
-        if (Achievements.instance == null)
-        {
-            GameObject achievementsObject = new GameObject();
-            achievementsObject.name = "Achievements";
-            Achievements newAchievements = achievementsObject.AddComponent<Achievements>();
-            achievements = newAchievements.GetAchievements();
-        }
-        else
-        {
-            achievements = Achievements.instance.GetAchievements();
-        }
     }
 
     private bool AchievementExists(string achievementName)
@@ -53,6 +50,30 @@ public class AchievementManager : MonoBehaviour
         return null;
     }
 
+    private void UpdateAchivementDisplay(Achievement achievement)
+    {
+        achievementName.text = achievement.GetName();
+        achievementDescription.text = achievement.GetDescription();
+        achievementIcon.sprite = achievement.GetIcon();
+    }
+
+    IEnumerator DisplayAchievements()
+    {
+        displayingAchievement = true;
+        while (achievementsQueue.Count > 0)
+        {
+            Achievement achievementToDisplay = achievementsQueue.Dequeue();
+            UpdateAchivementDisplay(achievementToDisplay);
+            achievementUI.SetActive(true);
+            while (achievementUI.activeSelf == true)
+            {
+                yield return new WaitForSeconds(1f);
+            }
+        }
+        displayingAchievement = false;
+        yield return null;
+    }
+
     private void UnlockAchievement(string achievementName)
     {
         if (!AchievementExists(achievementName)) return;
@@ -60,15 +81,16 @@ public class AchievementManager : MonoBehaviour
         activeProfile.AddAchievement(achievementName);
         Achievement unlockedAchievement = GetAchievementByName(achievementName);
         achievementsQueue.Enqueue(unlockedAchievement);
+        if (!displayingAchievement) StartCoroutine(DisplayAchievements());
     }
 
     void OnEnable()
     {
-        //AsteroidCollisionHandler.OnAchievementUnlocked += UnlockAchievement;
+        PowerupCollisionHandler.OnAchievementUnlocked += UnlockAchievement;
     }
 
     void OnDisable()
     {
-        //AsteroidCollisionHandler.OnAchievementUnlocked -= UnlockAchievement;
+        PowerupCollisionHandler.OnAchievementUnlocked -= UnlockAchievement;
     }
 }

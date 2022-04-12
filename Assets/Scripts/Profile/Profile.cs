@@ -47,6 +47,7 @@ public class Profile
         playerProjectilePositions = new List<float[]>();
         enemyProjectilePositions = new List<float[]>();
         asteroidDamageStates = new List<List<int>>();
+        achievements = new List<string>();
         enemiesXPosition = 0f;
         enemiesYPosition = 5f;
         enemiesSpeed = 0.5f;

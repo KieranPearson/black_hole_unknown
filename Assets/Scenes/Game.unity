@@ -2167,6 +2167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af99f98beb75114e9f29c6f35964927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  achievementUI: {fileID: 287836441}
+  achievementName: {fileID: 247360950}
+  achievementDescription: {fileID: 300590441}
+  achievementIcon: {fileID: 1821287856}
 --- !u!1001 &1751210041
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2366,6 +2370,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1821287854}
   m_CullTransparentMesh: 1
+--- !u!1001 &1822130520
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_RootOrder
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579600, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6156549701569579601, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
+      propertyPath: m_Name
+      value: Achievements
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: fd6e6115de2f6cf41b5ae83a5637c3d0, type: 3}
 --- !u!1 &1910256162
 GameObject:
   m_ObjectHideFlags: 0

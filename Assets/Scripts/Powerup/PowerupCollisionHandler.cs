@@ -5,6 +5,7 @@ using UnityEngine;
 public class PowerupCollisionHandler : MonoBehaviour
 {
     public static event System.Action<Vector2, float> OnImpact;
+    public static event System.Action<string> OnAchievementUnlocked;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
@@ -23,6 +24,7 @@ public class PowerupCollisionHandler : MonoBehaviour
 
             Vector3 position = transform.position;
             OnImpact?.Invoke(new Vector2(position.x, position.y), 1f);
+            OnAchievementUnlocked?.Invoke("Powerdown");
             gameObject.SetActive(false);
         }
         else if (colliderObj.CompareTag("Player"))
