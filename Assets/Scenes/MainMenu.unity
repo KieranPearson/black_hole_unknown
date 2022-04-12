@@ -6156,9 +6156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8090de4135c43648b0272b342c9c7ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotPrefab: {fileID: 6700140359801608834, guid: 958d4686d1e31d44c839f15d9d9d361c, type: 3}
+  slotPrefab: {fileID: 2813983404651847878, guid: 1b9fd50baf0c26349aaaab0ecbc3aaa9, type: 3}
   createSlotPrefab: {fileID: 3529047423431579941, guid: 518226b5f7e8f4740bb219e3cbea9e43, type: 3}
   content: {fileID: 73339161}
+  achievementIconPrefab: {fileID: 7986583014067994150, guid: 4410f97c0c3f2af4ba264aff1c6005eb, type: 3}
 --- !u!114 &1090070356
 MonoBehaviour:
   m_ObjectHideFlags: 0

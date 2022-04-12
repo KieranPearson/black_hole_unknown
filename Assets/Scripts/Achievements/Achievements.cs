@@ -25,4 +25,13 @@ public class Achievements : MonoBehaviour
     {
         return achievements;
     }
+
+    public Achievement GetAchievementByName(string achievementName)
+    {
+        for (int i = 0; i < achievements.Length; i++)
+        {
+            if (achievements[i].GetName() == achievementName) return achievements[i];
+        }
+        return null;
+    }
 }
