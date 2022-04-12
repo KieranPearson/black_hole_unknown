@@ -227,15 +227,8 @@ public class LevelManager : MonoBehaviour
         return null;
     }
 
-    private void CheckEnemyBehindFrontRow(int column, int row)
-    {
-        if (row == 0) return;
-        OnAchievementUnlocked?.Invoke("Sharpshooter");
-    }
-
     private void SetEnemyDestroyed(int column, int row)
     {
-        CheckEnemyBehindFrontRow(column, row);
         aliveEnemies[column].RemoveAt(row);
         if (aliveEnemies[column].Count == 0)
         {
@@ -275,6 +268,12 @@ public class LevelManager : MonoBehaviour
         enemiesMovement.SetSpeed(newSpeed);
     }
 
+    private void CheckEnemyBehindFrontRow(int row)
+    {
+        if (row == 0) return;
+        OnAchievementUnlocked?.Invoke("Sharpshooter");
+    }
+
     private void EnemyDestroyed(GameObject enemy, bool isLoaded)
     {
         Vector2Int? enemyAliveColumnRow = GetColumnRowOfAliveEnemy(enemy);
@@ -284,6 +283,7 @@ public class LevelManager : MonoBehaviour
         SetEnemyDestroyed(column, row);
         enemiesRemaining--;
         if (isLoaded) return;
+        CheckEnemyBehindFrontRow(row);
         UpdateEnemySpeed();
         SyncEnemyDeath(enemy);
         enemy.SetActive(false);
