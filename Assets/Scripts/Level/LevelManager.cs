@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     public static event System.Action OnLevelLoaded;
     public static event System.Action OnNewLevelStarted;
     public static event System.Action OnGameReset;
+
     private GameObject[,] enemies;
     private List<Combat> enemiesCombat = new List<Combat>();
     private List<List<GameObject>> allEnemies = new List<List<GameObject>>();

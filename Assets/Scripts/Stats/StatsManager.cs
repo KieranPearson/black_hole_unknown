@@ -10,6 +10,7 @@ public class StatsManager : MonoBehaviour
     public static StatsManager instance { get; private set; }
 
     public static event System.Action OnAllLivesLost;
+    public static event System.Action<string> OnAchievementUnlocked;
 
     private Profile activeProfile;
     private DisplayStats displayStats;
@@ -48,6 +49,20 @@ public class StatsManager : MonoBehaviour
         int level = activeProfile.GetLevel();
         activeProfile.SetLevel(level + amount);
         displayStats.UpdateLevel();
+        switch (activeProfile.GetLevel())
+        {
+            case 2:
+                OnAchievementUnlocked?.Invoke("Level 2");
+                break;
+            case 4:
+                OnAchievementUnlocked?.Invoke("Level 4");
+                break;
+            case 8:
+                OnAchievementUnlocked?.Invoke("Level 8");
+                break;
+            default:
+                break;
+        }
     }
 
     private void ChangeLives(int amount)

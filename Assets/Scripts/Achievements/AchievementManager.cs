@@ -87,10 +87,12 @@ public class AchievementManager : MonoBehaviour
     void OnEnable()
     {
         PowerupCollisionHandler.OnAchievementUnlocked += UnlockAchievement;
+        StatsManager.OnAchievementUnlocked += UnlockAchievement;
     }
 
     void OnDisable()
     {
         PowerupCollisionHandler.OnAchievementUnlocked -= UnlockAchievement;
+        StatsManager.OnAchievementUnlocked -= UnlockAchievement;
     }
 }
