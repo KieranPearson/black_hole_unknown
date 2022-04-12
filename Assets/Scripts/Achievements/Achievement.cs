@@ -13,4 +13,19 @@ public class Achievement : ScriptableObject
     {
 
     }
+
+    public string GetName()
+    {
+        return name;
+    }
+
+    public string GetDescription()
+    {
+        return description;
+    }
+
+    public Sprite GetIcon()
+    {
+        return icon;
+    }
 }
