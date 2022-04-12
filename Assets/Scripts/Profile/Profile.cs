@@ -14,6 +14,7 @@ public class Profile
     private List<float[]> playerProjectilePositions;
     private List<float[]> enemyProjectilePositions;
     private List<List<int>> asteroidDamageStates;
+    private List<string> achievements;
     private float enemiesXPosition;
     private float enemiesYPosition;
     private float enemiesSpeed;
@@ -166,6 +167,11 @@ public class Profile
         return powerupUsed;
     }
 
+    public List<string> GetAchievements()
+    {
+        return achievements;
+    }
+
     public void SetEnemiesXPosition(float enemiesXPosition)
     {
         this.enemiesXPosition = enemiesXPosition;
@@ -235,6 +241,11 @@ public class Profile
     public void AddAsteroidDamage(int clusterIndex, int damage)
     {
         asteroidDamageStates[clusterIndex].Add(damage);
+    }
+
+    public void AddAchievement(string achievementName)
+    {
+        achievements.Add(achievementName);
     }
 
     public void RemovePlayerProjectilePosition(int index)
