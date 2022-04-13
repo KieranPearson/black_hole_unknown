@@ -54,7 +54,6 @@ public class LevelManager : MonoBehaviour
         {
             instance = this;
         }
-
         enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
         enemiesTransform = enemiesObject.transform;
         playerTransform = playerObject.transform;

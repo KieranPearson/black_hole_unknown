@@ -9,7 +9,6 @@ public class Profile
     private int currentScore;
     private int level;
     private int lives;
-
     private List<int[]> destroyedEnemies;
     private List<float[]> playerProjectilePositions;
     private List<float[]> enemyProjectilePositions;
@@ -39,6 +38,29 @@ public class Profile
         SetDefaults();
     }
 
+    public void GenerateRandomPlayerXPosition()
+    {
+        int randomInt = Random.Range(0, 4);
+        switch (randomInt)
+        {
+            case 0:
+                playerXPosition = -12f;
+                break;
+            case 1:
+                playerXPosition = -4f;
+                break;
+            case 2:
+                playerXPosition = 4f;
+                break;
+            case 3:
+                playerXPosition = 12f;
+                break;
+            default:
+                playerXPosition = 0f;
+                break;
+        }
+    }
+
     private void SetDefaults()
     {
         highscore = 0;
@@ -62,7 +84,7 @@ public class Profile
         powerupUsed = "None";
         powerupUsedDuringLevel = false;
         asteroidShotDuringLevel = false;
-}
+    }
 
     public void ClearLevelSpecificData()
     {
@@ -74,8 +96,8 @@ public class Profile
         this.enemiesXPosition = defaultProfile.GetEnemiesXPosition();
         this.enemiesYPosition = defaultProfile.GetEnemiesYPosition();
         this.enemiesSpeed = defaultProfile.GetEnemiesSpeed();
-        this.playerXPosition = defaultProfile.GetPlayerXPosition();
-}
+        GenerateRandomPlayerXPosition();
+    }
 
     public string GetName()
     {

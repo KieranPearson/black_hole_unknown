@@ -104,6 +104,7 @@ public class ProfileManager : MonoBehaviour
     {
         if (GetProfileByName(profileName) != null) return;
         Profile newProfile = new Profile(profileName);
+        newProfile.GenerateRandomPlayerXPosition();
         profiles.Add(newProfile);
         MarkProfileToSave(newProfile);
         activeProfile = newProfile;
