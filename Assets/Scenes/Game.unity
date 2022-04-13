@@ -445,7 +445,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 12}
+  m_AnchoredPosition: {x: -15, y: 12}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &247360950
@@ -495,14 +495,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 17
-  m_fontSizeBase: 17
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -655,7 +655,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 287836441}
   m_Enabled: 1
-  m_Alpha: 0
+  m_Alpha: 1
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
@@ -727,28 +727,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35f30ea4c74ad8d47a663e7086e92c2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &293290729 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6052519698405716702, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
-  m_PrefabInstance: {fileID: 6052519698128285749}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293290724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 806e0793dcf37dd469cb1e37317eac53, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &293290730 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6052519698405716700, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
-  m_PrefabInstance: {fileID: 6052519698128285749}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 293290724}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78b95f2a2becfc44cb126c840fa88b2e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &293290734 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6052519698405716691, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
@@ -788,7 +766,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: -12}
+  m_AnchoredPosition: {x: -15, y: -12}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &300590441
@@ -838,14 +816,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 15
+  m_fontSizeBase: 15
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1897,8 +1875,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -400, y: -100}
-  m_SizeDelta: {x: 400, y: 50}
+  m_AnchoredPosition: {x: -450, y: -100}
+  m_SizeDelta: {x: 450, y: 50}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1079621616
 MonoBehaviour:
@@ -2226,8 +2204,6 @@ MonoBehaviour:
   enemyRowPadding: 1.9
   enemyColumnPadding: 1.9
   playerObject: {fileID: 293290724}
-  playerMovement: {fileID: 293290730}
-  playerController: {fileID: 293290729}
   projectiles: {fileID: 340729585}
   asteroids: {fileID: 1612431133}
   enemyEndGameYPosition: -7
@@ -2682,7 +2658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 75, y: 0}
+  m_AnchoredPosition: {x: 60, y: 0}
   m_SizeDelta: {x: 76, y: 88}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1821287856
