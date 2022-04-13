@@ -203,7 +203,11 @@ QualitySettings:
     anisotropicTextures: 2
     antiAliasing: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
     softParticles: 0
+=======
+    softParticles: 1
+>>>>>>> parent of a654450 (Some optimisation settings changes)
 =======
     softParticles: 1
 >>>>>>> parent of a654450 (Some optimisation settings changes)
