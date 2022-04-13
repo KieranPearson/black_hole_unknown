@@ -3453,6 +3453,7 @@ MonoBehaviour:
   musicVolumePrefKey: musicVolume
   soundEffectsVolumePrefKey: soundEffectsVolume
   refreshRatePrefKey: refreshRate
+  forceVSync: 1
 --- !u!4 &640656483
 Transform:
   m_ObjectHideFlags: 0
@@ -4715,8 +4716,8 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 424073375}
-  - {fileID: 1030493914}
   - {fileID: 1612614135}
+  - {fileID: 1030493914}
   m_Father: {fileID: 1090070351}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7515,7 +7516,7 @@ RectTransform:
   - {fileID: 1888186442}
   - {fileID: 283421735}
   m_Father: {fileID: 776159418}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}

@@ -20,6 +20,8 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private string soundEffectsVolumePrefKey;
     [SerializeField] private string refreshRatePrefKey;
 
+    [SerializeField] private bool forceVSync;
+
     public static event System.Action OnSettingsLoaded;
 
     private Resolution[] resolutions; // width, height, refresh_rate
@@ -128,6 +130,10 @@ public class SettingsManager : MonoBehaviour
     private void UpdateDisplay()
     {
         Screen.SetResolution(currentResolution.width, currentResolution.height, isFullscreen, currentRefreshRate);
+        if (forceVSync)
+        {
+            QualitySettings.vSyncCount = 1;
+        }
     }
 
     private void LoadMusicVolume()
