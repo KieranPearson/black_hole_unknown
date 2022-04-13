@@ -210,6 +210,7 @@ public class LevelManager : MonoBehaviour
     private void ResetGame()
     {
         DisablePlayer();
+        activeProfile.SetPowerupRemainingSeconds(0);
         deathScreen.SetActive(true);
         RefreshGame();
         OnGameReset?.Invoke();
