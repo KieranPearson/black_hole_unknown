@@ -26,6 +26,9 @@ public class PowerupManager : MonoBehaviour
         SlowMissilesPowerup
     };
     private Profile activeProfile;
+    private Combat playerCloneCombat;
+    private Movement playerCloneMovement;
+    private PlayerController playerCloneController;
 
     private void Awake()
     {
@@ -40,6 +43,9 @@ public class PowerupManager : MonoBehaviour
         powerupTransform = powerup.transform;
         powerupMovement = powerup.GetComponent<PowerupMovement>();
         powerupTypeChanger = powerup.GetComponent<PowerupTypeChanger>();
+        playerCloneCombat = playerClone.GetComponent<Combat>();
+        playerCloneMovement = playerClone.GetComponent<Movement>();
+        playerCloneController = playerClone.GetComponent<PlayerController>();
     }
 
     private void Start()
@@ -181,10 +187,22 @@ public class PowerupManager : MonoBehaviour
         LoadPowerupInUse();
     }
 
+    private void DisablePlayerClone()
+    {
+        if (!playerClone.activeSelf) return;
+        playerCloneMovement.Stop();
+        Command stopMovingLeft = new StopMovingLeftCommand(playerCloneController);
+        Command stopMovingRight = new StopMovingRightCommand(playerCloneController);
+        playerCloneController.UpdateState(stopMovingLeft);
+        playerCloneController.UpdateState(stopMovingRight);
+        playerCloneCombat.ToggleFire(false);
+        playerClone.SetActive(false);
+    }
+
     private void RemovePowerupEffects()
     {
         playerCombat.SetDefaultFireRate();
-        playerClone.SetActive(false);
+        DisablePlayerClone();
         List<Combat> enemiesCombat = LevelManager.instance.GetAllEnemiesCombat();
         for (int i = 0; i < enemiesCombat.Count; i++)
         {

@@ -12,8 +12,6 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
-    [SerializeField] private Movement playerMovement;
-    [SerializeField] private PlayerController playerController;
     [SerializeField] private Transform projectiles;
     [SerializeField] private Asteroids asteroids;
     [SerializeField] private float enemyEndGameYPosition;
@@ -46,6 +44,9 @@ public class LevelManager : MonoBehaviour
     private Transform playerTransform;
     private int totalEnemies;
     private PowerupManager powerupManager;
+    private Movement playerMovement;
+    private PlayerController playerController;
+    private Combat playerCombat;
 
     private void Awake()
     {
@@ -63,6 +64,9 @@ public class LevelManager : MonoBehaviour
         totalEnemies = enemyRows * enemyColumns;
         enemiesRemaining = totalEnemies;
         powerupManager = PowerupManager.instance;
+        playerMovement = playerObject.GetComponent<Movement>();
+        playerController = playerObject.GetComponent<PlayerController>();
+        playerCombat = playerObject.GetComponent<Combat>();
     }
 
     private void ClearAllProjectiles()
@@ -192,19 +196,20 @@ public class LevelManager : MonoBehaviour
         yield return null;
     }
 
-    private void StopPlayer()
+    private void DisablePlayer()
     {
         playerMovement.Stop();
         Command stopMovingLeft = new StopMovingLeftCommand(playerController);
         Command stopMovingRight = new StopMovingRightCommand(playerController);
         playerController.UpdateState(stopMovingLeft);
         playerController.UpdateState(stopMovingRight);
+        playerCombat.ToggleFire(false);
+        playerObject.SetActive(false);
     }
 
     private void ResetGame()
     {
-        StopPlayer();
-        playerObject.SetActive(false);
+        DisablePlayer();
         deathScreen.SetActive(true);
         RefreshGame();
         OnGameReset?.Invoke();
