@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
+    [SerializeField] private Movement playerMovement;
+    [SerializeField] private PlayerController playerController;
     [SerializeField] private Transform projectiles;
     [SerializeField] private Asteroids asteroids;
     [SerializeField] private float enemyEndGameYPosition;
@@ -24,6 +26,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemiesStartPositionYOnLevel4;
     [SerializeField] private float enemiesStartPositionYOnLevel5OrMore;
     [SerializeField] private Transform playerCloneTransform;
+    [SerializeField] private GameObject deathScreen;
 
     public static LevelManager instance { get; private set; }
 
@@ -179,10 +182,33 @@ public class LevelManager : MonoBehaviour
         OnNewLevelStarted?.Invoke();
     }
 
+    IEnumerator WaitForGameReset()
+    {
+        while (deathScreen.activeSelf)
+        {
+            yield return new WaitForSeconds(1);
+        }
+        playerObject.SetActive(true);
+        yield return null;
+    }
+
+    private void StopPlayer()
+    {
+        playerMovement.Stop();
+        Command stopMovingLeft = new StopMovingLeftCommand(playerController);
+        Command stopMovingRight = new StopMovingRightCommand(playerController);
+        playerController.UpdateState(stopMovingLeft);
+        playerController.UpdateState(stopMovingRight);
+    }
+
     private void ResetGame()
     {
+        StopPlayer();
+        playerObject.SetActive(false);
+        deathScreen.SetActive(true);
         RefreshGame();
         OnGameReset?.Invoke();
+        StartCoroutine(WaitForGameReset());
     }
 
     private void CheckIfEnemiesAtEndGamePosition()
