@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
 {
     [SerializeField] private float speed;
     [SerializeField] private float boundaryLimit;
+    [SerializeField] private float acceleration;
 
     private Rigidbody2D rb2;
     private Vector2 velocity;
@@ -17,6 +18,8 @@ public class Movement : MonoBehaviour
     private Vector3 newPosition;
     private Vector2 newVelocity;
     private Transform myTransform;
+    private float currentSpeed;
+    private bool isAccelerating;
 
     private void CalculateBoundary()
     {
@@ -41,27 +44,46 @@ public class Movement : MonoBehaviour
     public void MoveLeft()
     {
         direction.x = -1;
+        isAccelerating = true;
     }
 
     public void MoveRight()
     {
         direction.x = 1;
+        isAccelerating = true;
     }
 
     public void Stop()
     {
         direction = Vector2.zero;
+        isAccelerating = false;
     }
 
     private void FixedUpdate()
     {
         Move();
         SlowDown();
+        Accelerate();
+        Deaccelerate();
     }
 
     private void Update()
     {
         CheckOutOfBoundsX();
+    }
+
+    private void Accelerate()
+    {
+        if (!isAccelerating) return;
+        if (currentSpeed == speed) return;
+        currentSpeed = Mathf.Clamp(currentSpeed + acceleration, 0f, speed);
+    }
+
+    private void Deaccelerate()
+    {
+        if (isAccelerating) return;
+        if (currentSpeed == 0f) return;
+        currentSpeed = Mathf.Clamp(currentSpeed - acceleration, 0f, speed);
     }
 
     private void SlowDown()
@@ -80,7 +102,7 @@ public class Movement : MonoBehaviour
     private void Move()
     {
         if (direction.x == 0 && direction.y == 0) return;
-        newVelocity.Set(direction.x * speed, direction.y * speed);
+        newVelocity.Set(direction.x * currentSpeed, direction.y * currentSpeed);
         rb2.velocity = newVelocity;
     }
 }

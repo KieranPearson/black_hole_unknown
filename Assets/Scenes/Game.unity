@@ -3043,5 +3043,9 @@ PrefabInstance:
       propertyPath: projectilePoolSize
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 6052519698405716700, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
+      propertyPath: acceleration
+      value: 0.4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
