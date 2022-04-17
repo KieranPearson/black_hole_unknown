@@ -44,14 +44,12 @@ public class PlayerInput : MonoBehaviour
             MapKeyHeld(KeyCode.Insert, new FireCommand(combat));
             MapKeyHeld(KeyCode.RightShift, new FireCommand(combat));
             MapKeyHeld(KeyCode.UpArrow, new FireCommand(combat));
-            MapKeyHeld(KeyCode.DownArrow, new FireCommand(combat));
             MapKeyHeld(KeyCode.LeftArrow, new MoveLeftCommand(playerController));
             MapKeyHeld(KeyCode.RightArrow, new MoveRightCommand(playerController));
 
             MapKeyRelease(KeyCode.Insert, new StopFiringCommand(combat));
             MapKeyRelease(KeyCode.RightShift, new StopFiringCommand(combat));
             MapKeyRelease(KeyCode.UpArrow, new StopFiringCommand(combat));
-            MapKeyRelease(KeyCode.DownArrow, new StopFiringCommand(combat));
             MapKeyRelease(KeyCode.LeftArrow, new StopMovingLeftCommand(playerController));
             MapKeyRelease(KeyCode.RightArrow, new StopMovingRightCommand(playerController));
         }
