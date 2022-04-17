@@ -6,84 +6,100 @@ using UnityEngine;
 [RequireComponent(typeof(Combat))]
 public class PlayerInput : MonoBehaviour
 {
-    private Command keySpacebarPress;
-    private Command keyAPress;
-    private Command keyDPress;
-    private Command keyEscPress;
-    private Command keyMouse0Press;
-    private Command keyLeftPress;
-    private Command keyRightPress;
+    [SerializeField] private bool isPlayer2Input;
 
-    private Command keySpacebarRelease;
-    private Command keyARelease;
-    private Command keyDRelease;
-    private Command keyMouse0Release;
-    private Command keyLeftRelease;
-    private Command keyRightRelease;
+    private List<(KeyCode, Command)> keyPressMap;
+    private List<(KeyCode, Command)> keyReleaseMap;
+    private List<(KeyCode, Command)> keyHeldMap;
 
-    public void MapCommandOnPress(KeyCode key, Command command)
+    public void MapKeyPress(KeyCode key, Command command)
     {
-        if (key == KeyCode.Space) keySpacebarPress = command;
-        else if (key == KeyCode.A) keyAPress = command;
-        else if (key == KeyCode.D) keyDPress = command;
-        else if (key == KeyCode.Escape) keyEscPress = command;
-        else if (key == KeyCode.Mouse0) keyMouse0Press = command;
-        else if (key == KeyCode.LeftArrow) keyLeftPress = command;
-        else if (key == KeyCode.RightArrow) keyRightPress = command;
+        keyPressMap.Add((key, command));
     }
 
-    public void MapCommandOnRelease(KeyCode key, Command command)
+    public void MapKeyRelease(KeyCode key, Command command)
     {
-        if (key == KeyCode.Space) keySpacebarRelease = command;
-        else if (key == KeyCode.A) keyARelease = command;
-        else if (key == KeyCode.D) keyDRelease = command;
-        else if (key == KeyCode.Mouse0) keyMouse0Release = command;
-        else if (key == KeyCode.LeftArrow) keyLeftRelease = command;
-        else if (key == KeyCode.RightArrow) keyRightRelease = command;
+        keyReleaseMap.Add((key, command));
     }
 
-    void Start()
+    public void MapKeyHeld(KeyCode key, Command command)
+    {
+        keyHeldMap.Add((key, command));
+    }
+
+    private void Awake()
+    {
+        keyPressMap = new List<(KeyCode, Command)>();
+        keyReleaseMap = new List<(KeyCode, Command)>();
+        keyHeldMap = new List<(KeyCode, Command)>();
+    }
+
+    private void Start()
     {
         PlayerController playerController = gameObject.GetComponent<PlayerController>();
         Combat combat = gameObject.GetComponent<Combat>();
 
-        MapCommandOnPress(KeyCode.Space, new FireCommand(combat));
-        MapCommandOnPress(KeyCode.A, new MoveLeftCommand(playerController));
-        MapCommandOnPress(KeyCode.D, new MoveRightCommand(playerController));
-        MapCommandOnPress(KeyCode.Escape, new OpenMainMenuCommand());
-        MapCommandOnPress(KeyCode.Mouse0, new FireCommand(combat));
-        MapCommandOnPress(KeyCode.LeftArrow, new MoveLeftCommand(playerController));
-        MapCommandOnPress(KeyCode.RightArrow, new MoveRightCommand(playerController));
+        if (isPlayer2Input)
+        {
+            MapKeyHeld(KeyCode.Insert, new FireCommand(combat));
+            MapKeyHeld(KeyCode.RightShift, new FireCommand(combat));
+            MapKeyHeld(KeyCode.UpArrow, new FireCommand(combat));
+            MapKeyHeld(KeyCode.DownArrow, new FireCommand(combat));
+            MapKeyHeld(KeyCode.LeftArrow, new MoveLeftCommand(playerController));
+            MapKeyHeld(KeyCode.RightArrow, new MoveRightCommand(playerController));
 
-        MapCommandOnRelease(KeyCode.Space, new StopFiringCommand(combat));
-        MapCommandOnRelease(KeyCode.A, new StopMovingLeftCommand(playerController));
-        MapCommandOnRelease(KeyCode.D, new StopMovingRightCommand(playerController));
-        MapCommandOnRelease(KeyCode.Mouse0, new StopFiringCommand(combat));
-        MapCommandOnRelease(KeyCode.LeftArrow, new StopMovingLeftCommand(playerController));
-        MapCommandOnRelease(KeyCode.RightArrow, new StopMovingRightCommand(playerController));
+            MapKeyRelease(KeyCode.Insert, new StopFiringCommand(combat));
+            MapKeyRelease(KeyCode.RightShift, new StopFiringCommand(combat));
+            MapKeyRelease(KeyCode.UpArrow, new StopFiringCommand(combat));
+            MapKeyRelease(KeyCode.DownArrow, new StopFiringCommand(combat));
+            MapKeyRelease(KeyCode.LeftArrow, new StopMovingLeftCommand(playerController));
+            MapKeyRelease(KeyCode.RightArrow, new StopMovingRightCommand(playerController));
+        }
+        else
+        {
+            MapKeyPress(KeyCode.Escape, new OpenMainMenuCommand());
+
+            MapKeyHeld(KeyCode.Space, new FireCommand(combat));
+            MapKeyHeld(KeyCode.A, new MoveLeftCommand(playerController));
+            MapKeyHeld(KeyCode.D, new MoveRightCommand(playerController));
+
+            MapKeyRelease(KeyCode.Space, new StopFiringCommand(combat));
+            MapKeyRelease(KeyCode.A, new StopMovingLeftCommand(playerController));
+            MapKeyRelease(KeyCode.D, new StopMovingRightCommand(playerController));
+        }
     }
 
-    void Update()
+    private void Update()
     {
-        HandleInput();
+        HandleKeysPressed();
+        HandleKeysReleased();
+        HandleKeysHeld();
     }
 
-    private void HandleInput()
+    private void HandleKeysPressed()
     {
-        if (Input.GetKey(KeyCode.Space)) keySpacebarPress.Execute();
-        if (Input.GetKey(KeyCode.A)) keyAPress.Execute();
-        if (Input.GetKey(KeyCode.D)) keyDPress.Execute();
-        if (Input.GetKey(KeyCode.Mouse0)) keyMouse0Press.Execute();
-        if (Input.GetKey(KeyCode.LeftArrow)) keyLeftPress.Execute();
-        if (Input.GetKey(KeyCode.RightArrow)) keyRightPress.Execute();
+        for (int i = 0; i < keyPressMap.Count; i++)
+        {
+            if (!Input.GetKeyDown(keyPressMap[i].Item1)) continue;
+            keyPressMap[i].Item2.Execute();
+        }
+    }
 
-        if (Input.GetKeyDown(KeyCode.Escape)) keyEscPress.Execute();
+    private void HandleKeysReleased()
+    {
+        for (int i = 0; i < keyReleaseMap.Count; i++)
+        {
+            if (!Input.GetKeyUp(keyReleaseMap[i].Item1)) continue;
+            keyReleaseMap[i].Item2.Execute();
+        }
+    }
 
-        if (Input.GetKeyUp(KeyCode.Space)) keySpacebarRelease.Execute();
-        if (Input.GetKeyUp(KeyCode.A)) keyARelease.Execute();
-        if (Input.GetKeyUp(KeyCode.D)) keyDRelease.Execute();
-        if (Input.GetKeyUp(KeyCode.Mouse0)) keyMouse0Release.Execute();
-        if (Input.GetKeyUp(KeyCode.LeftArrow)) keyLeftRelease.Execute();
-        if (Input.GetKeyUp(KeyCode.RightArrow)) keyRightRelease.Execute();
+    private void HandleKeysHeld()
+    {
+        for (int i = 0; i < keyHeldMap.Count; i++)
+        {
+            if (!Input.GetKey(keyHeldMap[i].Item1)) continue;
+            keyHeldMap[i].Item2.Execute();
+        }
     }
 }

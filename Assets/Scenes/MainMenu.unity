@@ -8775,11 +8775,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4861011092352386734, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_text
-      value: MULTIPLAYER
+      value: 2 PLAYERS
       objectReference: {fileID: 0}
     - target: {fileID: 4861011092352386734, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_fontSize
-      value: 36
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4861011092352386734, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_fontStyle
@@ -8787,7 +8787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4861011092352386734, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_fontSizeBase
-      value: 36
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 4861011092352386734, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
       propertyPath: m_HorizontalAlignment
