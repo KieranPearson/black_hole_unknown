@@ -13,6 +13,11 @@ public class Fader : MonoBehaviour
     public static event System.Action OnScreenFadedIn;
     public static event System.Action OnScreenFadedOut;
 
+    private void Awake()
+    {
+        canvasGroup = GetComponent<CanvasGroup>();
+    }
+
     public void ToggleFadeIn()
     {
         fadeIn = !fadeIn;
@@ -31,7 +36,6 @@ public class Fader : MonoBehaviour
 
     private void OnEnable()
     {
-        canvasGroup = GetComponent<CanvasGroup>();
         SetupFade();
     }
 

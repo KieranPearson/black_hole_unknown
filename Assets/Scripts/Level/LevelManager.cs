@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform player2CloneTransform;
     [SerializeField] private GameObject deathScreen;
     [SerializeField] private MultiplayerManager multiplayerManager;
+    [SerializeField] private SpriteFader playerSpriteFader;
+    [SerializeField] private SpriteFader player2SpriteFader;
 
     public static LevelManager instance { get; private set; }
 
@@ -204,14 +206,24 @@ public class LevelManager : MonoBehaviour
         OnNewLevelStarted?.Invoke();
     }
 
+    private void DisplayPlayer()
+    {
+        playerObject.SetActive(true);
+        playerSpriteFader.enabled = true;
+        if (multiplayerManager.isMultiplayerModeEnabled())
+        {
+            player2Object.SetActive(true);
+            player2SpriteFader.enabled = true;
+        }
+    }
+
     IEnumerator WaitForGameReset()
     {
         while (deathScreen.activeSelf)
         {
             yield return new WaitForSeconds(1);
         }
-        playerObject.SetActive(true);
-        if (multiplayerManager.isMultiplayerModeEnabled()) player2Object.SetActive(true);
+        DisplayPlayer();
         yield return null;
     }
 

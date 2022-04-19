@@ -18,6 +18,8 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private float slowMissilesSpeed;
     [SerializeField] private BoxCollider2D playerCollider;
     [SerializeField] private BoxCollider2D player2Collider;
+    [SerializeField] private SpriteFader playerCloneSpriteFader;
+    [SerializeField] private SpriteFader player2CloneSpriteFader;
 
     public static PowerupManager instance { get; private set; }
 
@@ -268,12 +270,14 @@ public class PowerupManager : MonoBehaviour
         Vector3 playerClonePosition = playerClone.transform.position;
         playerClone.transform.position = new Vector3(playerPosition.x - 1.75f, playerClonePosition.y, playerClonePosition.z);
         playerClone.SetActive(true);
+        playerCloneSpriteFader.enabled = true;
         if (multiplayerManager.isMultiplayerModeEnabled())
         {
             Vector3 player2Position = player2Transform.position;
             Vector3 player2ClonePosition = player2Clone.transform.position;
             player2Clone.transform.position = new Vector3(player2Position.x - 1.75f, player2ClonePosition.y, player2ClonePosition.z);
             player2Clone.SetActive(true);
+            player2CloneSpriteFader.enabled = true;
         }
     }
 
