@@ -58,6 +58,7 @@ public class LevelManager : MonoBehaviour
     private PlayerController player2Controller;
     private Combat playerCombat;
     private Combat player2Combat;
+    private BonusLevel[] bonusLevels;
 
     private void Awake()
     {
@@ -79,6 +80,7 @@ public class LevelManager : MonoBehaviour
         playerMovement = playerObject.GetComponent<Movement>();
         playerController = playerObject.GetComponent<PlayerController>();
         playerCombat = playerObject.GetComponent<Combat>();
+        bonusLevels = gameObject.GetComponent<BonusLevels>().GetBonusLevels();
     }
 
     private void SetEnemyStartSpeed(float speed)
@@ -134,17 +136,15 @@ public class LevelManager : MonoBehaviour
     private void RandomiseLevel()
     {
         if (!multiplayerManager.isMultiplayerModeEnabled()) return;
-
-        SetPlayerFirerate(0.1f);
-        SetPlayerSpeed(25f);
-
-        SetEnemyStartSpeed(3f); // 0f .. 4f
-        SetEnemyMoveDownAmount(0.5f); // 0 .. 2f
-        SetEnemySpawnDistance(5f); // 5f .. 1f
-        SetEnemyFireChance(0);
-        SetEnemyFirerate(0.1f);
-
-        SetAsteroidsInvincibile(true);
+        int randomLevel = Random.Range(0, bonusLevels.Length);
+        SetPlayerFirerate(bonusLevels[randomLevel].GetPlayerFireRate());
+        SetPlayerSpeed(bonusLevels[randomLevel].GetPlayerSpeed());
+        SetEnemyStartSpeed(bonusLevels[randomLevel].GetEnemySpeed());
+        SetEnemyMoveDownAmount(bonusLevels[randomLevel].GetEnemyMoveDownAmount());
+        SetEnemySpawnDistance(bonusLevels[randomLevel].GetEnemySpawnDistance());
+        SetEnemyFireChance(bonusLevels[randomLevel].GetEnemyFireChance());
+        SetEnemyFirerate(bonusLevels[randomLevel].GetEnemyFireRate());
+        SetAsteroidsInvincibile(bonusLevels[randomLevel].AsteroidsInvincibile());
     }
 
     private void ClearAllProjectiles()
