@@ -135,14 +135,14 @@ public class LevelManager : MonoBehaviour
     {
         if (!multiplayerManager.isMultiplayerModeEnabled()) return;
 
+        SetPlayerFirerate(0.1f);
+        SetPlayerSpeed(25f);
+
         SetEnemyStartSpeed(3f); // 0f .. 4f
         SetEnemyMoveDownAmount(0.5f); // 0 .. 2f
         SetEnemySpawnDistance(5f); // 5f .. 1f
         SetEnemyFireChance(0);
         SetEnemyFirerate(0.1f);
-
-        SetPlayerFirerate(0.1f);
-        SetPlayerSpeed(25f);
 
         SetAsteroidsInvincibile(true);
     }
