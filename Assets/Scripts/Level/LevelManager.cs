@@ -12,6 +12,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemyRowPadding;
     [SerializeField] private float enemyColumnPadding;
     [SerializeField] private GameObject playerObject;
+    [SerializeField] private GameObject player2Object;
     [SerializeField] private Transform projectiles;
     [SerializeField] private Asteroids asteroids;
     [SerializeField] private float enemyEndGameYPosition;
@@ -24,7 +25,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private float enemiesStartPositionYOnLevel4;
     [SerializeField] private float enemiesStartPositionYOnLevel5OrMore;
     [SerializeField] private Transform playerCloneTransform;
+    [SerializeField] private Transform player2CloneTransform;
     [SerializeField] private GameObject deathScreen;
+    [SerializeField] private MultiplayerManager multiplayerManager;
 
     public static LevelManager instance { get; private set; }
 
@@ -42,11 +45,15 @@ public class LevelManager : MonoBehaviour
     private Transform enemiesTransform;
     private EnemiesMovement enemiesMovement;
     private Transform playerTransform;
+    private Transform player2Transform;
     private int totalEnemies;
     private PowerupManager powerupManager;
     private Movement playerMovement;
+    private Movement player2Movement;
     private PlayerController playerController;
+    private PlayerController player2Controller;
     private Combat playerCombat;
+    private Combat player2Combat;
 
     private void Awake()
     {
@@ -61,6 +68,7 @@ public class LevelManager : MonoBehaviour
         enemiesMovement = enemiesObject.GetComponent<EnemiesMovement>();
         enemiesTransform = enemiesObject.transform;
         playerTransform = playerObject.transform;
+        player2Transform = player2Object.transform;
         totalEnemies = enemyRows * enemyColumns;
         enemiesRemaining = totalEnemies;
         powerupManager = PowerupManager.instance;
@@ -101,6 +109,14 @@ public class LevelManager : MonoBehaviour
         enemiesObject.SetActive(true);
     }
 
+    private void RefreshPlayer2()
+    {
+        if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        Vector3 player2Position = player2Transform.position;
+        float newX = activeProfile.GetPlayerXPosition();
+        player2Transform.position = new Vector3(newX, player2Position.y, player2Position.z);
+    }
+
     private void RefreshPlayer()
     {
         Vector3 playerPosition = playerTransform.position;
@@ -110,6 +126,7 @@ public class LevelManager : MonoBehaviour
         newX = playerTransform.position.x - 1.75f;
         Vector3 playerClonePosition = playerCloneTransform.position;
         playerCloneTransform.position = new Vector3(newX, playerClonePosition.y, playerClonePosition.z);
+        player2CloneTransform.position = new Vector3(newX, playerClonePosition.y, playerClonePosition.z);
     }
 
     private void RefreshAsteroids()
@@ -137,6 +154,7 @@ public class LevelManager : MonoBehaviour
         RefreshEnemies();
         UpdateEnemySpeed();
         RefreshPlayer();
+        RefreshPlayer2();
         RefreshAsteroids();
         activeProfile.SetAsteroidShotDuringLevel(false);
         activeProfile.SetPowerupUsedDuringLevel(false);
@@ -193,7 +211,20 @@ public class LevelManager : MonoBehaviour
             yield return new WaitForSeconds(1);
         }
         playerObject.SetActive(true);
+        if (multiplayerManager.isMultiplayerModeEnabled()) player2Object.SetActive(true);
         yield return null;
+    }
+
+    private void DisablePlayer2()
+    {
+        if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        if (multiplayerManager.isMultiplayerModeEnabled()) player2Movement.Stop();
+        Command stopMovingLeft = new StopMovingLeftCommand(player2Controller);
+        Command stopMovingRight = new StopMovingRightCommand(player2Controller);
+        player2Controller.UpdateState(stopMovingLeft);
+        player2Controller.UpdateState(stopMovingRight);
+        player2Combat.ToggleFire(false);
+        player2Object.SetActive(false);
     }
 
     private void DisablePlayer()
@@ -210,6 +241,7 @@ public class LevelManager : MonoBehaviour
     private void ResetGame()
     {
         DisablePlayer();
+        DisablePlayer2();
         activeProfile.SetPowerupRemainingSeconds(0);
         deathScreen.SetActive(true);
         RefreshGame();
@@ -480,10 +512,12 @@ public class LevelManager : MonoBehaviour
         float playerPositionY = playerTransform.position.y;
         float playerPositionZ = playerTransform.position.z;
         playerTransform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
+        player2Transform.position = new Vector3(playerPositionX, playerPositionY, playerPositionZ);
 
         Vector3 playerClonePosition = playerCloneTransform.position;
         float newPlayerCloneXPosition = playerTransform.position.x - 1.75f;
         playerCloneTransform.position = new Vector3(newPlayerCloneXPosition, playerClonePosition.y, playerClonePosition.z);
+        player2CloneTransform.position = new Vector3(newPlayerCloneXPosition, playerClonePosition.y, playerClonePosition.z);
 
         LoadDestroyedEnemies();
         LoadPlayerProjectiles();
@@ -494,8 +528,18 @@ public class LevelManager : MonoBehaviour
         OnLevelLoaded?.Invoke();
     }
 
+    private void SetupMultiplayer()
+    {
+        multiplayerManager = MultiplayerManager.instance;
+        if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        player2Movement = player2Object.GetComponent<Movement>();
+        player2Controller = player2Object.GetComponent<PlayerController>();
+        player2Combat = player2Object.GetComponent<Combat>();
+    }
+
     void Start()
     {
+        SetupMultiplayer();
         GenerateEnemyGrid();
         LoadLevel();
     }
