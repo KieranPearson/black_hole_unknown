@@ -47,6 +47,11 @@ public class EnemiesMovement : MonoBehaviour
         this.currentSpeed = newSpeed;
     }
 
+    public void SetMoveDownAmount(float amount)
+    {
+        moveDownAmount = amount;
+    }
+
     private void MoveDown()
     {
         Vector3 position = myTransform.position;

@@ -2410,6 +2410,7 @@ MonoBehaviour:
   multiplayerManager: {fileID: 977671694}
   playerSpriteFader: {fileID: 293290735}
   player2SpriteFader: {fileID: 2121832100}
+  enemiesCombatController: {fileID: 1599791851}
 --- !u!4 &1504559646
 Transform:
   m_ObjectHideFlags: 0

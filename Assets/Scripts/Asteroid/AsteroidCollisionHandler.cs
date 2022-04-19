@@ -12,6 +12,8 @@ public class AsteroidCollisionHandler : MonoBehaviour
     public static event System.Action<Vector2, float> OnImpact;
     public static event System.Action OnPlayerShotAsteroid;
 
+    private static bool isInvincible;
+
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D boxCollider;
     private int maxDamage;
@@ -21,6 +23,7 @@ public class AsteroidCollisionHandler : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         boxCollider = GetComponent<BoxCollider2D>();
         maxDamage = asteroidSprites.Length - 1;
+        isInvincible = false;
     }
 
     private void ProjectileHit(GameObject projectile)
@@ -50,8 +53,14 @@ public class AsteroidCollisionHandler : MonoBehaviour
         UpdateBoxCollider();
     }
 
+    public static void ToggleInvincibility(bool toggle)
+    {
+        isInvincible = toggle;
+    }
+
     private void TakeDamage()
     {
+        if (isInvincible) return;
         if (damage == maxDamage)
         {
             gameObject.SetActive(false);

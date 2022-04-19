@@ -116,6 +116,11 @@ public class Combat : MonoBehaviour
         this.currentFireRate = fireRate;
     }
 
+    public void SetDefaultFireRate(float rate)
+    {
+        fireRate = rate;
+    }
+
     public void SetProjectilesSpeed(float newSpeed)
     {
         if (projectilesMoveDown) newSpeed = -newSpeed;

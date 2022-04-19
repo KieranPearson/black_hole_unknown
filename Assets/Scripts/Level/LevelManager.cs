@@ -30,6 +30,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private MultiplayerManager multiplayerManager;
     [SerializeField] private SpriteFader playerSpriteFader;
     [SerializeField] private SpriteFader player2SpriteFader;
+    [SerializeField] private EnemiesCombatController enemiesCombatController;
 
     public static LevelManager instance { get; private set; }
 
@@ -78,6 +79,72 @@ public class LevelManager : MonoBehaviour
         playerMovement = playerObject.GetComponent<Movement>();
         playerController = playerObject.GetComponent<PlayerController>();
         playerCombat = playerObject.GetComponent<Combat>();
+    }
+
+    private void SetEnemyStartSpeed(float speed)
+    {
+        enemiesMovement.SetStartSpeed(speed);
+    }
+
+    private void SetEnemyMoveDownAmount(float amount)
+    {
+        enemiesMovement.SetMoveDownAmount(amount);
+    }
+
+    private void SetEnemySpawnDistance(float newY)
+    {
+        Vector3 enemiesPosition = enemiesTransform.position;
+        enemiesPosition.y = newY;
+        enemiesTransform.position = enemiesPosition;
+    }
+
+    private void SetEnemyFireChance(int chance)
+    {
+        enemiesCombatController.SetEnemyFireChance(chance);
+    }
+
+    private void SetEnemyFirerate(float rate)
+    {
+        for (int i = 0; i < enemiesCombat.Count; i++)
+        {
+            enemiesCombat[i].SetDefaultFireRate(rate);
+            enemiesCombat[i].SetFireRate(rate);
+        }
+    }
+
+    private void SetPlayerFirerate(float rate)
+    {
+        playerCombat.SetDefaultFireRate(rate);
+        playerCombat.SetFireRate(rate);
+        player2Combat.SetDefaultFireRate(rate);
+        player2Combat.SetFireRate(rate);
+    }
+
+    private void SetAsteroidsInvincibile(bool toggle)
+    {
+        AsteroidCollisionHandler.ToggleInvincibility(toggle);
+    }
+
+    private void SetPlayerSpeed(float speed)
+    {
+        playerMovement.SetSpeed(speed);
+        player2Movement.SetSpeed(speed);
+    }
+
+    private void RandomiseLevel()
+    {
+        if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+
+        SetEnemyStartSpeed(3f); // 0f .. 4f
+        SetEnemyMoveDownAmount(0.5f); // 0 .. 2f
+        SetEnemySpawnDistance(5f); // 5f .. 1f
+        SetEnemyFireChance(0);
+        SetEnemyFirerate(0.1f);
+
+        SetPlayerFirerate(0.1f);
+        SetPlayerSpeed(25f);
+
+        SetAsteroidsInvincibile(true);
     }
 
     private void ClearAllProjectiles()
@@ -206,6 +273,7 @@ public class LevelManager : MonoBehaviour
         RefreshGame();
         SetNewLevelEnemiesYPosition();
         OnNewLevelStarted?.Invoke();
+        RandomiseLevel();
     }
 
     private void DisplayPlayer()
@@ -260,6 +328,7 @@ public class LevelManager : MonoBehaviour
         deathScreen.SetActive(true);
         RefreshGame();
         OnGameReset?.Invoke();
+        RandomiseLevel();
         StartCoroutine(WaitForGameReset());
     }
 
@@ -341,6 +410,7 @@ public class LevelManager : MonoBehaviour
                 newSpeed += (enemiesDestroyed * enemySpeedIncreaseOnDestruction);
                 break;
         }
+        if (multiplayerManager.isMultiplayerModeEnabled()) return;
         activeProfile.SetEnemiesSpeed(newSpeed);
         enemiesMovement.SetSpeed(newSpeed);
     }
@@ -540,6 +610,8 @@ public class LevelManager : MonoBehaviour
         LoadEnemyProjectiles();
         LoadAsteroidDamage();
         powerupManager.LoadPowerup();
+
+        RandomiseLevel();
 
         OnLevelLoaded?.Invoke();
     }

@@ -41,6 +41,11 @@ public class Movement : MonoBehaviour
         CalculateBoundary();
     }
 
+    public void SetSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
     public void MoveLeft()
     {
         direction.x = -1;

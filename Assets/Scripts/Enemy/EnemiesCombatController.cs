@@ -8,6 +8,11 @@ public class EnemiesCombatController : MonoBehaviour
 
     public static event System.Action<GameObject> OnEnemyShoot;
 
+    public void SetEnemyFireChance(int chance)
+    {
+        chanceEnemyFires = chance;
+    }
+
     void FixedUpdate()
     {
         EnemiesShoot();
