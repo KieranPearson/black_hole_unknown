@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MainMenuHandler : MonoBehaviour
 {
+    public static event System.Action OnMultiplayerModeClicked;
+
     private UIController uiController;
 
     private void Awake()
@@ -14,6 +16,11 @@ public class MainMenuHandler : MonoBehaviour
     public void PlayButtonClicked()
     {
         uiController.DisplayProfileSelector();
+    }
+
+    public void MultiplayerButtonClicked()
+    {
+        OnMultiplayerModeClicked?.Invoke();
     }
 
     public void AchievementsButtonClicked()

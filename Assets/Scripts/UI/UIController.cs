@@ -90,7 +90,8 @@ public class UIController : MonoBehaviour
         if (activeTransition == Transition.Out)
         {
             TransitionOutMenu();
-        } else if (activeTransition == Transition.In)
+        } 
+        else if (activeTransition == Transition.In)
         {
             TransitionInMenu();
         }

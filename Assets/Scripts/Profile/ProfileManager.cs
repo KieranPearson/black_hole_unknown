@@ -100,6 +100,14 @@ public class ProfileManager : MonoBehaviour
         }
     }
 
+    public void StartUnsavedGame()
+    {
+        Profile newProfile = new Profile();
+        newProfile.GenerateRandomPlayerXPosition();
+        activeProfile = newProfile;
+        GameManager.instance.StartGame();
+    }
+
     private void ProfileSlotNew_OnNewProfile(string profileName)
     {
         if (GetProfileByName(profileName) != null) return;
