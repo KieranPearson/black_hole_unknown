@@ -545,6 +545,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 247360948}
   m_CullTransparentMesh: 1
+--- !u!1 &271909571 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6052519698405716689, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
+  m_PrefabInstance: {fileID: 1315173790}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &287836441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1831,13 +1836,17 @@ MonoBehaviour:
   powerup: {fileID: 550431448}
   percentChanceOfPowerup: 15
   playerClone: {fileID: 148169035}
+  player2Clone: {fileID: 271909571}
   playerCombat: {fileID: 293290727}
+  player2Combat: {fileID: 2121832092}
   enemyCombat: {fileID: -3947062780682599927, guid: 289d87f25c02f6549a072441c5fdfe22, type: 3}
   powerupDuration: 10
   playerTransform: {fileID: 293290734}
+  player2Transform: {fileID: 2121832099}
   rapidfireSpeed: 0.25
   slowMissilesSpeed: 0.5
   playerCollider: {fileID: 293290725}
+  player2Collider: {fileID: 2121832091}
 --- !u!1 &1031945806
 GameObject:
   m_ObjectHideFlags: 0
@@ -3181,6 +3190,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.2, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2121832092 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6052519698405716697, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
+  m_PrefabInstance: {fileID: 2121832088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2121832089}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 35f30ea4c74ad8d47a663e7086e92c2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &2121832099 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6052519698405716691, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
+  m_PrefabInstance: {fileID: 2121832088}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1341792152027725883
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -7,13 +7,17 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private GameObject powerup;
     [SerializeField] private int percentChanceOfPowerup;
     [SerializeField] private GameObject playerClone;
+    [SerializeField] private GameObject player2Clone;
     [SerializeField] private Combat playerCombat;
+    [SerializeField] private Combat player2Combat;
     [SerializeField] private Combat enemyCombat;
     [SerializeField] private int powerupDuration;
     [SerializeField] private Transform playerTransform;
+    [SerializeField] private Transform player2Transform;
     [SerializeField] private float rapidfireSpeed;
     [SerializeField] private float slowMissilesSpeed;
     [SerializeField] private BoxCollider2D playerCollider;
+    [SerializeField] private BoxCollider2D player2Collider;
 
     public static PowerupManager instance { get; private set; }
 
@@ -29,6 +33,10 @@ public class PowerupManager : MonoBehaviour
     private Combat playerCloneCombat;
     private Movement playerCloneMovement;
     private PlayerController playerCloneController;
+    private Combat player2CloneCombat;
+    private Movement player2CloneMovement;
+    private PlayerController player2CloneController;
+    private MultiplayerManager multiplayerManager;
 
     private void Awake()
     {
@@ -46,11 +54,15 @@ public class PowerupManager : MonoBehaviour
         playerCloneCombat = playerClone.GetComponent<Combat>();
         playerCloneMovement = playerClone.GetComponent<Movement>();
         playerCloneController = playerClone.GetComponent<PlayerController>();
+        player2CloneCombat = player2Clone.GetComponent<Combat>();
+        player2CloneMovement = player2Clone.GetComponent<Movement>();
+        player2CloneController = player2Clone.GetComponent<PlayerController>();
     }
 
     private void Start()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
+        multiplayerManager = MultiplayerManager.instance;
     }
 
     private void SetPowerupType(PowerupType powerupType)
@@ -187,6 +199,18 @@ public class PowerupManager : MonoBehaviour
         LoadPowerupInUse();
     }
 
+    private void DisablePlayer2Clone()
+    {
+        if (!player2Clone.activeSelf) return;
+        player2CloneMovement.Stop();
+        Command stopMovingLeft = new StopMovingLeftCommand(player2CloneController);
+        Command stopMovingRight = new StopMovingRightCommand(player2CloneController);
+        player2CloneController.UpdateState(stopMovingLeft);
+        player2CloneController.UpdateState(stopMovingRight);
+        player2CloneCombat.ToggleFire(false);
+        player2Clone.SetActive(false);
+    }
+
     private void DisablePlayerClone()
     {
         if (!playerClone.activeSelf) return;
@@ -203,12 +227,18 @@ public class PowerupManager : MonoBehaviour
     {
         playerCombat.SetDefaultFireRate();
         DisablePlayerClone();
+        if (multiplayerManager.isMultiplayerModeEnabled())
+        {
+            player2Combat.SetDefaultFireRate();
+            DisablePlayer2Clone();
+        }
         List<Combat> enemiesCombat = LevelManager.instance.GetAllEnemiesCombat();
         for (int i = 0; i < enemiesCombat.Count; i++)
         {
             enemiesCombat[i].SetProjectilesDefaultSpeed();
         }
         playerCollider.enabled = true;
+        player2Collider.enabled = true;
 
         List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
         if (loadedEnemyProjectileMovements.Count <= 0) return;
@@ -226,6 +256,10 @@ public class PowerupManager : MonoBehaviour
     private void UseRapidfirePowerup()
     {
         playerCombat.SetFireRate(rapidfireSpeed);
+        if (multiplayerManager.isMultiplayerModeEnabled())
+        {
+            player2Combat.SetFireRate(rapidfireSpeed);
+        }
     }
 
     private void UseClonePowerup()
@@ -234,6 +268,13 @@ public class PowerupManager : MonoBehaviour
         Vector3 playerClonePosition = playerClone.transform.position;
         playerClone.transform.position = new Vector3(playerPosition.x - 1.75f, playerClonePosition.y, playerClonePosition.z);
         playerClone.SetActive(true);
+        if (multiplayerManager.isMultiplayerModeEnabled())
+        {
+            Vector3 player2Position = player2Transform.position;
+            Vector3 player2ClonePosition = player2Clone.transform.position;
+            player2Clone.transform.position = new Vector3(player2Position.x - 1.75f, player2ClonePosition.y, player2ClonePosition.z);
+            player2Clone.SetActive(true);
+        }
     }
 
     private void UseSlowMissilesPowerup()
@@ -244,6 +285,7 @@ public class PowerupManager : MonoBehaviour
             enemiesCombat[i].SetProjectilesSpeed(slowMissilesSpeed);
         }
         playerCollider.enabled = false;
+        player2Collider.enabled = false;
 
         List<ProjectileMovement> loadedEnemyProjectileMovements = ProjectileLoader.instance.GetEnemyProjectileMovements();
         if (loadedEnemyProjectileMovements.Count <= 0) return;
