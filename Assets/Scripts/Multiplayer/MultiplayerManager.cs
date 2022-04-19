@@ -21,9 +21,9 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
-    public void ToggleMultiplayerMode(bool enabled)
+    public bool isMultiplayerModeEnabled()
     {
-        multiplayerModeEnabled = enabled;
+        return multiplayerModeEnabled;
     }
 
     private void StartMultiplayerMode()
@@ -37,9 +37,16 @@ public class MultiplayerManager : MonoBehaviour
         StartMultiplayerMode();
     }
 
+    private void DisableMultiplayerMode(string profile)
+    {
+        multiplayerModeEnabled = false;
+    }
+
     private void OnEnable()
     {
         MainMenuHandler.OnMultiplayerModeClicked += OnMultiplayerModeClicked;
+        ProfileSlotNew.OnNewProfile += DisableMultiplayerMode;
+        ProfileSlot.OnProfileSelected += DisableMultiplayerMode;
     }
 
     private void OnDisable()
