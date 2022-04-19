@@ -136,6 +136,7 @@ public class LevelManager : MonoBehaviour
     private void RandomiseLevel()
     {
         if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        if (bonusLevels.Length == 0) return;
         int randomLevel = Random.Range(0, bonusLevels.Length);
         SetPlayerFirerate(bonusLevels[randomLevel].GetPlayerFireRate());
         SetPlayerSpeed(bonusLevels[randomLevel].GetPlayerSpeed());
