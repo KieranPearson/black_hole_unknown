@@ -39,6 +39,7 @@ public class LevelManager : MonoBehaviour
     public static event System.Action<string> OnAchievementUnlocked;
 
     private GameObject[,] enemies;
+    private SpriteFader[,] enemySpriteFaders;
     private List<Combat> enemiesCombat = new List<Combat>();
     private List<List<GameObject>> allEnemies = new List<List<GameObject>>();
     private List<List<GameObject>> aliveEnemies = new List<List<GameObject>>();
@@ -101,6 +102,7 @@ public class LevelManager : MonoBehaviour
                 GameObject enemy = enemies[column, row];
                 enemiesInColumn.Add(enemy);
                 enemy.SetActive(true);
+                enemySpriteFaders[column, row].enabled = true;
             }
             aliveEnemies.Add(enemiesInColumn);
         }
@@ -385,6 +387,7 @@ public class LevelManager : MonoBehaviour
     private void GenerateEnemyGrid()
     {
         enemies = new GameObject[enemyColumns, enemyRows];
+        enemySpriteFaders = new SpriteFader[enemyColumns, enemyRows];
         int columnLength = enemies.GetLength(0);
         int rowLength = enemies.GetLength(1);
         int columnLength_ = columnLength - 1;
@@ -398,6 +401,7 @@ public class LevelManager : MonoBehaviour
             {
                 GameObject enemy = CreateEnemy(new Vector2(spawnPosX, spawnPosY));
                 enemies[column, row] = enemy;
+                enemySpriteFaders[column, row] = enemy.GetComponent<SpriteFader>();
                 enemiesInColumn.Add(enemy);
                 spawnPosY += enemyRowPadding;
                 enemiesCombat.Add(enemy.GetComponent<Combat>());
