@@ -71,7 +71,7 @@ public class SettingsHandler : MonoBehaviour
 
     private void UpdateBonusLevels()
     {
-        bonusLevelsToggle.isOn = settingsManager.bonusLevelsEnabled();
+        bonusLevelsToggle.isOn = settingsManager.BonusLevelsEnabled();
     }
 
     private void UpdateMusicVolume()

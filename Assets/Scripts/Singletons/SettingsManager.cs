@@ -137,7 +137,7 @@ public class SettingsManager : MonoBehaviour
         return isFullscreen;
     }
 
-    public bool bonusLevelsEnabled()
+    public bool BonusLevelsEnabled()
     {
         return bonusLevels;
     }

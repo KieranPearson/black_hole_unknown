@@ -59,6 +59,7 @@ public class LevelManager : MonoBehaviour
     private Combat playerCombat;
     private Combat player2Combat;
     private BonusLevel[] bonusLevels;
+    private bool useMultiplayerBonusLevels;
 
     private void Awake()
     {
@@ -136,6 +137,7 @@ public class LevelManager : MonoBehaviour
     private void RandomiseLevel()
     {
         if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        if (!useMultiplayerBonusLevels) return;
         if (bonusLevels.Length == 0) return;
         int randomLevel = Random.Range(0, bonusLevels.Length);
         SetPlayerFirerate(bonusLevels[randomLevel].GetPlayerFireRate());
@@ -411,7 +413,7 @@ public class LevelManager : MonoBehaviour
                 newSpeed += (enemiesDestroyed * enemySpeedIncreaseOnDestruction);
                 break;
         }
-        if (multiplayerManager.isMultiplayerModeEnabled()) return;
+        if (multiplayerManager.isMultiplayerModeEnabled() && useMultiplayerBonusLevels) return;
         activeProfile.SetEnemiesSpeed(newSpeed);
         enemiesMovement.SetSpeed(newSpeed);
     }
@@ -621,6 +623,7 @@ public class LevelManager : MonoBehaviour
     {
         multiplayerManager = MultiplayerManager.instance;
         if (!multiplayerManager.isMultiplayerModeEnabled()) return;
+        useMultiplayerBonusLevels = SettingsManager.instance.BonusLevelsEnabled();
         player2Movement = player2Object.GetComponent<Movement>();
         player2Controller = player2Object.GetComponent<PlayerController>();
         player2Combat = player2Object.GetComponent<Combat>();
