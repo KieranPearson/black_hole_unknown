@@ -18,6 +18,7 @@ public class MultiplayerModeSetup : MonoBehaviour
             return;
         }
         SetupMultiplayerMode();
+        ProfileManager.instance.GetActiveProfile().SetLives(6);
     }
 
     private void SetupMultiplayerMode()

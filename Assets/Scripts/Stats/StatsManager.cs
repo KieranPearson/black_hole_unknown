@@ -79,7 +79,14 @@ public class StatsManager : MonoBehaviour
     private void ResetGameStats()
     {
         activeProfile.SetLevel(1);
-        activeProfile.SetLives(3);
+        if (MultiplayerManager.instance.isMultiplayerModeEnabled())
+        {
+            activeProfile.SetLives(6);
+        }
+        else
+        {
+            activeProfile.SetLives(3);
+        }
         activeProfile.SetCurrentScore(0);
         displayStats.UpdateAll();
     }
