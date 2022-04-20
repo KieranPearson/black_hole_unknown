@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 949aab7207792e64ca5ff6ca7658d6f0, type: 3}
-  m_Name: Level1
+  m_Name: Level3
   m_EditorClassIdentifier: 
-  playerSpeed: 8
-  playerFireRate: 0.4
-  enemySpeed: 7
-  enemyMoveDownAmount: 0.3
+  playerSpeed: 2
+  playerFireRate: 0.1
+  enemySpeed: 2
+  enemyMoveDownAmount: 0.1
   enemySpawnDistance: 5
-  enemyFireChance: 5
-  enemyFireRate: 1
-  asteroidsInvincibile: 0
+  enemyFireChance: 4
+  enemyFireRate: 0.1
+  asteroidsInvincibile: 1
