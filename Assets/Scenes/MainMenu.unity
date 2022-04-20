@@ -3512,12 +3512,14 @@ MonoBehaviour:
   defaultFullscreen: 1
   defaultMusicVolume: 0.5
   defaultSoundEffectsVolume: 0.5
+  defaultBonusLevels: 1
   resolutionWidthPrefKey: resolutionWidth
   resolutionHeightPrefKey: resolutionHeight
   isFullscreenPrefKey: isFullscreen
   musicVolumePrefKey: musicVolume
   soundEffectsVolumePrefKey: soundEffectsVolume
   refreshRatePrefKey: refreshRate
+  bonusLevelsPrefKey: multiplayerBonusLevels
   forceVSync: 1
 --- !u!4 &640656483
 Transform:
@@ -5985,6 +5987,7 @@ MonoBehaviour:
   isFullscreenToggle: {fileID: 2051474428}
   musicVolumeSlider: {fileID: 550157073}
   soundEffectsVolumeSlider: {fileID: 668416626}
+  bonusLevelsToggle: {fileID: 1645560085}
 --- !u!114 &1090070354
 MonoBehaviour:
   m_ObjectHideFlags: 0

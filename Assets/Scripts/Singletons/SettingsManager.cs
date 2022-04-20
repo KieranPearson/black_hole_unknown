@@ -12,6 +12,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private bool defaultFullscreen;
     [SerializeField] private float defaultMusicVolume;
     [SerializeField] private float defaultSoundEffectsVolume;
+    [SerializeField] private bool defaultBonusLevels;
 
     [SerializeField] private string resolutionWidthPrefKey;
     [SerializeField] private string resolutionHeightPrefKey;
@@ -19,6 +20,7 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private string musicVolumePrefKey;
     [SerializeField] private string soundEffectsVolumePrefKey;
     [SerializeField] private string refreshRatePrefKey;
+    [SerializeField] private string bonusLevelsPrefKey;
 
     [SerializeField] private bool forceVSync;
 
@@ -31,6 +33,7 @@ public class SettingsManager : MonoBehaviour
     private float musicVolume;
     private float soundEffectsVolume;
     private bool changesMade;
+    private bool bonusLevels;
 
     private void Awake()
     {
@@ -114,9 +117,29 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
+    private void LoadBonusLevels()
+    {
+        bonusLevels = defaultBonusLevels;
+        if (PlayerPrefs.HasKey(bonusLevelsPrefKey))
+        {
+            int loadedBonusLevels = PlayerPrefs.GetInt(bonusLevelsPrefKey);
+            if (loadedBonusLevels == 1)
+            {
+                bonusLevels = true;
+                return;
+            }
+            bonusLevels = false;
+        }
+    }
+
     public bool IsFullscreen()
     {
         return isFullscreen;
+    }
+
+    public bool bonusLevelsEnabled()
+    {
+        return bonusLevels;
     }
 
     public void RequestFullscreenChange(bool isFullscreen)
@@ -124,6 +147,13 @@ public class SettingsManager : MonoBehaviour
         if (this.isFullscreen == isFullscreen) return;
         this.isFullscreen = isFullscreen;
         UpdateDisplay();
+        changesMade = true;
+    }
+
+    public void RequestBonusLevelsChange(bool bonusLevels)
+    {
+        if (this.bonusLevels == bonusLevels) return;
+        this.bonusLevels = bonusLevels;
         changesMade = true;
     }
 
@@ -196,6 +226,7 @@ public class SettingsManager : MonoBehaviour
         LoadMusicVolume();
         LoadSoundEffectsVolume();
         UpdateAudio();
+        LoadBonusLevels();
         OnSettingsLoaded?.Invoke();
     }
 
@@ -208,6 +239,7 @@ public class SettingsManager : MonoBehaviour
         PlayerPrefs.SetInt(isFullscreenPrefKey, isFullscreen ? 1 : 0);
         PlayerPrefs.SetFloat(musicVolumePrefKey, musicVolume);
         PlayerPrefs.SetFloat(soundEffectsVolumePrefKey, soundEffectsVolume);
+        PlayerPrefs.SetInt(bonusLevelsPrefKey, bonusLevels ? 1 : 0);
         PlayerPrefs.Save();
     }
 
