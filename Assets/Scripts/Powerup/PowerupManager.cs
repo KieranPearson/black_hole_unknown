@@ -115,6 +115,8 @@ public class PowerupManager : MonoBehaviour
 
     private void EnemyCollisionHandler_OnEnemyDestroyed(GameObject enemy)
     {
+        if (multiplayerManager.isMultiplayerModeEnabled() &&
+            SettingsManager.instance.BonusLevelsEnabled()) return;
         if (powerup.activeSelf || activeProfile.GetUsingPowerup()) return;
         int powerupSpawnChance = Random.Range(1, 101);
         if (powerupSpawnChance > percentChanceOfPowerup) return;

@@ -16,9 +16,12 @@ public class BonusLevel : ScriptableObject
 
     [SerializeField] private bool asteroidsInvincibile;
 
-    void Start()
-    {
+    void Start() { }
 
+    private void OnValidate()
+    {
+        if (playerFireRate < 0.1f) playerFireRate = 0.1f;
+        if (enemyFireRate < 0.1f) enemyFireRate = 0.1f;
     }
 
     public float GetPlayerSpeed()

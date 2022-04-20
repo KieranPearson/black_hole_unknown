@@ -1417,7 +1417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab: {fileID: 8907105247064317813, guid: 56f25b60194bb5840962c5175629453a, type: 3}
-  explosionPoolSize: 15
+  explosionPoolSize: 30
 --- !u!1 &728214823
 GameObject:
   m_ObjectHideFlags: 0
@@ -2439,7 +2439,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bonusLevels:
-  - {fileID: 11400000, guid: a61ce0bf7a3965944b523ef991e22e8f, type: 2}
+  - {fileID: 11400000, guid: 3b92e85ac5e3bd84cb0cd93b4d08278f, type: 2}
 --- !u!1001 &1516232827
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3199,7 +3199,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716697, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: projectilePoolSize
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716700, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: acceleration
@@ -3456,7 +3456,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716697, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: projectilePoolSize
-      value: 5
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6052519698405716700, guid: b20c3d136746f1c4a8ceebcc4d8bf872, type: 3}
       propertyPath: acceleration
