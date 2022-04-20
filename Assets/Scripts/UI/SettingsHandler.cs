@@ -47,7 +47,21 @@ public class SettingsHandler : MonoBehaviour
             }
         }
         settingsManager.RequestFullscreenChange(isFullscreenToggle.isOn);
+    }
+
+    public void BonusLevelsToggleChanged()
+    {
         settingsManager.RequestBonusLevelsChange(bonusLevelsToggle.isOn);
+    }
+
+    public void MusicVolumeChanged()
+    {
+        settingsManager.RequestMusicVolumeChange(musicVolumeSlider.value);
+    }
+
+    public void SoundEffectsVolumeChanged()
+    {
+        settingsManager.RequestSoundVolumeChange(soundEffectsVolumeSlider.value);
     }
 
     private void UpdateResolutionDropdown()

@@ -2994,7 +2994,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1090070353}
+        m_TargetAssemblyTypeName: SettingsHandler, Assembly-CSharp
+        m_MethodName: MusicVolumeChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &558489260
 GameObject:
   m_ObjectHideFlags: 0
@@ -3510,9 +3522,9 @@ MonoBehaviour:
   defaultResolutionHeight: 720
   defaultRefreshRate: 0
   defaultFullscreen: 1
-  defaultMusicVolume: 0.5
+  defaultMusicVolume: 0.35
   defaultSoundEffectsVolume: 0.5
-  defaultBonusLevels: 1
+  defaultBonusLevels: 0
   resolutionWidthPrefKey: resolutionWidth
   resolutionHeightPrefKey: resolutionHeight
   isFullscreenPrefKey: isFullscreen
@@ -4078,7 +4090,19 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1090070353}
+        m_TargetAssemblyTypeName: SettingsHandler, Assembly-CSharp
+        m_MethodName: SoundEffectsVolumeChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &679620226
 GameObject:
   m_ObjectHideFlags: 0
@@ -5835,7 +5859,25 @@ MonoBehaviour:
 
     Dogmatic on Unity Asset Store
 
-'
+
+    Music by
+
+    Fato_Shadow on OpenGameArt
+
+
+    Sound
+    by
+
+    Unnamed on OpenGameArt
+
+    Listener on OpenGameArt
+
+    NenadSimic on
+    OpenGameArt
+
+    Q009 on OpenGameArt
+
+    qubodup on OpenGameArt'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -8018,7 +8060,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1090070353}
+        m_TargetAssemblyTypeName: SettingsHandler, Assembly-CSharp
+        m_MethodName: BonusLevelsToggleChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 1
 --- !u!1 &1713381708
 GameObject:
@@ -9340,6 +9394,67 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4861011091941000324, guid: f6333687a6e72994ead605d6f06aa851, type: 3}
   m_PrefabInstance: {fileID: 2093403863}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2077918753019464719
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_RootOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373478, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2077918752246373479, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_Name
+      value: BackgroundMusic
+      objectReference: {fileID: 0}
+    - target: {fileID: 8103525051441801471, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+      propertyPath: m_Volume
+      value: 0.5
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
 --- !u!1001 &4861011090528856858
 PrefabInstance:
   m_ObjectHideFlags: 0

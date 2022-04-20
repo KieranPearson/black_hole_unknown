@@ -102,6 +102,20 @@ public class SettingsManager : MonoBehaviour
         changesMade = true;
     }
 
+    public void RequestMusicVolumeChange(float musicVolume)
+    {
+        this.musicVolume = musicVolume;
+        UpdateMusicVolume();
+        changesMade = true;
+    }
+
+    public void RequestSoundVolumeChange(float soundVolume)
+    {
+        soundEffectsVolume = soundVolume;
+        UpdateSoundEffectsVolume();
+        changesMade = true;
+    }
+
     private void LoadFullscreen()
     {
         isFullscreen = defaultFullscreen;
@@ -171,8 +185,8 @@ public class SettingsManager : MonoBehaviour
         musicVolume = defaultMusicVolume;
         if (PlayerPrefs.HasKey(musicVolumePrefKey))
         {
-            float loadedMusicVolume = PlayerPrefs.GetInt(musicVolumePrefKey);
-            if (loadedMusicVolume > 1 || loadedMusicVolume < 0) return;
+            float loadedMusicVolume = PlayerPrefs.GetFloat(musicVolumePrefKey);
+            if (loadedMusicVolume > 1f || loadedMusicVolume < 0f) loadedMusicVolume = 0f;
             musicVolume = loadedMusicVolume;
         }
     }
@@ -187,7 +201,7 @@ public class SettingsManager : MonoBehaviour
         soundEffectsVolume = defaultSoundEffectsVolume;
         if (PlayerPrefs.HasKey(soundEffectsVolumePrefKey))
         {
-            float loadedSoundEffectsVolume = PlayerPrefs.GetInt(soundEffectsVolumePrefKey);
+            float loadedSoundEffectsVolume = PlayerPrefs.GetFloat(soundEffectsVolumePrefKey);
             if (loadedSoundEffectsVolume > 1 || loadedSoundEffectsVolume < 0) return;
             soundEffectsVolume = loadedSoundEffectsVolume;
         }
@@ -198,9 +212,14 @@ public class SettingsManager : MonoBehaviour
         return soundEffectsVolume;
     }
 
-    private void UpdateAudio()
+    private void UpdateMusicVolume()
     {
-        // update the music & sound effects audio volume
+        BackgroundMusic.instance.UpdateMusicVolume(musicVolume);
+    }
+
+    private void UpdateSoundEffectsVolume()
+    {
+
     }
 
     public Resolution GetCurrentResolution()
@@ -224,8 +243,8 @@ public class SettingsManager : MonoBehaviour
         LoadFullscreen();
         UpdateDisplay();
         LoadMusicVolume();
+        UpdateMusicVolume();
         LoadSoundEffectsVolume();
-        UpdateAudio();
         LoadBonusLevels();
         OnSettingsLoaded?.Invoke();
     }
