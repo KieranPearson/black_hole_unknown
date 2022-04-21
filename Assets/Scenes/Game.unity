@@ -2226,7 +2226,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3066540041982289407, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
       propertyPath: defaultMusicVolume
-      value: 0.5
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3066540041982289407, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
       propertyPath: defaultSoundEffectsVolume

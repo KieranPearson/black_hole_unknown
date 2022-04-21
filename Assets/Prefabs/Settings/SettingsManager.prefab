@@ -47,7 +47,7 @@ MonoBehaviour:
   defaultResolutionHeight: 720
   defaultRefreshRate: 0
   defaultFullscreen: 1
-  defaultMusicVolume: 0.5
+  defaultMusicVolume: 0.2
   defaultSoundEffectsVolume: 0.5
   defaultBonusLevels: 0
   resolutionWidthPrefKey: resolutionWidth
