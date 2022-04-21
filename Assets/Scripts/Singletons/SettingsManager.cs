@@ -46,6 +46,8 @@ public class SettingsManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        musicVolume = defaultMusicVolume;
+        soundEffectsVolume = defaultSoundEffectsVolume;
     }
 
     private void SetDefaultResolution()

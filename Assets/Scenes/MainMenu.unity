@@ -3489,64 +3489,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &640656481
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 640656483}
-  - component: {fileID: 640656482}
-  m_Layer: 0
-  m_Name: SettingsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &640656482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640656481}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f36db1bf68cd1245b750d3123551698, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultResolutionWidth: 1280
-  defaultResolutionHeight: 720
-  defaultRefreshRate: 0
-  defaultFullscreen: 1
-  defaultMusicVolume: 0.35
-  defaultSoundEffectsVolume: 0.5
-  defaultBonusLevels: 0
-  resolutionWidthPrefKey: resolutionWidth
-  resolutionHeightPrefKey: resolutionHeight
-  isFullscreenPrefKey: isFullscreen
-  musicVolumePrefKey: musicVolume
-  soundEffectsVolumePrefKey: soundEffectsVolume
-  refreshRatePrefKey: refreshRate
-  bonusLevelsPrefKey: multiplayerBonusLevels
-  forceVSync: 1
---- !u!4 &640656483
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 640656481}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &644098259
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9455,6 +9397,63 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2c446c0b59d34440a32f7b36eb6a63c, type: 3}
+--- !u!1001 &3066540042554048925
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3066540041982289404, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_Name
+      value: SettingsManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3066540041982289406, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 38c76247f8329ce409d01897989f9c54, type: 3}
 --- !u!1001 &4861011090528856858
 PrefabInstance:
   m_ObjectHideFlags: 0

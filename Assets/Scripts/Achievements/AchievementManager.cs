@@ -4,22 +4,33 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class AchievementManager : MonoBehaviour
 {
     [SerializeField] private GameObject achievementUI;
     [SerializeField] private TMP_Text achievementName;
     [SerializeField] private TMP_Text achievementDescription;
     [SerializeField] private Image achievementIcon;
+    [SerializeField] private AudioClip achievementSound;
+
+    public static event System.Action<AudioSource> OnPlayAchievementSound;
 
     private Queue<Achievement> achievementsQueue = new Queue<Achievement>();
     private bool displayingAchievement = false;
     private Profile activeProfile;
     private Achievement[] achievements;
+    private AudioSource audioSource;
+
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
 
     private void Start()
     {
         achievements = Achievements.instance.GetAchievements();
         activeProfile = ProfileManager.instance.GetActiveProfile();
+        audioSource.clip = achievementSound;
     }
 
     private bool AchievementExists(string achievementName)
@@ -65,6 +76,7 @@ public class AchievementManager : MonoBehaviour
             Achievement achievementToDisplay = achievementsQueue.Dequeue();
             UpdateAchivementDisplay(achievementToDisplay);
             achievementUI.SetActive(true);
+            OnPlayAchievementSound?.Invoke(audioSource);
             while (achievementUI.activeSelf == true)
             {
                 yield return new WaitForSeconds(1f);

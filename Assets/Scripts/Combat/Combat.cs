@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(AudioSource))]
 public class Combat : MonoBehaviour
 {
     [SerializeField] private GameObject projectilePrefab;
@@ -10,6 +11,9 @@ public class Combat : MonoBehaviour
     [SerializeField] private int projectilePoolSize;
     [SerializeField] private float projectileSpeed;
     [SerializeField] private bool projectilesMoveDown;
+    [SerializeField] private AudioClip fireSound;
+
+    public static event System.Action<AudioSource> OnPlayFireSound;
 
     private GameObject projectiles;
     private float projectileSpawnOffset;
@@ -20,6 +24,7 @@ public class Combat : MonoBehaviour
     private int currentProjectile;
     private float currentFireRate;
     private float currentProjectileSpeed;
+    private AudioSource audioSource;
 
     private void CalculateSpawnOffset()
     {
@@ -59,11 +64,13 @@ public class Combat : MonoBehaviour
         }
         currentProjectileSpeed = projectileSpeed;
         SetupProjectilePool();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     void Start()
     {
         CalculateSpawnOffset();
+        audioSource.clip = fireSound;
     }
 
     void FixedUpdate()
@@ -91,6 +98,7 @@ public class Combat : MonoBehaviour
         {
             currentProjectile = 0;
         }
+        OnPlayFireSound?.Invoke(audioSource);
     }
 
     public void FireOnce()

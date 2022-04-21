@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class PowerupManager : MonoBehaviour
 {
     [SerializeField] private GameObject powerup;
@@ -20,8 +21,11 @@ public class PowerupManager : MonoBehaviour
     [SerializeField] private BoxCollider2D player2Collider;
     [SerializeField] private SpriteFader playerCloneSpriteFader;
     [SerializeField] private SpriteFader player2CloneSpriteFader;
+    [SerializeField] private AudioClip powerupCollectedSound;
 
     public static PowerupManager instance { get; private set; }
+
+    public static event System.Action<AudioSource> OnPlayCollectedSound;
 
     private Transform powerupTransform;
     private PowerupMovement powerupMovement;
@@ -39,6 +43,7 @@ public class PowerupManager : MonoBehaviour
     private Movement player2CloneMovement;
     private PlayerController player2CloneController;
     private MultiplayerManager multiplayerManager;
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -59,12 +64,14 @@ public class PowerupManager : MonoBehaviour
         player2CloneCombat = player2Clone.GetComponent<Combat>();
         player2CloneMovement = player2Clone.GetComponent<Movement>();
         player2CloneController = player2Clone.GetComponent<PlayerController>();
+        audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     private void Start()
     {
         activeProfile = ProfileManager.instance.GetActiveProfile();
         multiplayerManager = MultiplayerManager.instance;
+        audioSource.clip = powerupCollectedSound;
     }
 
     private void SetPowerupType(PowerupType powerupType)
@@ -352,5 +359,6 @@ public class PowerupManager : MonoBehaviour
         activeProfile.SetUsingPowerup(true);
         activeProfile.SetPowerupRemainingSeconds(powerupDuration);
         EnablePowerupEffect();
+        OnPlayCollectedSound?.Invoke(audioSource);
     }
 }
