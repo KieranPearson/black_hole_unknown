@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        function loadHTML(url, elementId) {
+            fetch(url)
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            loadHTML('header.html', 'header');
+            loadHTML('footer.html', 'footer');
+        });
+    </script>
+</head>
+<body>
+    <div id="header"></div>
+
+    <div class="content">
+        <h1>Unity projects</h1>
+        <p>Test</p>
+    </div>
+
+    <div id="footer" div class="footer"></div>
+</body>
+</html>
